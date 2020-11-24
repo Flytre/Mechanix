@@ -1,0 +1,8 @@
+{
+  "itemGroup.mechanix.all" : "Mechanix",
+  "block.mechanix.energy_cell" : "Energy Cell",
+  "block.mechanix.cable" : "Cable",
+  "block.mechanix.generator" : "Fuel Generator",
+  "block.mechanix.furnace" : "Powered Furnace"
+
+}
