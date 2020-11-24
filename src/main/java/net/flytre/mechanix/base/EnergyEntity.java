@@ -82,7 +82,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                 energyMode.put(d, dirs.getByte(d.getName()) == 1);
         }
 
-        CompoundTag items = tag.getCompound("Items");
+        CompoundTag items = tag.getCompound("ItemMode");
         for (Direction d : Direction.values()) {
             itemMode.put(d, items.getByte(d.getName()) == 1);
         }
@@ -99,7 +99,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         }
 
         CompoundTag items = new CompoundTag();
-        tag.put("Items", items);
+        tag.put("ItemMode", items);
         for (Direction direction : itemMode.keySet()) {
             items.putByte(direction.getName(), (byte) (itemMode.get(direction) ? 1 : 0));
         }

@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.cell;
 
-import net.flytre.mechanix.base.Connectable;
+import net.flytre.mechanix.block.cable.CableConnectable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -18,7 +18,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class EnergyCell extends Block implements BlockEntityProvider, Connectable {
+public class EnergyCell extends Block implements BlockEntityProvider, CableConnectable {
 
     public static final Property<Boolean> UP;
     public static final Property<Boolean> DOWN;

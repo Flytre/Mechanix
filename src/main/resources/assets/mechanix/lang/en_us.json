@@ -2,7 +2,8 @@
   "itemGroup.mechanix.all" : "Mechanix",
   "block.mechanix.energy_cell" : "Energy Cell",
   "block.mechanix.cable" : "Cable",
+  "block.mechanix.item_pipe" : "Item Pipe",
   "block.mechanix.generator" : "Fuel Generator",
-  "block.mechanix.furnace" : "Powered Furnace"
-
+  "block.mechanix.furnace" : "Powered Furnace",
+  "item.mechanix.servo" : "Servo"
 }

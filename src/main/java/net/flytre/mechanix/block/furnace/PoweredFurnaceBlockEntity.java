@@ -6,21 +6,16 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.flytre.mechanix.base.EnergyEntity;
 import net.flytre.mechanix.block.generator.GeneratorBlock;
 import net.flytre.mechanix.util.MachineRegistry;
-import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
@@ -263,7 +258,6 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
     protected int getCookTime() {
         if (this.world == null)
             return 200;
-        System.out.println(this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world));
         return this.world.getRecipeManager().getFirstMatch(this.recipeType, this, this.world).map(AbstractCookingRecipe::getCookTime).orElse(200);
     }
 

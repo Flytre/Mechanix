@@ -1,6 +1,5 @@
 package net.flytre.mechanix.block.cable;
 
-import net.flytre.mechanix.base.Connectable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -18,7 +17,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-public class Cable extends Block implements Connectable {
+public class Cable extends Block implements CableConnectable {
 
     public static final Property<Boolean> UP;
     public static final Property<Boolean> DOWN;
@@ -105,7 +104,7 @@ public class Cable extends Block implements Connectable {
     }
 
     private boolean isConnectable(Block block) {
-        return block instanceof Connectable;
+        return block instanceof CableConnectable;
     }
 
     private Property<Boolean> getProperty(Direction facing) {

@@ -28,6 +28,7 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
     protected DefaultedList<ItemStack> inventory;
     private int burnTime;
     private int fuelTime;
+    private static final int genPerTick = 20;
 
 
     public GeneratorBlockEntity() {
@@ -85,6 +86,10 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
         }
 
         if (!this.world.isClient) {
+
+            if(this.hasEnergy(this.getMaxEnergy() - genPerTick + 0.001))
+                return;
+
             ItemStack fuelSlot = this.inventory.get(0);
 
             if(this.isBurning() || !fuelSlot.isEmpty()) {
@@ -103,7 +108,7 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
                         }
                     }
                 } else {
-                    this.addEnergy(20);
+                    this.addEnergy(genPerTick);
                 }
             }
 

@@ -12,6 +12,8 @@ import net.flytre.mechanix.block.furnace.PoweredFurnaceScreenHandler;
 import net.flytre.mechanix.block.generator.GeneratorBlock;
 import net.flytre.mechanix.block.generator.GeneratorBlockEntity;
 import net.flytre.mechanix.block.generator.GeneratorScreenHandler;
+import net.flytre.mechanix.block.item_pipe.ItemPipe;
+import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -24,6 +26,9 @@ import net.minecraft.util.registry.Registry;
 public class MachineRegistry {
 
     public static final Block CABLE = new Cable(FabricBlockSettings.of(Material.METAL));
+
+    public static final Block ITEM_PIPE = new ItemPipe(FabricBlockSettings.of(Material.METAL));
+    public static BlockEntityType<ItemPipeBlockEntity> ITEM_PIPE_ENTITY;
 
 
     public static final Block ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
@@ -42,6 +47,12 @@ public class MachineRegistry {
     public static void init() {
         Registry.register(Registry.BLOCK, new Identifier("mechanix", "cable"), CABLE);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "cable"), new BlockItem(CABLE, new Item.Settings().group(MiscRegistry.TAB)));
+
+
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", "item_pipe"), ITEM_PIPE);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", "item_pipe"), new BlockItem(ITEM_PIPE, new Item.Settings().group(MiscRegistry.TAB)));
+        ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
+
 
         Registry.register(Registry.BLOCK, new Identifier("mechanix", "energy_cell"), ENERGY_CELL);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "energy_cell"), new BlockItem(ENERGY_CELL, new Item.Settings().group(MiscRegistry.TAB)));

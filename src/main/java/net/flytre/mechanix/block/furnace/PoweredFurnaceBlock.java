@@ -2,7 +2,8 @@ package net.flytre.mechanix.block.furnace;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.base.Connectable;
+import net.flytre.mechanix.block.cable.CableConnectable;
+import net.flytre.mechanix.block.item_pipe.ItemPipeConnectable;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,7 +27,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class PoweredFurnaceBlock extends BlockWithEntity implements Connectable {
+public class PoweredFurnaceBlock extends BlockWithEntity implements CableConnectable, ItemPipeConnectable {
     public static final DirectionProperty FACING;
     public static final BooleanProperty LIT;
 

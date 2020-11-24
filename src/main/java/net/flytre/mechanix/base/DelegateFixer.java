@@ -43,7 +43,6 @@ public class DelegateFixer {
             result[i] = n >= c;
             n = n >= c ? n - c : n;
         }
-
         return result;
     }
 
