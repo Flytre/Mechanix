@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"particle": "mechanix:block/cable_connector",
-		"texture": "mechanix:block/cable_connector"
+		"particle": "mechanix:block/cable/standard_connector",
+		"texture": "mechanix:block/cable/standard_connector"
 	},
 	"elements": [
 		{

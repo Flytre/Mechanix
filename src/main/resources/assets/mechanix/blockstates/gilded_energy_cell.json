@@ -10,7 +10,7 @@
                 "north": "true"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_out"
+                "model": "mechanix:block/energy_cell/gilded_horizontal_out"
             }
         },
         {
@@ -18,7 +18,7 @@
                 "east": "true"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_out",
+                "model": "mechanix:block/energy_cell/gilded_horizontal_out",
                 "y" : 90
             }
         },
@@ -27,7 +27,7 @@
                 "south": "true"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_out",
+                "model": "mechanix:block/energy_cell/gilded_horizontal_out",
                 "y" : 180
             }
         },
@@ -36,7 +36,7 @@
                 "west": "true"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_out",
+                "model": "mechanix:block/energy_cell/gilded_horizontal_out",
                 "y" : 270
             }
         },
@@ -45,7 +45,7 @@
                 "up": "true"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_vertical_out"
+                "model": "mechanix:block/energy_cell/gilded_vertical_out"
             }
         },
         {
@@ -53,7 +53,7 @@
                 "down": "true"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_vertical_out",
+                "model": "mechanix:block/energy_cell/gilded_vertical_out",
                 "x" : 180
             }
         },
@@ -62,7 +62,7 @@
                 "north": "false"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_in"
+                "model": "mechanix:block/energy_cell/gilded_horizontal_in"
             }
         },
         {
@@ -70,7 +70,7 @@
                 "east": "false"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_in",
+                "model": "mechanix:block/energy_cell/gilded_horizontal_in",
                 "y" : 90
             }
         },
@@ -79,7 +79,7 @@
                 "south": "false"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_in",
+                "model": "mechanix:block/energy_cell/gilded_horizontal_in",
                 "y" : 180
             }
         },
@@ -88,7 +88,7 @@
                 "west": "false"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_horizontal_in",
+                "model": "mechanix:block/energy_cell/gilded_horizontal_in",
                 "y" : 270
             }
         },
@@ -97,7 +97,7 @@
                 "up": "false"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_vertical_in"
+                "model": "mechanix:block/energy_cell/gilded_vertical_in"
             }
         },
         {
@@ -105,7 +105,7 @@
                 "down": "false"
             },
             "apply": {
-                "model": "mechanix:block/energy_cell/standard_vertical_in",
+                "model": "mechanix:block/energy_cell/gilded_vertical_in",
                 "x" : 180
             }
         }

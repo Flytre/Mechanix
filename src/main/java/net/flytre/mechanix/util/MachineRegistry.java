@@ -25,13 +25,20 @@ import net.minecraft.util.registry.Registry;
 
 public class MachineRegistry {
 
-    public static final Block CABLE = new Cable(FabricBlockSettings.of(Material.METAL));
+    public static final Cable CABLE = new Cable(FabricBlockSettings.of(Material.METAL));
+    public static final Cable GILDED_CABLE = new Cable(FabricBlockSettings.of(Material.METAL));
+    public static final Cable VYSTERIUM_CABLE = new Cable(FabricBlockSettings.of(Material.METAL));
+    public static final Cable NEPTUNIUM_CABLE = new Cable(FabricBlockSettings.of(Material.METAL));
+
 
     public static final Block ITEM_PIPE = new ItemPipe(FabricBlockSettings.of(Material.METAL));
     public static BlockEntityType<ItemPipeBlockEntity> ITEM_PIPE_ENTITY;
 
 
-    public static final Block ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
+    public static final EnergyCell ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
+    public static final EnergyCell GILDED_ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
+    public static final EnergyCell VYSTERIUM_ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
+    public static final EnergyCell NEPTUNIUM_ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
     public static BlockEntityType<EnergyCellEntity> ENERGY_CELL_ENTITY;
     public static ScreenHandlerType<EnergyCellScreenHandler> ENERGY_CELL_SCREEN_HANDLER;
 
@@ -45,18 +52,21 @@ public class MachineRegistry {
 
 
     public static void init() {
-        Registry.register(Registry.BLOCK, new Identifier("mechanix", "cable"), CABLE);
-        Registry.register(Registry.ITEM, new Identifier("mechanix", "cable"), new BlockItem(CABLE, new Item.Settings().group(MiscRegistry.TAB)));
-
+        registerCable(CABLE,"cable");
+        registerCable(GILDED_CABLE,"gilded_cable");
+        registerCable(VYSTERIUM_CABLE,"vysterium_cable");
+        registerCable(NEPTUNIUM_CABLE,"neptunium_cable");
 
         Registry.register(Registry.BLOCK, new Identifier("mechanix", "item_pipe"), ITEM_PIPE);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "item_pipe"), new BlockItem(ITEM_PIPE, new Item.Settings().group(MiscRegistry.TAB)));
         ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
 
 
-        Registry.register(Registry.BLOCK, new Identifier("mechanix", "energy_cell"), ENERGY_CELL);
-        Registry.register(Registry.ITEM, new Identifier("mechanix", "energy_cell"), new BlockItem(ENERGY_CELL, new Item.Settings().group(MiscRegistry.TAB)));
-        ENERGY_CELL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:energy_cell", BlockEntityType.Builder.create(EnergyCellEntity::new, ENERGY_CELL).build(null));
+        registerEnergyCell(ENERGY_CELL,"energy_cell");
+        registerEnergyCell(GILDED_ENERGY_CELL,"gilded_energy_cell");
+        registerEnergyCell(VYSTERIUM_ENERGY_CELL,"vysterium_energy_cell");
+        registerEnergyCell(NEPTUNIUM_ENERGY_CELL,"neptunium_energy_cell");
+        ENERGY_CELL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:energy_cell", BlockEntityType.Builder.create(EnergyCellEntity::new, ENERGY_CELL,GILDED_ENERGY_CELL,VYSTERIUM_ENERGY_CELL,NEPTUNIUM_ENERGY_CELL).build(null));
         ENERGY_CELL_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:energy_cell"), EnergyCellScreenHandler::new);
 
         Registry.register(Registry.BLOCK, new Identifier("mechanix", "generator"), GENERATOR);
@@ -69,5 +79,17 @@ public class MachineRegistry {
         POWERED_FURNACE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:furnace", BlockEntityType.Builder.create(PoweredFurnaceBlockEntity::new, POWERED_FURNACE).build(null));
         POWERED_FURNACE_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:furnace"), PoweredFurnaceScreenHandler::new);
 
+    }
+
+
+    private static void registerCable(Cable cable, String id) {
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", id), cable);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", id), new BlockItem(cable, new Item.Settings().group(MiscRegistry.TAB)));
+
+    }
+
+    private static void registerEnergyCell(EnergyCell cell, String id) {
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", id), cell);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", id), new BlockItem(cell, new Item.Settings().group(MiscRegistry.TAB)));
     }
 }

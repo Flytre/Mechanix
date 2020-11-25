@@ -1,7 +1,13 @@
 {
   "itemGroup.mechanix.all" : "Mechanix",
   "block.mechanix.energy_cell" : "Energy Cell",
+  "block.mechanix.gilded_energy_cell" : "Gilded Energy Cell",
+  "block.mechanix.vysterium_energy_cell" : "Vysterium Energy Cell",
+  "block.mechanix.neptunium_energy_cell" : "Neptunium Energy Cell",
   "block.mechanix.cable" : "Cable",
+  "block.mechanix.gilded_cable" : "Gilded Cable",
+  "block.mechanix.vysterium_cable" : "Vysterium Cable",
+  "block.mechanix.neptunium_cable" : "Neptunium Cable",
   "block.mechanix.item_pipe" : "Item Pipe",
   "block.mechanix.generator" : "Fuel Generator",
   "block.mechanix.furnace" : "Powered Furnace",

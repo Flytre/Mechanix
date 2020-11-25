@@ -1,0 +1,7 @@
+{
+	"parent" : "mechanix:block/cable/standard_connector",
+	"textures": {
+		"particle": "mechanix:block/cable/vysterium_connector",
+		"texture": "mechanix:block/cable/vysterium_connector"
+	}
+}

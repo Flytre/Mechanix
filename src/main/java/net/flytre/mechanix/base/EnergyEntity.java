@@ -3,6 +3,9 @@ package net.flytre.mechanix.base;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.flytre.mechanix.block.cable.Cable;
+import net.flytre.mechanix.block.cable.CableResult;
+import net.flytre.mechanix.util.MachineRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -35,7 +38,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         itemMode = new HashMap<>();
         properties = new ArrayPropertyDelegate(12); //4 unused for subclasses
 
-        //defaults - PLEASE OVERRIDE unless ur an energy cell
+        //defaults - PLEASE OVERRIDE
         maxEnergy = 300000;
         maxTransferRate = 300;
         panelMode = 0;
@@ -73,6 +76,8 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         super.fromTag(state, tag);
         this.setEnergy(tag.getDouble("energy"));
 
+        this.maxTransferRate = tag.getDouble("transferRate");
+
 
         if(tag.contains("maxEnergy"))
             this.maxEnergy = tag.getDouble("maxEnergy");
@@ -106,6 +111,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
         tag.putDouble("energy", this.energy);
         tag.putDouble("maxEnergy", this.maxEnergy);
+        tag.putDouble("transferRate",this.maxTransferRate);
         return super.toTag(tag);
     }
 
@@ -212,24 +218,46 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         if(world == null)
             return;
 
-        Deque<BlockPos> to_visit = new LinkedList<>();
+        BlockPos start = this.getPos();
+
+        Deque<CableResult> to_visit = new LinkedList<>();
         Set<BlockPos> visited  = new HashSet<>();
-        to_visit.add(this.getPos());
+        to_visit.add(new CableResult(this.getPos(),this.maxTransferRate));
 
         while(to_visit.size() > 0) {
-            BlockPos current = to_visit.pop();
-            BlockEntity entity = world.getBlockEntity(current);
-            if(entity instanceof EnergyEntity && !(this.getPos().equals(current))) {
-                amt = transferEnergy((EnergyEntity) entity,amt);
+            CableResult cableResult = to_visit.pop();
+            BlockPos currentPos = cableResult.getPos();
+            BlockEntity entity = world.getBlockEntity(currentPos);
+            if(entity instanceof EnergyEntity && !(this.getPos().equals(currentPos))) {
+                amt = transferEnergy((EnergyEntity) entity,Math.min(amt,cableResult.getMax()));
                 if(amt == 0)
                     return;
             }
-            ArrayList<Direction> neighbors = EnergyEntity.transferrableDirections(current,world);
-            for(Direction d : neighbors) {
-                if(!visited.contains(current))
-                    to_visit.add(current.offset(d));
+            if(entity == null || currentPos.equals(start)) {
+                ArrayList<Direction> neighbors = EnergyEntity.transferrableDirections(currentPos, world);
+                for (Direction d : neighbors) {
+                    if (!visited.contains(currentPos.offset(d))) {
+                        BlockEntity childEntity = world.getBlockEntity(currentPos.offset(d));
+                        double maxAmount = cableResult.getMax();
+                        if(childEntity instanceof EnergyEntity) {
+                            maxAmount = Math.min(maxAmount, ((EnergyEntity) childEntity).maxTransferRate);
+                        } else {
+                            //cable transfer rates:
+                            Block cable = world.getBlockState(currentPos.offset(d)).getBlock();
+                            if(cable == MachineRegistry.CABLE)
+                                maxAmount = Math.min(maxAmount,25);
+                            if(cable == MachineRegistry.GILDED_CABLE)
+                                maxAmount = Math.min(maxAmount,100);
+                            if(cable == MachineRegistry.VYSTERIUM_CABLE)
+                                maxAmount = Math.min(maxAmount,300);
+                            if(cable == MachineRegistry.NEPTUNIUM_CABLE)
+                                maxAmount = Math.min(maxAmount,1000);
+                        }
+                        to_visit.add(new CableResult(currentPos.offset(d),maxAmount));
+                    }
+                }
             }
-            visited.add(current);
+            visited.add(currentPos);
         }
 
 

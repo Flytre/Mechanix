@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "mechanix:block/energy_cell_output",
-		"particle": "mechanix:block/energy_cell_output"
+		"0": "mechanix:block/energy_cell/standard_out",
+		"particle": "mechanix:block/energy_cell/standard_out"
 	},
 	"elements": [
 		{

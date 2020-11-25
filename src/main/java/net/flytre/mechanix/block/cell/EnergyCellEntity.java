@@ -2,9 +2,11 @@ package net.flytre.mechanix.block.cell;
 
 import net.flytre.mechanix.base.EnergyEntity;
 import net.flytre.mechanix.util.MachineRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -16,10 +18,13 @@ import org.jetbrains.annotations.Nullable;
 public class EnergyCellEntity extends EnergyEntity implements Tickable {
 
 
+    private boolean corrected = false;
+
     public EnergyCellEntity() {
         super(MachineRegistry.ENERGY_CELL_ENTITY);
         setEnergyMode(true, true, true, true, true, true);
     }
+
 
     @Override
     public Text getDisplayName() {
@@ -59,13 +64,46 @@ public class EnergyCellEntity extends EnergyEntity implements Tickable {
             double amount = Math.min(this.getMaxTransferRate(), this.getMaxEnergy() - this.getEnergy());
             requestEnergy(amount);
         }
+
+        if(!corrected && world !=null && !world.isClient) {
+            Block block = world.getBlockState(pos).getBlock();
+            if(block == MachineRegistry.ENERGY_CELL) {
+                setMaxEnergy(100000);
+                setMaxTransferRate(25);
+            }
+            if(block == MachineRegistry.GILDED_ENERGY_CELL) {
+                setMaxEnergy(500000);
+                setMaxTransferRate(75);
+            }
+            if(block == MachineRegistry.VYSTERIUM_ENERGY_CELL) {
+                setMaxEnergy(1500000);
+                setMaxTransferRate(250);
+            }
+            if(block == MachineRegistry.NEPTUNIUM_ENERGY_CELL) {
+                setMaxEnergy(5000000);
+                setMaxTransferRate(750);
+            }
+            corrected = true;
+        }
+
         super.tick();
     }
 
+    @Override
+    public void fromTag(BlockState state, CompoundTag tag) {
+        corrected = tag.getBoolean("init");
+        super.fromTag(state, tag);
+    }
+
+    @Override
+    public CompoundTag toTag(CompoundTag tag) {
+        tag.putBoolean("init",corrected);
+        return super.toTag(tag);
+    }
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new EnergyCellScreenHandler(syncId,inv,this,this.getProperties());
+        return new EnergyCellScreenHandler(syncId, inv, this, this.getProperties());
     }
 
 }

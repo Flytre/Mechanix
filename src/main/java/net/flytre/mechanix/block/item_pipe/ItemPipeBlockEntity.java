@@ -286,7 +286,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             }
             ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferrableDirections(current, world, stack);
             for (Direction d : neighbors) {
-                if (!visited.contains(current)) {
+                if (!visited.contains(current.offset(d))) {
                     ArrayList<BlockPos> newPath = new ArrayList<>(path);
                     newPath.add(current);
                     to_visit.add(new PipeResult(current.offset(d), newPath, stack, d.getOpposite()));
