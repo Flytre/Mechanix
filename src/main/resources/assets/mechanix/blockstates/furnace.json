@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,lit=false": {
-      "model": "mechanix:block/generator",
+      "model": "mechanix:block/furnace",
       "y": 90
     },
     "facing=east,lit=true": {
-      "model": "mechanix:block/generator_on",
+      "model": "mechanix:block/furnace_on",
       "y": 90
     },
     "facing=north,lit=false": {
-      "model": "mechanix:block/generator"
+      "model": "mechanix:block/furnace"
     },
     "facing=north,lit=true": {
-      "model": "mechanix:block/generator_on"
+      "model": "mechanix:block/furnace_on"
     },
     "facing=south,lit=false": {
-      "model": "mechanix:block/generator",
+      "model": "mechanix:block/furnace",
       "y": 180
     },
     "facing=south,lit=true": {
-      "model": "mechanix:block/generator_on",
+      "model": "mechanix:block/furnace_on",
       "y": 180
     },
     "facing=west,lit=false": {
-      "model": "mechanix:block/generator",
+      "model": "mechanix:block/furnace",
       "y": 270
     },
     "facing=west,lit=true": {
-      "model": "mechanix:block/generator_on",
+      "model": "mechanix:block/furnace_on",
       "y": 270
     }
   }

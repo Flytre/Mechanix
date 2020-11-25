@@ -37,6 +37,12 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
     private static final VoxelShape C_WEST;
     private static final VoxelShape C_NORTH;
     private static final VoxelShape C_SOUTH;
+    private static final VoxelShape S_UP;
+    private static final VoxelShape S_DOWN;
+    private static final VoxelShape S_EAST;
+    private static final VoxelShape S_WEST;
+    private static final VoxelShape S_NORTH;
+    private static final VoxelShape S_SOUTH;
 
 
     static {
@@ -53,6 +59,12 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
         C_WEST = Block.createCuboidShape(0,4.5,4.5,5,11.5,11.5);
         C_NORTH = Block.createCuboidShape(4.5,4.5,0,11.5,11.5,5);
         C_SOUTH = Block.createCuboidShape(4.5,4.5,11,11.5,11.5,16);
+        S_UP = Block.createCuboidShape(3.5,14,3.5,12.5,16,12.5);
+        S_DOWN = Block.createCuboidShape(3.5,0,3.5,12.5,2,12.5);
+        S_EAST = Block.createCuboidShape(14,3.5,3.5,16,12.5,12.5);
+        S_WEST = Block.createCuboidShape(0,3.5,3.5,2,12.5,12.5);
+        S_NORTH = Block.createCuboidShape(3.5,3.5,0,12.5,12.5,2);
+        S_SOUTH = Block.createCuboidShape(3.5,3.5,14,12.5,12.5,16);
     }
 
     public ItemPipe(AbstractBlock.Settings settings) {
@@ -110,6 +122,20 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
             shape = VoxelShapes.combineAndSimplify(shape, C_SOUTH, BooleanBiFunction.OR);
         if(state.get(WEST) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_WEST, BooleanBiFunction.OR);
+
+        if(state.get(UP) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape,S_UP,BooleanBiFunction.OR);
+        if(state.get(DOWN) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape,S_DOWN,BooleanBiFunction.OR);
+        if(state.get(NORTH) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape,S_NORTH,BooleanBiFunction.OR);
+        if(state.get(EAST) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape,S_EAST,BooleanBiFunction.OR);
+        if(state.get(SOUTH) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape,S_SOUTH,BooleanBiFunction.OR);
+        if(state.get(WEST) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape,S_WEST,BooleanBiFunction.OR);
+
         return shape;
     }
 
