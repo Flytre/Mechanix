@@ -1,0 +1,7 @@
+{
+	"parent" : "mechanix:block/energy_cell/vysterium_vertical_in",
+	"textures": {
+		"0": "mechanix:block/energy_cell/vysterium_out",
+		"particle": "mechanix:block/energy_cell/vysterium_out"
+	}
+}
