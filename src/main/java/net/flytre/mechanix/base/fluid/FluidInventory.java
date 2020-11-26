@@ -1,10 +1,17 @@
 package net.flytre.mechanix.base.fluid;
 
+import net.flytre.mechanix.base.Formatter;
+import net.flytre.mechanix.mixin.FluidBlockMixin;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.text.*;
 import net.minecraft.util.Clearable;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +22,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public interface FluidInventory extends Clearable {
+
 
     static FluidStack splitStack(List<FluidStack> stacks, int slot, int amount) {
         return slot >= 0 && slot < stacks.size() && !stacks.get(slot).isEmpty() && amount > 0 ? stacks.get(slot).split(amount) : FluidStack.EMPTY;
@@ -203,4 +211,27 @@ public interface FluidInventory extends Clearable {
         return getFluidIO().get(dir);
     }
 
+    static void toToolTip(ItemStack stack, List<Text> tooltip) {
+
+        if(stack == null || tooltip == null || stack.getTag() == null)
+            return;
+
+        if(!stack.getTag().contains("BlockEntityTag"))
+            return;
+
+        CompoundTag blockEntityTag = stack.getTag().getCompound("BlockEntityTag");
+        DefaultedList<FluidStack> stacks = DefaultedList.ofSize(blockEntityTag.getList("Fluids",10).size(),FluidStack.EMPTY);
+        fromTag(blockEntityTag,stacks);
+
+        for(FluidStack fluidStack : stacks) {
+            for (FluidBlock block : FluidBlocks.fluidBlocks) {
+                FlowableFluid fluid = ((FluidBlockMixin) block).getFluid();
+                if(fluid == fluidStack.getFluid()) {
+                    MutableText line = new LiteralText(Formatter.formatNumber(fluidStack.getAmount()/1000.0, "B ")).append(new TranslatableText(block.getTranslationKey()));
+                    line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
+                    tooltip.add(line);
+                }
+            }
+        }
+    }
 }

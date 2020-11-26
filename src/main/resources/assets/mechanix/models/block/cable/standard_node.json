@@ -1,4 +1,5 @@
 {
+	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
 		"particle": "mechanix:block/cable/standard_node",
@@ -30,7 +31,8 @@
 			"rotation": [0, 225, 0]
 		},
 		"ground": {
-			"translation": [0, 2, 0]
+			"translation": [0, 2, 0],
+			"scale": [0.7, 0.7, 0.7]
 		},
 		"gui": {
 			"rotation": [30, 225, 0],

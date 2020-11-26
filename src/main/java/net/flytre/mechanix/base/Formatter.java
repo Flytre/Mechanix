@@ -63,4 +63,18 @@ public class Formatter {
     public static int maxEnergy(PropertyDelegate propertyDelegate) {
         return Math.max(Formatter.unsplit(new int[]{propertyDelegate.get(5),propertyDelegate.get(6)}),1);
     }
+
+
+    public static String formatNumber(double num, String suffix) {
+        if(num <= 999)
+            return String.format("%.1f", num) + suffix;
+        if(num <= 999999)
+            return String.format("%.1f", num/1000) + "k" + suffix;
+        if(num <= 999999999)
+            return String.format("%.1f", num/1000000) + "M" + suffix;
+        else
+            return String.format("%.1f", num/1000000000) + "G" + suffix;
+
+
+    }
 }

@@ -1,5 +1,7 @@
 package net.flytre.mechanix.block.fluid_pipe;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.block.item_pipe.PipeSide;
 import net.flytre.mechanix.util.ItemRegistery;
@@ -8,10 +10,12 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -77,6 +81,25 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
                 .with(SOUTH, PipeSide.NONE)
                 .with(EAST, PipeSide.NONE)
                 .with(WEST, PipeSide.NONE));
+    }
+
+
+    public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.empty();
+    }
+
+    @Environment(EnvType.CLIENT)
+    public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
+        return 1.0F;
+    }
+
+    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+        return true;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        return stateFrom.isOf(this) ? true : super.isSideInvisible(state, stateFrom, direction);
     }
 
     @Override
@@ -187,6 +210,16 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
         return null;
     }
 
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock()))
+            for (Direction dir : Direction.values())
+                if (state.get(getProperty(dir)) == PipeSide.SERVO)
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistery.SERVO));
+
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {

@@ -13,5 +13,8 @@
   "block.mechanix.furnace" : "Powered Furnace",
   "item.mechanix.servo" : "Servo",
   "block.mechanix.tank" : "Fluid Tank",
-  "block.mechanix.fluid_pipe": "Fluid Pipe"
+  "block.mechanix.fluid_pipe": "Fluid Pipe",
+  "tooltip.mechanix.energy" : "Energy",
+  "tooltip.mechanix.max_energy" : "Max Energy",
+  "tooltip.mechanix.transfer_rate" : "Transfer Rate"
 }

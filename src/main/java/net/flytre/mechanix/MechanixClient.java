@@ -26,6 +26,7 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.FLUID_TANK_SCREEN_HANDLER, FluidTankScreen::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPE, RenderLayer.getTranslucent());
 
     }
 }
