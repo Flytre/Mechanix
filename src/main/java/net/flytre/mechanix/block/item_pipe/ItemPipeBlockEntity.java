@@ -7,7 +7,6 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
@@ -16,7 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.text.Text;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -40,7 +38,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         servoSides(false, false, false, false, false, false);
     }
 
-    public static ArrayList<Direction> transferrableDirections(BlockPos startingPos, World world, ItemStack stack) {
+    public static ArrayList<Direction> transferableDirections(BlockPos startingPos, World world, ItemStack stack) {
         ArrayList<Direction> result = new ArrayList<>();
 
         if (world == null)
@@ -133,7 +131,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         }
 
         if (inventory == null) {
-            List<Entity> list = world.getOtherEntities((Entity) null, new Box(x - 0.5D, y - 0.5D, z - 0.5D, x + 0.5D, y + 0.5D, z + 0.5D), EntityPredicates.VALID_INVENTORIES);
+            List<Entity> list = world.getOtherEntities(null, new Box(x - 0.5D, y - 0.5D, z - 0.5D, x + 0.5D, y + 0.5D, z + 0.5D), EntityPredicates.VALID_INVENTORIES);
             if (!list.isEmpty()) {
                 inventory = (Inventory) list.get(world.random.nextInt(list.size()));
             }
@@ -214,7 +212,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         //Remove from queue
         boolean succeeded = transferItem();
         if (!succeeded) {
-            MinecraftClient.getInstance().player.sendMessage(Text.of("FAILED"), true);
+            //handle
         }
 
         if (cooldown > 0)
@@ -284,7 +282,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             if (!current.equals(start) && entity instanceof Inventory) {
                 return popped;
             }
-            ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferrableDirections(current, world, stack);
+            ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferableDirections(current, world, stack);
             for (Direction d : neighbors) {
                 if (!visited.contains(current.offset(d))) {
                     ArrayList<BlockPos> newPath = new ArrayList<>(path);

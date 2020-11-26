@@ -1,7 +1,8 @@
-package net.flytre.mechanix.base;
+package net.flytre.mechanix.base.energy;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.flytre.mechanix.base.Formatter;
 import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cable.CableResult;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -23,8 +24,8 @@ import java.util.*;
 
 public abstract class EnergyEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 
-    public final HashMap<Direction, Boolean> energyMode; //true = output, false = input
-    public final HashMap<Direction, Boolean> itemMode; //true = output, false = input
+    public HashMap<Direction, Boolean> energyMode; //true = output, false = input
+    public HashMap<Direction, Boolean> itemMode; //true = output, false = input
     private final PropertyDelegate properties;
     private double energy;
     private double maxEnergy;
@@ -43,7 +44,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         maxTransferRate = 300;
         panelMode = 0;
         setEnergyMode(true, true, true, true, true, true);
-        setItemMode(true, false, true, false, true, false);
+        setItemMode(false, true, true, true, true, true);
 
     }
 
@@ -58,10 +59,10 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     public void updateDelegate() {
 
         properties.set(0, 1); //when this is 1 you know its synced
-        properties.set(1,DelegateFixer.hashToInt(this.energyMode));
-        properties.set(2,DelegateFixer.hashToInt(this.itemMode));
-        int[] en = DelegateFixer.splitInt((int) getEnergy());
-        int[] max = DelegateFixer.splitInt((int) getMaxEnergy());
+        properties.set(1, Formatter.hashToInt(this.energyMode));
+        properties.set(2, Formatter.hashToInt(this.itemMode));
+        int[] en = Formatter.splitInt((int) getEnergy());
+        int[] max = Formatter.splitInt((int) getMaxEnergy());
         properties.set(3, en[0]);
         properties.set(4, en[1]);
         properties.set(5, max[0]);
@@ -82,32 +83,16 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         if(tag.contains("maxEnergy"))
             this.maxEnergy = tag.getDouble("maxEnergy");
 
-        CompoundTag dirs = tag.getCompound("Directions");
-        for (Direction d : Direction.values()) {
-                energyMode.put(d, dirs.getByte(d.getName()) == 1);
-        }
 
-        CompoundTag items = tag.getCompound("ItemMode");
-        for (Direction d : Direction.values()) {
-            itemMode.put(d, items.getByte(d.getName()) == 1);
-        }
-
+        energyMode = Formatter.intToHash(tag.getInt("EnergyMode"));
+        itemMode = Formatter.intToHash(tag.getInt("ItemMode"));
     }
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
 
-        CompoundTag dirs = new CompoundTag();
-        tag.put("Directions", dirs);
-        for (Direction direction : energyMode.keySet()) {
-            dirs.putByte(direction.getName(), (byte) (energyMode.get(direction) ? 1 : 0));
-        }
-
-        CompoundTag items = new CompoundTag();
-        tag.put("ItemMode", items);
-        for (Direction direction : itemMode.keySet()) {
-            items.putByte(direction.getName(), (byte) (itemMode.get(direction) ? 1 : 0));
-        }
+        tag.putInt("EnergyMode", Formatter.hashToInt(energyMode));
+        tag.putInt("ItemMode", Formatter.hashToInt(itemMode));
 
         tag.putDouble("energy", this.energy);
         tag.putDouble("maxEnergy", this.maxEnergy);

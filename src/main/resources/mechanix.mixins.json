@@ -4,8 +4,10 @@
   "package": "net.flytre.mechanix.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BucketItemMixin"
   ],
   "client": [
+    "SpriteMixin"
   ],
   "injectors": {
     "defaultRequire": 1

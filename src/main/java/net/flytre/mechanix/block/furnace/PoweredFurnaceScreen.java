@@ -3,7 +3,7 @@ package net.flytre.mechanix.block.furnace;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.base.EnergyScreen;
+import net.flytre.mechanix.base.energy.EnergyScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;

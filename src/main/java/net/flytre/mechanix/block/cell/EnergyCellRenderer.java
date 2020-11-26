@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.cell;
 
-import net.flytre.mechanix.base.DelegateFixer;
+import net.flytre.mechanix.base.Formatter;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -26,7 +26,7 @@ public class EnergyCellRenderer extends BlockEntityRenderer<EnergyCellEntity> {
         Matrix4f matrix4f = matrices.peek().getModel();
 
 
-        double percent = (double)DelegateFixer.energy(blockEntity.getProperties()) / DelegateFixer.maxEnergy(blockEntity.getProperties());
+        double percent = (double) Formatter.energy(blockEntity.getProperties()) / Formatter.maxEnergy(blockEntity.getProperties());
 
 
         for(float k = 0.25f; k <= 0.25f + (percent * 0.50f); k+= 0.01f) {

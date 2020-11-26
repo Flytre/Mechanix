@@ -6,6 +6,8 @@ import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cell.EnergyCell;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
 import net.flytre.mechanix.block.cell.EnergyCellScreenHandler;
+import net.flytre.mechanix.block.fluid_pipe.FluidPipe;
+import net.flytre.mechanix.block.fluid_pipe.FluidPipeBlockEntity;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceBlock;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceBlockEntity;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceScreenHandler;
@@ -14,6 +16,9 @@ import net.flytre.mechanix.block.generator.GeneratorBlockEntity;
 import net.flytre.mechanix.block.generator.GeneratorScreenHandler;
 import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
+import net.flytre.mechanix.block.tank.FluidTank;
+import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
+import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -33,6 +38,14 @@ public class MachineRegistry {
 
     public static final Block ITEM_PIPE = new ItemPipe(FabricBlockSettings.of(Material.METAL));
     public static BlockEntityType<ItemPipeBlockEntity> ITEM_PIPE_ENTITY;
+
+    public static final Block FLUID_TANK = new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque());
+    public static BlockEntityType<FluidTankBlockEntity> FLUID_TANK_ENTITY;
+    public static ScreenHandlerType<FluidTankScreenHandler> FLUID_TANK_SCREEN_HANDLER;
+
+
+    public static final Block FLUID_PIPE = new FluidPipe(FabricBlockSettings.of(Material.METAL));
+    public static BlockEntityType<FluidPipeBlockEntity> FLUID_PIPE_ENTITY;
 
 
     public static final EnergyCell ENERGY_CELL = new EnergyCell(FabricBlockSettings.of(Material.METAL));
@@ -60,6 +73,16 @@ public class MachineRegistry {
         Registry.register(Registry.BLOCK, new Identifier("mechanix", "item_pipe"), ITEM_PIPE);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "item_pipe"), new BlockItem(ITEM_PIPE, new Item.Settings().group(MiscRegistry.TAB)));
         ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
+
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", "tank"), FLUID_TANK);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", "tank"), new BlockItem(FLUID_TANK, new Item.Settings().group(MiscRegistry.TAB)));
+        FLUID_TANK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:tank", BlockEntityType.Builder.create(FluidTankBlockEntity::new, FLUID_TANK).build(null));
+        FLUID_TANK_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:tank"), FluidTankScreenHandler::new);
+
+
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", "fluid_pipe"), FLUID_PIPE);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", "fluid_pipe"), new BlockItem(FLUID_PIPE, new Item.Settings().group(MiscRegistry.TAB)));
+        FLUID_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:fluid_pipe", BlockEntityType.Builder.create(FluidPipeBlockEntity::new, FLUID_PIPE).build(null));
 
 
         registerEnergyCell(ENERGY_CELL,"energy_cell");

@@ -11,5 +11,7 @@
   "block.mechanix.item_pipe" : "Item Pipe",
   "block.mechanix.generator" : "Fuel Generator",
   "block.mechanix.furnace" : "Powered Furnace",
-  "item.mechanix.servo" : "Servo"
+  "item.mechanix.servo" : "Servo",
+  "block.mechanix.tank" : "Fluid Tank",
+  "block.mechanix.fluid_pipe": "Fluid Pipe"
 }

@@ -1,5 +1,6 @@
-package net.flytre.mechanix.base;
+package net.flytre.mechanix.base.energy;
 
+import net.flytre.mechanix.base.Formatter;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -34,11 +35,11 @@ public abstract class EnergyScreenHandler  extends ScreenHandler {
     }
 
     public int getEnergy() {
-        return DelegateFixer.energy(propertyDelegate);
+        return Formatter.energy(propertyDelegate);
     }
 
     public int getMaxEnergy() {
-        return DelegateFixer.maxEnergy(propertyDelegate);
+        return Formatter.maxEnergy(propertyDelegate);
     }
 
     public int getPanelMode() {
@@ -47,7 +48,7 @@ public abstract class EnergyScreenHandler  extends ScreenHandler {
 
 
     public boolean getEnergyTransferable(Direction direction) {
-        HashMap<Direction,Boolean> energyMap = DelegateFixer.intToHash(propertyDelegate.get(1));
+        HashMap<Direction,Boolean> energyMap = Formatter.intToHash(propertyDelegate.get(1));
         return energyMap.get(direction);
     }
 
@@ -58,7 +59,7 @@ public abstract class EnergyScreenHandler  extends ScreenHandler {
 
 
     public boolean getItemTransferable(Direction direction) {
-        HashMap<Direction,Boolean> itemMap = DelegateFixer.intToHash(propertyDelegate.get(2));
+        HashMap<Direction,Boolean> itemMap = Formatter.intToHash(propertyDelegate.get(2));
         return itemMap.get(direction);
     }
 

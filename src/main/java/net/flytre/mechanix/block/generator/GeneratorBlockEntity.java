@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.generator;
 
-import net.flytre.mechanix.base.EnergyEntity;
+import net.flytre.mechanix.base.energy.EnergyEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;

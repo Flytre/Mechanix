@@ -1,6 +1,7 @@
-package net.flytre.mechanix.base;
+package net.flytre.mechanix.base.energy;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.flytre.mechanix.base.Formatter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -28,8 +29,8 @@ public class EnergyMeterWidget extends TexturedButtonWidget {
         minecraftClient.getTextureManager().bindTexture(FULL);
 
         assert minecraftClient.world != null;
-        double energy = DelegateFixer.energy(delegate);
-        double max = DelegateFixer.maxEnergy(delegate);
+        double energy = Formatter.energy(delegate);
+        double max = Formatter.maxEnergy(delegate);
         double u = 60 * (1.0 - (energy/max));
         u = (int)MathHelper.clamp(u,0,60);
         RenderSystem.enableDepthTest();

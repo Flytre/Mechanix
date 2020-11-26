@@ -1,25 +1,22 @@
-package net.flytre.mechanix.base;
+package net.flytre.mechanix.base.energy;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.flytre.mechanix.base.ToggleButton;
 import net.flytre.mechanix.util.Packets;
-import net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen;
-import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.AbstractFurnaceScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 public abstract class EnergyScreen<T extends EnergyScreenHandler> extends HandledScreen<T> {
-    private static final Identifier BUTTONS = new Identifier("mechanix:textures/gui/button/io.png");
+    public static final Identifier BUTTONS = new Identifier("mechanix:textures/gui/button/io.png");
 
     protected final T handler;
     private EnergyMeterWidget meter;

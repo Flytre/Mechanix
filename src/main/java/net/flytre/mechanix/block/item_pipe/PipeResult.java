@@ -41,7 +41,6 @@ public class PipeResult {
         tag.put("path",list);
 
         CompoundTag stack = new CompoundTag();
-        System.out.println(this.stack);
         this.stack.toTag(stack);
         tag.put("stack",stack);
         tag.putString("dir",direction.asString());

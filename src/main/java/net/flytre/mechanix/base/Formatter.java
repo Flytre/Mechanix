@@ -5,7 +5,7 @@ import net.minecraft.util.math.Direction;
 
 import java.util.HashMap;
 
-public class DelegateFixer {
+public class Formatter {
 
 
     public static int hashToInt(HashMap<Direction, Boolean> hash) {
@@ -58,9 +58,9 @@ public class DelegateFixer {
     }
 
     public static int energy(PropertyDelegate propertyDelegate) {
-            return DelegateFixer.unsplit(new int[]{propertyDelegate.get(3),propertyDelegate.get(4)});
+            return Formatter.unsplit(new int[]{propertyDelegate.get(3),propertyDelegate.get(4)});
     }
     public static int maxEnergy(PropertyDelegate propertyDelegate) {
-        return Math.max(DelegateFixer.unsplit(new int[]{propertyDelegate.get(5),propertyDelegate.get(6)}),1);
+        return Math.max(Formatter.unsplit(new int[]{propertyDelegate.get(5),propertyDelegate.get(6)}),1);
     }
 }

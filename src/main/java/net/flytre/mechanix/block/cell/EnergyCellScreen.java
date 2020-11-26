@@ -3,17 +3,11 @@ package net.flytre.mechanix.block.cell;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.base.EnergyScreen;
-import net.flytre.mechanix.base.EnergyScreenHandler;
+import net.flytre.mechanix.base.energy.EnergyScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-
-import java.util.Optional;
 
 public class EnergyCellScreen extends EnergyScreen<EnergyCellScreenHandler> {
 
