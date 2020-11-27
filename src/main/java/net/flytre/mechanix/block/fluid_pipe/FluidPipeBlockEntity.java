@@ -1,5 +1,6 @@
 package net.flytre.mechanix.block.fluid_pipe;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.base.fluid.FluidStack;
 import net.flytre.mechanix.block.item_pipe.PipeSide;
@@ -21,14 +22,18 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
+public class FluidPipeBlockEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable {
 
     public final HashMap<Direction, Boolean> servo;
-    private final int perTick;
+    private int perTick;
+    private FluidStack currentFluid;
+    private int renderTime;
+    private boolean corrected = false;
 
     public FluidPipeBlockEntity() {
         super(MachineRegistry.FLUID_PIPE_ENTITY);
         servo = new HashMap<>();
+        currentFluid = FluidStack.EMPTY;
         servoSides(false, false, false, false, false, false);
         perTick = 50;
     }
@@ -58,8 +63,13 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
             BlockEntity entity = world.getBlockEntity(pos);
 
 
-            if (entity instanceof FluidPipeBlockEntity)
-                result.add(direction);
+            if (entity instanceof FluidPipeBlockEntity) {
+                if(((FluidPipeBlockEntity) entity).getFluidStack().isEmpty())
+                    result.add(direction);
+                else if(((FluidPipeBlockEntity) entity).getFluidStack().getFluid() == stack.getFluid())
+                    result.add(direction);
+                continue;
+            }
 
             if (entity instanceof FluidInventory) {
                 FluidInventory dInv = (FluidInventory) entity;
@@ -129,7 +139,21 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
+        CompoundTag fluid = new CompoundTag();
+        this.currentFluid.toTag(fluid);
+        tag.put("fluid",fluid);
+        tag.putBoolean("init",corrected);
+        corrected = tag.getBoolean("init");
         return super.toTag(tag);
+    }
+
+
+    public void setFluidStack(FluidStack stack) {
+        this.currentFluid = stack;
+        renderTime = 2;
+
+        if(world != null && !world.isClient)
+        sync();
     }
 
     @Override
@@ -141,17 +165,33 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
             else
                 servo.put(dir, false);
         }
+        this.setFluidStack(FluidStack.fromTag(tag.getCompound("fluid")));
+        corrected = tag.getBoolean("init");
         super.fromTag(state, tag);
+    }
+
+
+    public FluidStack getFluidStack() {
+        return currentFluid;
     }
 
     @Override
     public void tick() {
         if (world == null || world.isClient)
             return;
+        
+        
+        
 
+        if(!this.currentFluid.isEmpty() && renderTime == 0) {
+            this.currentFluid = FluidStack.EMPTY;
+            sync();
+        } else if(renderTime > 0) {
+            sync();
+            renderTime--;
+        }
 
-
-//        Add to queue
+        //Add to queue
             for (Direction d : Direction.values()) {
                 if (servo.get(d)) {
                     FluidInventory out = getInventoryAt(world, this.pos.offset(d));
@@ -164,18 +204,25 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
                     for (int i : arr) {
 
                         FluidStack stack = out.getStack(i);
-                        if (!canExtract(out, stack, i, opp) || stack.isEmpty() || stack.getAmount() < perTick)
+                        if (!canExtract(out, stack, i, opp) || stack.isEmpty())
                             continue;
 
                         FluidStack one = stack.copy();
-                        one.setAmount(perTick);
+                        one.setAmount(Math.min(perTick,stack.getAmount()));
                         FluidPipeResult result = findDestination(one, this.pos.offset(d));
                         if (result != null) {
                             FluidInventory inv = (FluidInventory) world.getBlockEntity(result.getDestination());
                             assert inv != null;
-                            inv.add(one);
-                            stack.decrement(perTick);
+                            inv.add(new FluidStack(one.getFluid(), (int) result.getAmount()));
+                            stack.decrement((int) result.getAmount());
                             markDirty();
+
+                            for(BlockPos pos : result.getPath()) {
+                                BlockEntity e = world.getBlockEntity(pos);
+                                if(e instanceof FluidPipeBlockEntity) {
+                                    ((FluidPipeBlockEntity) e).setFluidStack(new FluidStack(one.getFluid(),1));
+                                }
+                            }
 
                             out.markDirty();
                             inv.markDirty();
@@ -185,6 +232,24 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
                     }
                 }
             }
+
+        //Tiers/
+        if(!corrected && world !=null && !world.isClient) {
+            Block block = world.getBlockState(pos).getBlock();
+            if(block == MachineRegistry.FLUID_PIPE) {
+                perTick = 50;
+            }
+            if(block == MachineRegistry.GILDED_FLUID_PIPE) {
+                perTick = 150;
+            }
+            if(block == MachineRegistry.VYSTERIUM_FLUID_PIPE) {
+                perTick = 500;
+            }
+            if(block == MachineRegistry.NEPTUNIUM_FLUID_PIPE) {
+                perTick = 1500;
+            }
+            corrected = true;
+        }
     }
 
 
@@ -196,7 +261,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
 
         Deque<FluidPipeResult> to_visit = new LinkedList<>();
         Set<BlockPos> visited = new HashSet<>();
-        to_visit.add(new FluidPipeResult(this.getPos(), stack.getAmount(), Direction.NORTH));
+        to_visit.add(new FluidPipeResult(this.getPos(), stack.getAmount(), Direction.NORTH, new ArrayList<>()));
 
         while (to_visit.size() > 0) {
             FluidPipeResult popped = to_visit.pop();
@@ -209,13 +274,40 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable {
             ArrayList<Direction> neighbors = FluidPipeBlockEntity.transferableDirections(current, world, stack);
             for (Direction d : neighbors) {
                 if (!visited.contains(current.offset(d))) {
-                    to_visit.add(new FluidPipeResult(current.offset(d), stack.getAmount(), d.getOpposite()));
+                    ArrayList<BlockPos> newPath = new ArrayList<>(popped.getPath());
+                    newPath.add(current);
+
+                    int amount = (int)Math.min(stack.getAmount(),popped.getAmount());
+                    BlockState state = world.getBlockState(current.offset(d));
+                    if(state.getBlock() == MachineRegistry.FLUID_PIPE)
+                        amount = Math.min(amount,50);
+                    if(state.getBlock() == MachineRegistry.GILDED_FLUID_PIPE)
+                        amount = Math.min(amount,150);
+                    if(state.getBlock() == MachineRegistry.VYSTERIUM_FLUID_PIPE)
+                        amount = Math.min(amount,500);
+                    if(state.getBlock() == MachineRegistry.NEPTUNIUM_FLUID_PIPE)
+                        amount = Math.min(amount,1500);
+
+                    to_visit.add(new FluidPipeResult(current.offset(d), amount, d.getOpposite(), newPath));
                 }
             }
             visited.add(current);
         }
 
         return null;
+    }
+
+    @Override
+    public void fromClientTag(CompoundTag compoundTag) {
+        this.setFluidStack(FluidStack.fromTag(compoundTag.getCompound("fluid")));
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag compoundTag) {
+        CompoundTag fluid = new CompoundTag();
+        this.currentFluid.toTag(fluid);
+        compoundTag.put("fluid",fluid);
+        return compoundTag;
     }
 }
 

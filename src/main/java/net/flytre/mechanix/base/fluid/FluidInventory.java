@@ -79,6 +79,10 @@ public interface FluidInventory extends Clearable {
 
     int capacity();
 
+    default int slotCapacity() {
+        return capacity();
+    }
+
     default int slots() {
         return getFluids().size();
     }
@@ -122,6 +126,8 @@ public interface FluidInventory extends Clearable {
             stack.setAmount(capacity() - currentCapacity());
         }
         getFluids().set(slot, stack);
+        if(stack.getAmount() > slotCapacity())
+            stack.setAmount(slotCapacity());
     }
 
     default boolean canAdd(FluidStack stack) {
@@ -173,7 +179,8 @@ public interface FluidInventory extends Clearable {
     }
 
     default boolean isValid(int slot, FluidStack stack) {
-        return (getStack(slot) == FluidStack.EMPTY || getStack(slot).getFluid() == stack.getFluid())
+        return (getStack(slot) == FluidStack.EMPTY ||
+                (getStack(slot).getFluid() == stack.getFluid()  && stack.getAmount() + getStack(slot).getAmount() <= slotCapacity()))
                 && currentCapacity() + stack.getAmount() <= capacity();
     }
 

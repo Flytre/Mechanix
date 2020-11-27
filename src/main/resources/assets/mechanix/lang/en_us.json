@@ -13,7 +13,13 @@
   "block.mechanix.furnace" : "Powered Furnace",
   "item.mechanix.servo" : "Servo",
   "block.mechanix.tank" : "Fluid Tank",
+  "block.mechanix.gilded_tank" : "Gilded Fluid Tank",
+  "block.mechanix.vysterium_tank" : "Vysterium Fluid Tank",
+  "block.mechanix.neptunium_tank" : "Neptunium Fluid Tank",
   "block.mechanix.fluid_pipe": "Fluid Pipe",
+  "block.mechanix.gilded_fluid_pipe": "Gilded Fluid Pipe",
+  "block.mechanix.vysterium_fluid_pipe": "Vysterium Fluid Pipe",
+  "block.mechanix.neptunium_fluid_pipe": "Neptunium Fluid Pipe",
   "tooltip.mechanix.energy" : "Energy",
   "tooltip.mechanix.max_energy" : "Max Energy",
   "tooltip.mechanix.transfer_rate" : "Transfer Rate"

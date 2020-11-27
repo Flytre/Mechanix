@@ -1,0 +1,8 @@
+{
+	"parent": "mechanix:block/item_pipe_servo",
+	"textures": {
+		"1": "mechanix:block/fluid_pipe/standard_node",
+		"particle": "mechanix:block/fluid_pipe/standard_connector",
+		"texture": "mechanix:block/fluid_pipe/standard_connector"
+	}
+}

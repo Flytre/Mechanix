@@ -33,9 +33,13 @@ public class FluidTankRenderer extends BlockEntityRenderer<FluidTankBlockEntity>
 
         if(!stack.isEmpty()) {
             float percent = (float)((double)stack.getAmount() / max);
+
+            if(percent > 0)
+                percent = Math.max(0.1f,percent);
+
             Sprite texture = textureName(entity.getWorld(),entity.getPos(), stack.getFluid());
             int[] color = unpackColor(color(entity.getWorld(),entity.getPos(), stack.getFluid()));
-            renderBlockSprite(buffer.getBuffer(RenderLayer.getTranslucent()), matrix.peek().getModel(), texture, light, overlay, 2.1f / 16, 13.9f / 16, 0f, (15*percent) / 16, 2.1f / 16, 13.9f / 16, color);
+            renderBlockSprite(buffer.getBuffer(RenderLayer.getTranslucent()), matrix.peek().getModel(), texture, light, overlay, 2.1f / 16, 13.9f / 16, 1.1f / 16, (15*percent) / 16, 2.1f / 16, 13.9f / 16, color);
 
             }
 
@@ -85,7 +89,7 @@ public class FluidTankRenderer extends BlockEntityRenderer<FluidTankBlockEntity>
         renderBlockSprite(builder, stack.peek().getModel(), sprite, light, overlay, 0f, 1f, 0f, 1f, 0f, 1f, color);
     }
 
-    private static void renderBlockSprite(VertexConsumer builder, Matrix4f pos, Sprite sprite, int light, int overlay, float x1, float x2, float y1, float y2, float z1, float z2, int[] color) {
+    public static void renderBlockSprite(VertexConsumer builder, Matrix4f pos, Sprite sprite, int light, int overlay, float x1, float x2, float y1, float y2, float z1, float z2, int[] color) {
         renderSpriteSide(builder, pos, sprite, Direction.DOWN, light, overlay, x1, x2, y1, y2, z1, z2, color);
         renderSpriteSide(builder, pos, sprite, Direction.UP, light, overlay, x1, x2, y1, y2, z1, z2, color);
         renderSpriteSide(builder, pos, sprite, Direction.NORTH, light, overlay, x1, x2, y1, y2, z1, z2, color);

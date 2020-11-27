@@ -1,7 +1,0 @@
-{
-	"textures": {
-		"particle": "mechanix:block/fluid_pipe_connector",
-		"texture": "mechanix:block/fluid_pipe_connector"
-	},
-	"parent": "mechanix:block/item_pipe_connector"
-}

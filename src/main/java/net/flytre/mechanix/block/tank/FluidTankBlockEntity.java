@@ -7,6 +7,7 @@ import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.base.fluid.FluidStack;
 import net.flytre.mechanix.mixin.BucketItemMixin;
 import net.flytre.mechanix.util.MachineRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,6 +41,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
     private final PropertyDelegate properties;
     private final DefaultedList<FluidStack> inventory;
     private int capacity;
+    private boolean corrected = false;
 
     public FluidTankBlockEntity() {
         super(MachineRegistry.FLUID_TANK_ENTITY);
@@ -95,7 +97,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         FluidInventory.fromTag(tag,inventory);
 
         fluidMode = Formatter.intToHash(tag.getInt("FluidMode"));
-
+        corrected = tag.getBoolean("init");
     }
 
     @Override
@@ -104,7 +106,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         tag.putInt("capacity", this.capacity);
 
         tag.putInt("FluidMode", Formatter.hashToInt(fluidMode));
-
+        tag.putBoolean("init",corrected);
         return super.toTag(tag);
     }
 
@@ -114,6 +116,24 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
 
         if (getAmount() == 0 || getFluid() == null) {
             setStack(0,FluidStack.EMPTY);
+        }
+
+        //Tiers/
+        if(!corrected && world !=null && !world.isClient) {
+            Block block = world.getBlockState(pos).getBlock();
+            if(block == MachineRegistry.FLUID_TANK) {
+                capacity = 16000;
+            }
+            if(block == MachineRegistry.GILDED_FLUID_TANK) {
+                capacity = 64000;
+            }
+            if(block == MachineRegistry.VYSTERIUM_FLUID_TANK) {
+                capacity = 256000;
+            }
+            if(block == MachineRegistry.NEPTUNIUM_FLUID_TANK) {
+                capacity = 1024000;
+            }
+            corrected = true;
         }
 
     }

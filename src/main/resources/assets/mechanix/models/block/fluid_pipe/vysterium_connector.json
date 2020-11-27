@@ -1,0 +1,8 @@
+{
+	"parent": "mechanix:block/fluid_pipe/standard_connector",
+	"textures": {
+		"1": "mechanix:block/fluid_pipe/vysterium_node",
+		"particle": "mechanix:block/fluid_pipe/vysterium_connector",
+		"texture": "mechanix:block/fluid_pipe/vysterium_connector"
+	}
+}

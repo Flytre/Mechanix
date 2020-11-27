@@ -48,12 +48,18 @@ public class MachineRegistry {
     public static final Block ITEM_PIPE = new ItemPipe(FabricBlockSettings.of(Material.METAL).hardness(0.9f));
     public static BlockEntityType<ItemPipeBlockEntity> ITEM_PIPE_ENTITY;
 
-    public static final Block FLUID_TANK = new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f));
+    public static final FluidTank FLUID_TANK = new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f));
+    public static final FluidTank GILDED_FLUID_TANK = new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f));
+    public static final FluidTank VYSTERIUM_FLUID_TANK = new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f));
+    public static final FluidTank NEPTUNIUM_FLUID_TANK = new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f));
     public static BlockEntityType<FluidTankBlockEntity> FLUID_TANK_ENTITY;
     public static ScreenHandlerType<FluidTankScreenHandler> FLUID_TANK_SCREEN_HANDLER;
 
 
-    public static final Block FLUID_PIPE = new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f));
+    public static final FluidPipe FLUID_PIPE = new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f));
+    public static final FluidPipe GILDED_FLUID_PIPE = new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f));
+    public static final FluidPipe VYSTERIUM_FLUID_PIPE = new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f));
+    public static final FluidPipe NEPTUNIUM_FLUID_PIPE = new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f));
     public static BlockEntityType<FluidPipeBlockEntity> FLUID_PIPE_ENTITY;
 
 
@@ -84,23 +90,19 @@ public class MachineRegistry {
         ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
 
 
-        Registry.register(Registry.BLOCK, new Identifier("mechanix", "tank"), FLUID_TANK);
-        Registry.register(Registry.ITEM, new Identifier("mechanix", "tank"), new BlockItem(FLUID_TANK, new Item.Settings().group(MiscRegistry.TAB)) {
-            @Override
-            public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-                FluidInventory.toToolTip(stack,tooltip);
-                super.appendTooltip(stack, world, tooltip, context);
-            }
-        });
-
-
-        FLUID_TANK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:tank", BlockEntityType.Builder.create(FluidTankBlockEntity::new, FLUID_TANK).build(null));
+        registerTank(FLUID_TANK,"tank");
+        registerTank(GILDED_FLUID_TANK,"gilded_tank");
+        registerTank(VYSTERIUM_FLUID_TANK,"vysterium_tank");
+        registerTank(NEPTUNIUM_FLUID_TANK,"neptunium_tank");
+        FLUID_TANK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:tank", BlockEntityType.Builder.create(FluidTankBlockEntity::new, FLUID_TANK, GILDED_FLUID_TANK, VYSTERIUM_FLUID_TANK, NEPTUNIUM_FLUID_TANK).build(null));
         FLUID_TANK_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:tank"), FluidTankScreenHandler::new);
 
 
-        Registry.register(Registry.BLOCK, new Identifier("mechanix", "fluid_pipe"), FLUID_PIPE);
-        Registry.register(Registry.ITEM, new Identifier("mechanix", "fluid_pipe"), new BlockItem(FLUID_PIPE, new Item.Settings().group(MiscRegistry.TAB)));
-        FLUID_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:fluid_pipe", BlockEntityType.Builder.create(FluidPipeBlockEntity::new, FLUID_PIPE).build(null));
+        registerFluidPipe(FLUID_PIPE,"fluid_pipe");
+        registerFluidPipe(GILDED_FLUID_PIPE,"gilded_fluid_pipe");
+        registerFluidPipe(VYSTERIUM_FLUID_PIPE,"vysterium_fluid_pipe");
+        registerFluidPipe(NEPTUNIUM_FLUID_PIPE,"neptunium_fluid_pipe");
+        FLUID_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:fluid_pipe", BlockEntityType.Builder.create(FluidPipeBlockEntity::new, FLUID_PIPE, GILDED_FLUID_PIPE, VYSTERIUM_FLUID_PIPE, NEPTUNIUM_FLUID_PIPE).build(null));
 
 
         registerEnergyCell(ENERGY_CELL,"energy_cell");
@@ -126,7 +128,23 @@ public class MachineRegistry {
     private static void registerCable(Cable cable, String id) {
         Registry.register(Registry.BLOCK, new Identifier("mechanix", id), cable);
         Registry.register(Registry.ITEM, new Identifier("mechanix", id), new BlockItem(cable, new Item.Settings().group(MiscRegistry.TAB)));
+    }
 
+    private static void registerTank(FluidTank tank, String id) {
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", id), tank);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", id), new BlockItem(tank, new Item.Settings().group(MiscRegistry.TAB)) {
+            @Override
+            public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+                FluidInventory.toToolTip(stack,tooltip);
+                super.appendTooltip(stack, world, tooltip, context);
+            }
+        });
+
+    }
+
+    private static void registerFluidPipe(FluidPipe pipe, String id) {
+        Registry.register(Registry.BLOCK, new Identifier("mechanix", id), pipe);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", id), new BlockItem(pipe, new Item.Settings().group(MiscRegistry.TAB)));
     }
 
     private static void registerEnergyCell(EnergyCell cell, String id) {
