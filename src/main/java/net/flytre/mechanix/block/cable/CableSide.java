@@ -1,16 +1,15 @@
-package net.flytre.mechanix.block.item_pipe;
+package net.flytre.mechanix.block.cable;
 
 import net.minecraft.util.StringIdentifiable;
 
-public enum PipeSide implements StringIdentifiable {
+public enum CableSide implements StringIdentifiable {
     NONE("none"),
     CONNECTED("connected"),
-    WRENCHED("wrenched"),
-    SERVO("servo");
+    WRENCHED("wrenched");
 
     private final String name;
 
-    PipeSide(String name) {
+    CableSide(String name) {
         this.name = name;
     }
 

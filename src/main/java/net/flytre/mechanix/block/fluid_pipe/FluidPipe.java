@@ -9,6 +9,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -57,19 +58,19 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
         SOUTH = EnumProperty.of("pipe_south", PipeSide.class);
         EAST = EnumProperty.of("pipe_east", PipeSide.class);
         WEST = EnumProperty.of("pipe_west", PipeSide.class);
-        NODE = Block.createCuboidShape(4.5,4.5,4.5,11.5,11.5,11.5);
-        C_DOWN = Block.createCuboidShape(4.5,0,4.5,11.5,5,11.5);
-        C_UP = Block.createCuboidShape(4.5,11,4.5,11.5,16,11.5);
-        C_EAST = Block.createCuboidShape(11,4.5,4.5,16,11.5,11.5);
-        C_WEST = Block.createCuboidShape(0,4.5,4.5,5,11.5,11.5);
-        C_NORTH = Block.createCuboidShape(4.5,4.5,0,11.5,11.5,5);
-        C_SOUTH = Block.createCuboidShape(4.5,4.5,11,11.5,11.5,16);
-        S_UP = Block.createCuboidShape(3.5,14,3.5,12.5,16,12.5);
-        S_DOWN = Block.createCuboidShape(3.5,0,3.5,12.5,2,12.5);
-        S_EAST = Block.createCuboidShape(14,3.5,3.5,16,12.5,12.5);
-        S_WEST = Block.createCuboidShape(0,3.5,3.5,2,12.5,12.5);
-        S_NORTH = Block.createCuboidShape(3.5,3.5,0,12.5,12.5,2);
-        S_SOUTH = Block.createCuboidShape(3.5,3.5,14,12.5,12.5,16);
+        NODE = Block.createCuboidShape(4.5, 4.5, 4.5, 11.5, 11.5, 11.5);
+        C_DOWN = Block.createCuboidShape(4.5, 0, 4.5, 11.5, 5, 11.5);
+        C_UP = Block.createCuboidShape(4.5, 11, 4.5, 11.5, 16, 11.5);
+        C_EAST = Block.createCuboidShape(11, 4.5, 4.5, 16, 11.5, 11.5);
+        C_WEST = Block.createCuboidShape(0, 4.5, 4.5, 5, 11.5, 11.5);
+        C_NORTH = Block.createCuboidShape(4.5, 4.5, 0, 11.5, 11.5, 5);
+        C_SOUTH = Block.createCuboidShape(4.5, 4.5, 11, 11.5, 11.5, 16);
+        S_UP = Block.createCuboidShape(3.5, 14, 3.5, 12.5, 16, 12.5);
+        S_DOWN = Block.createCuboidShape(3.5, 0, 3.5, 12.5, 2, 12.5);
+        S_EAST = Block.createCuboidShape(14, 3.5, 3.5, 16, 12.5, 12.5);
+        S_WEST = Block.createCuboidShape(0, 3.5, 3.5, 2, 12.5, 12.5);
+        S_NORTH = Block.createCuboidShape(3.5, 3.5, 0, 12.5, 12.5, 2);
+        S_SOUTH = Block.createCuboidShape(3.5, 3.5, 14, 12.5, 12.5, 16);
     }
 
     public FluidPipe(Settings settings) {
@@ -83,6 +84,23 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
                 .with(WEST, PipeSide.NONE));
     }
 
+    public static EnumProperty<PipeSide> getProperty(Direction facing) {
+        switch (facing) {
+            case UP:
+                return UP;
+            case DOWN:
+                return DOWN;
+            case EAST:
+                return EAST;
+            case WEST:
+                return WEST;
+            case NORTH:
+                return NORTH;
+            case SOUTH:
+                return SOUTH;
+        }
+        return null;
+    }
 
     public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.empty();
@@ -105,26 +123,42 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
-        if(world.isClient) {
-            return player.getStackInHand(hand).getItem() == ItemRegistery.SERVO ? ActionResult.SUCCESS : ActionResult.PASS;
+        Item item = player.getStackInHand(hand).getItem();
+        if (world.isClient) {
+            return item == ItemRegistery.SERVO || item == ItemRegistery.WRENCH ? ActionResult.SUCCESS : ActionResult.PASS;
         } else {
 
-            if(!(player.getStackInHand(hand).getItem() == ItemRegistery.SERVO))
+            if (!(item == ItemRegistery.SERVO) && !(item == ItemRegistery.WRENCH))
                 return ActionResult.PASS;
 
             Direction side = hit.getSide();
             PipeSide current = state.get(getProperty(side));
-            if(current == PipeSide.CONNECTED || current == PipeSide.NONE) {
-                BlockState newState = state.with(getProperty(side),PipeSide.SERVO);
-                world.setBlockState(pos,newState);
-                BlockEntity entity = world.getBlockEntity(pos);
+            //SERVO
+            if (item == ItemRegistery.SERVO) {
+                if (current == PipeSide.CONNECTED || current == PipeSide.NONE) {
+                    BlockState newState = state.with(getProperty(side), PipeSide.SERVO);
+                    world.setBlockState(pos, newState);
 
-                if(entity instanceof FluidPipeBlockEntity) {
-                    ((FluidPipeBlockEntity) entity).servo.put(side,true);
+                    if (!player.isCreative()) {
+                        player.getStackInHand(hand).decrement(1);
+                    }
                 }
-
-                if(!player.isCreative()) {
-                    player.getStackInHand(hand).decrement(1);
+            } else {
+                //WRENCH
+                if (current == PipeSide.SERVO) {
+                    ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistery.SERVO));
+                    world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
+                } else {
+                    BlockState state1 = world.getBlockState(pos.offset(side));
+                    if(state1.getBlock() instanceof FluidPipe && state.get(getProperty(side)) == PipeSide.NONE && state1.get(getProperty(side.getOpposite())) == PipeSide.WRENCHED) {
+                        world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
+                    } else if (!(current == PipeSide.WRENCHED)) {
+                        world.setBlockState(pos, state.with(getProperty(side), PipeSide.WRENCHED));
+                        if(state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO)
+                            world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
+                    } else {
+                        world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
+                    }
                 }
             }
         }
@@ -134,31 +168,31 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         VoxelShape shape = NODE;
-        if(state.get(UP) != PipeSide.NONE)
+        if (state.get(UP) != PipeSide.NONE && state.get(UP) != PipeSide.WRENCHED)
             shape = VoxelShapes.combineAndSimplify(shape, C_UP, BooleanBiFunction.OR);
-        if(state.get(DOWN) != PipeSide.NONE)
+        if (state.get(DOWN) != PipeSide.NONE && state.get(DOWN) != PipeSide.WRENCHED)
             shape = VoxelShapes.combineAndSimplify(shape, C_DOWN, BooleanBiFunction.OR);
-        if(state.get(NORTH) != PipeSide.NONE)
+        if (state.get(NORTH) != PipeSide.NONE && state.get(NORTH) != PipeSide.WRENCHED)
             shape = VoxelShapes.combineAndSimplify(shape, C_NORTH, BooleanBiFunction.OR);
-        if(state.get(EAST) != PipeSide.NONE)
+        if (state.get(EAST) != PipeSide.NONE && state.get(EAST) != PipeSide.WRENCHED)
             shape = VoxelShapes.combineAndSimplify(shape, C_EAST, BooleanBiFunction.OR);
-        if(state.get(SOUTH) != PipeSide.NONE)
+        if (state.get(SOUTH) != PipeSide.NONE && state.get(SOUTH) != PipeSide.WRENCHED)
             shape = VoxelShapes.combineAndSimplify(shape, C_SOUTH, BooleanBiFunction.OR);
-        if(state.get(WEST) != PipeSide.NONE)
+        if (state.get(WEST) != PipeSide.NONE && state.get(WEST) != PipeSide.WRENCHED)
             shape = VoxelShapes.combineAndSimplify(shape, C_WEST, BooleanBiFunction.OR);
 
-        if(state.get(UP) == PipeSide.SERVO)
-            shape = VoxelShapes.combineAndSimplify(shape,S_UP,BooleanBiFunction.OR);
-        if(state.get(DOWN) == PipeSide.SERVO)
-            shape = VoxelShapes.combineAndSimplify(shape,S_DOWN,BooleanBiFunction.OR);
-        if(state.get(NORTH) == PipeSide.SERVO)
-            shape = VoxelShapes.combineAndSimplify(shape,S_NORTH,BooleanBiFunction.OR);
-        if(state.get(EAST) == PipeSide.SERVO)
-            shape = VoxelShapes.combineAndSimplify(shape,S_EAST,BooleanBiFunction.OR);
-        if(state.get(SOUTH) == PipeSide.SERVO)
-            shape = VoxelShapes.combineAndSimplify(shape,S_SOUTH,BooleanBiFunction.OR);
-        if(state.get(WEST) == PipeSide.SERVO)
-            shape = VoxelShapes.combineAndSimplify(shape,S_WEST,BooleanBiFunction.OR);
+        if (state.get(UP) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape, S_UP, BooleanBiFunction.OR);
+        if (state.get(DOWN) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape, S_DOWN, BooleanBiFunction.OR);
+        if (state.get(NORTH) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape, S_NORTH, BooleanBiFunction.OR);
+        if (state.get(EAST) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape, S_EAST, BooleanBiFunction.OR);
+        if (state.get(SOUTH) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape, S_SOUTH, BooleanBiFunction.OR);
+        if (state.get(WEST) == PipeSide.SERVO)
+            shape = VoxelShapes.combineAndSimplify(shape, S_WEST, BooleanBiFunction.OR);
 
         return shape;
     }
@@ -170,11 +204,17 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+
         Block neighbor = world.getBlockState(posFrom).getBlock();
-        if(state.get(getProperty(direction)) == PipeSide.SERVO)
+        BlockState neighborState = world.getBlockState(posFrom);
+        if (state.get(getProperty(direction)) == PipeSide.SERVO || state.get(getProperty(direction)) == PipeSide.WRENCHED)
             return state;
 
-        return state.with(getProperty(direction), isConnectable(neighbor,world.getBlockEntity(posFrom)) ? PipeSide.CONNECTED : PipeSide.NONE);
+        if (neighbor instanceof FluidPipe && neighborState.get(getProperty(direction.getOpposite())) == PipeSide.WRENCHED) {
+            return state;
+        }
+
+        return state.with(getProperty(direction), isConnectable(neighbor, world.getBlockEntity(posFrom)) ? PipeSide.CONNECTED : PipeSide.NONE);
     }
 
     @Override
@@ -182,8 +222,13 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
         BlockState state = getDefaultState();
         BlockPos blockPos = ctx.getBlockPos();
         for (Direction direction : Direction.values()) {
-            Block neighbor = ctx.getWorld().getBlockState(blockPos.offset(direction)).getBlock();
-            state = state.with(getProperty(direction), isConnectable(neighbor,ctx.getWorld().getBlockEntity(blockPos.offset(direction))) ? PipeSide.CONNECTED : PipeSide.NONE);
+            BlockState neighborState = ctx.getWorld().getBlockState(blockPos.offset(direction));
+            Block neighbor = neighborState.getBlock();
+
+            if (neighbor instanceof FluidPipe && neighborState.get(getProperty(direction.getOpposite())) == PipeSide.WRENCHED)
+                state = state.with(getProperty(direction), PipeSide.NONE);
+            else
+                state = state.with(getProperty(direction), isConnectable(neighbor, ctx.getWorld().getBlockEntity(blockPos.offset(direction))) ? PipeSide.CONNECTED : PipeSide.NONE);
 
         }
         return state;
@@ -192,24 +237,6 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
     private boolean isConnectable(Block block, BlockEntity entity) {
         return block instanceof FluidPipeConnectable || (entity instanceof FluidInventory);
     }
-    public static EnumProperty<PipeSide> getProperty(Direction facing) {
-        switch (facing) {
-            case UP:
-                return UP;
-            case DOWN:
-                return DOWN;
-            case EAST:
-                return EAST;
-            case WEST:
-                return WEST;
-            case NORTH:
-                return NORTH;
-            case SOUTH:
-                return SOUTH;
-        }
-        return null;
-    }
-
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {

@@ -11,7 +11,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -24,7 +23,6 @@ import java.util.stream.IntStream;
 
 public class FluidPipeBlockEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable {
 
-    public final HashMap<Direction, Boolean> servo;
     private int perTick;
     private FluidStack currentFluid;
     private int renderTime;
@@ -32,19 +30,22 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
 
     public FluidPipeBlockEntity() {
         super(MachineRegistry.FLUID_PIPE_ENTITY);
-        servo = new HashMap<>();
         currentFluid = FluidStack.EMPTY;
-        servoSides(false, false, false, false, false, false);
         perTick = 50;
     }
 
-    public void servoSides(boolean up, boolean down, boolean north, boolean east, boolean south, boolean west) {
-        servo.put(Direction.UP, up);
-        servo.put(Direction.DOWN, down);
-        servo.put(Direction.NORTH, north);
-        servo.put(Direction.EAST, east);
-        servo.put(Direction.SOUTH, south);
-        servo.put(Direction.WEST, west);
+
+    public PipeSide getSide(Direction d) {
+        if(world == null)
+            return null ;
+        BlockState state = world.getBlockState(pos);
+        if(!(state.getBlock() instanceof FluidPipe))
+            return null;
+        return state.get(FluidPipe.getProperty(d));
+    }
+
+    public boolean hasServo(Direction d) {
+        return getSide(d) == PipeSide.SERVO;
     }
 
     public static ArrayList<Direction> transferableDirections(BlockPos startingPos, World world, FluidStack stack) {
@@ -57,7 +58,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
 
         for (Direction direction : Direction.values()) {
 
-            if (me instanceof FluidPipeBlockEntity && ((FluidPipeBlockEntity) me).servo.get(direction))
+            if (me instanceof FluidPipeBlockEntity && !(((FluidPipeBlockEntity) me).getSide(direction) == PipeSide.CONNECTED))
                 continue;
             BlockPos pos = startingPos.offset(direction);
             BlockEntity entity = world.getBlockEntity(pos);
@@ -142,8 +143,6 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
         CompoundTag fluid = new CompoundTag();
         this.currentFluid.toTag(fluid);
         tag.put("fluid",fluid);
-        tag.putBoolean("init",corrected);
-        corrected = tag.getBoolean("init");
         return super.toTag(tag);
     }
 
@@ -158,15 +157,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
-        for (Direction dir : Direction.values()) {
-            EnumProperty<PipeSide> property = FluidPipe.getProperty(dir);
-            if (state.get(property) == PipeSide.SERVO)
-                servo.put(dir, true);
-            else
-                servo.put(dir, false);
-        }
         this.setFluidStack(FluidStack.fromTag(tag.getCompound("fluid")));
-        corrected = tag.getBoolean("init");
         super.fromTag(state, tag);
     }
 
@@ -193,7 +184,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
 
         //Add to queue
             for (Direction d : Direction.values()) {
-                if (servo.get(d)) {
+                if (hasServo(d)) {
                     FluidInventory out = getInventoryAt(world, this.pos.offset(d));
                     Direction opp = d.getOpposite();
 

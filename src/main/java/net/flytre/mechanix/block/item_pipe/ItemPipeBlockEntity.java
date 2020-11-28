@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -27,15 +26,29 @@ import java.util.stream.IntStream;
 
 public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
 
-    public final HashMap<Direction, Boolean> servo;
     private final Queue<PipeResult> items;
+    private int roundRobinIndex;
+    private boolean roundRobinMode;
     private int cooldown;
 
     public ItemPipeBlockEntity() {
         super(MachineRegistry.ITEM_PIPE_ENTITY);
-        servo = new HashMap<>();
         items = new LinkedList<>();
-        servoSides(false, false, false, false, false, false);
+        roundRobinIndex = 0;
+        roundRobinMode = false;
+    }
+
+    public PipeSide getSide(Direction d) {
+        if(world == null)
+            return null;
+        BlockState state = world.getBlockState(pos);
+        if(!(state.getBlock() instanceof ItemPipe))
+            return null;
+        return state.get(ItemPipe.getProperty(d));
+    }
+
+    public boolean hasServo(Direction d) {
+        return getSide(d) == PipeSide.SERVO;
     }
 
     public static ArrayList<Direction> transferableDirections(BlockPos startingPos, World world, ItemStack stack) {
@@ -48,16 +61,16 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
 
         for (Direction direction : Direction.values()) {
 
-            if (me instanceof ItemPipeBlockEntity && ((ItemPipeBlockEntity) me).servo.get(direction))
+            if (me instanceof ItemPipeBlockEntity) {
+                if ((((ItemPipeBlockEntity) me).getSide(direction) == PipeSide.CONNECTED))
+                    result.add(direction);
                 continue;
+            }
             BlockPos pos = startingPos.offset(direction);
             BlockEntity entity = world.getBlockEntity(pos);
 
 
-            if (entity instanceof ItemPipeBlockEntity)
-                result.add(direction);
-
-            if (entity instanceof Inventory) {
+            if (entity instanceof  Inventory) {
                 Inventory dInv = (Inventory) entity;
                 int[] slots = getAvailableSlots(dInv, direction.getOpposite()).toArray();
                 for (int i : slots) {
@@ -143,7 +156,8 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         tag.putInt("cooldown", this.cooldown);
-
+        tag.putInt("rri", this.roundRobinIndex);
+        tag.putBoolean("rrm", this.roundRobinMode);
         ListTag list = new ListTag();
         for (PipeResult piped : items)
             list.add(piped.toTag(new CompoundTag()));
@@ -152,16 +166,19 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         return super.toTag(tag);
     }
 
+    public boolean isRoundRobinMode() {
+        return roundRobinMode;
+    }
+
+    public void setRoundRobinMode(boolean roundRobinMode) {
+        this.roundRobinMode = roundRobinMode;
+    }
+
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
-        for (Direction dir : Direction.values()) {
-            EnumProperty<PipeSide> property = ItemPipe.getProperty(dir);
-            if (state.get(property) == PipeSide.SERVO)
-                servo.put(dir, true);
-            else
-                servo.put(dir, false);
-        }
         this.cooldown = tag.getInt("cooldown");
+        this.roundRobinIndex = tag.getInt("rri");
+        this.roundRobinMode = tag.getBoolean("rrm");
         ListTag list = tag.getList("queue", 10);
         for (int i = 0; i < list.size(); i++) {
             PipeResult result = PipeResult.fromTag(list.getCompound(i));
@@ -176,47 +193,58 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             return;
         //Add to queue
         if (cooldown <= 0) {
-            for (Direction d : Direction.values()) {
-                if (servo.get(d) && cooldown <= 0) {
-                    Inventory out = getInventoryAt(world, this.pos.offset(d));
-                    Direction opp = d.getOpposite();
+            addToQueue();
+        }
 
-                    if (out == null || isInventoryEmpty(out, opp))
+//        //Remove from queue
+        boolean succeeded = transferItem();
+
+        if (cooldown > 0)
+            cooldown--;
+    }
+
+
+    private void addToQueue() {
+        for (Direction d : Direction.values()) {
+            if (hasServo(d) && cooldown <= 0) {
+                Inventory out = getInventoryAt(world, this.pos.offset(d));
+                Direction opp = d.getOpposite();
+
+                if (out == null || isInventoryEmpty(out, opp))
+                    continue;
+
+                int[] arr = getAvailableSlots(out, opp).toArray();
+                for (int i : arr) {
+
+                    ItemStack stack = out.getStack(i);
+                    if(!canExtract(out,stack,i,opp))
                         continue;
 
-                    int[] arr = getAvailableSlots(out, opp).toArray();
-                    for (int i : arr) {
+                    if (stack.isEmpty())
+                        continue;
+                    ItemStack one = stack.copy();
+                    one.setCount(1);
 
-                        ItemStack stack = out.getStack(i);
-                        if(!canExtract(out,stack,i,opp))
-                            continue;
-
-                        if (stack.isEmpty())
-                            continue;
-                        ItemStack one = stack.copy();
-                        one.setCount(1);
-                        PipeResult result = findDestination(one, this.pos.offset(d));
-                        if (result != null) {
-                            items.add(result);
-                            stack.decrement(1);
-                            cooldown = 10;
-                            markDirty();
-                            break;
+                    PipeResult result;
+                    if(isRoundRobinMode()) {
+                        ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d));
+                        if (results.size() <= roundRobinIndex) {
+                            roundRobinIndex = 0;
                         }
+                        result = results.get(roundRobinIndex++);
+                    } else {
+                        result = findDestination(one, this.pos.offset(d));
+                    }
+                    if (result != null) {
+                        items.add(result);
+                        stack.decrement(1);
+                        cooldown = 10;
+                        markDirty();
+                        break;
                     }
                 }
             }
         }
-
-
-        //Remove from queue
-        boolean succeeded = transferItem();
-        if (!succeeded) {
-            //handle
-        }
-
-        if (cooldown > 0)
-            cooldown--;
     }
 
     private boolean transferItem() {
@@ -266,6 +294,39 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         });
     }
 
+
+    public ArrayList<PipeResult> findDestinations(ItemStack stack, BlockPos start) {
+
+        ArrayList<PipeResult> result = new ArrayList<>();
+        if (world == null)
+            return result;
+
+        Deque<PipeResult> to_visit = new LinkedList<>();
+        Set<BlockPos> visited = new HashSet<>();
+        to_visit.add(new PipeResult(this.getPos(), new ArrayList<>(), stack, Direction.NORTH));
+
+        while (to_visit.size() > 0) {
+            PipeResult popped = to_visit.pop();
+            BlockPos current = popped.getDestination();
+            ArrayList<BlockPos> path = popped.getPath();
+            BlockEntity entity = world.getBlockEntity(current);
+            if (!current.equals(start) && entity instanceof Inventory) {
+                result.add(popped);
+            }
+            ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferableDirections(current, world, stack);
+            for (Direction d : neighbors) {
+                if (!visited.contains(current.offset(d))) {
+                    ArrayList<BlockPos> newPath = new ArrayList<>(path);
+                    newPath.add(current);
+                    to_visit.add(new PipeResult(current.offset(d), newPath, stack, d.getOpposite()));
+                }
+            }
+            visited.add(current);
+        }
+
+        return result;
+    }
+
     public @Nullable PipeResult findDestination(ItemStack stack, BlockPos start) {
         if (world == null)
             return null;
@@ -294,15 +355,6 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         }
 
         return null;
-    }
-
-    public void servoSides(boolean up, boolean down, boolean north, boolean east, boolean south, boolean west) {
-        servo.put(Direction.UP, up);
-        servo.put(Direction.DOWN, down);
-        servo.put(Direction.NORTH, north);
-        servo.put(Direction.EAST, east);
-        servo.put(Direction.SOUTH, south);
-        servo.put(Direction.WEST, west);
     }
 
 

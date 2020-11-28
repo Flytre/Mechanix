@@ -7,7 +7,7 @@
     },
     {
       "when": {
-        "north": "true"
+        "north": "connected"
       },
       "apply": {
         "model": "mechanix:block/cable/gilded_connector",
@@ -16,7 +16,7 @@
     },
     {
       "when": {
-        "east": "true"
+        "east": "connected"
       },
       "apply": {
         "model": "mechanix:block/cable/gilded_connector",
@@ -26,7 +26,7 @@
     },
     {
       "when": {
-        "south": "true"
+        "south": "connected"
       },
       "apply": {
         "model": "mechanix:block/cable/gilded_connector",
@@ -36,7 +36,7 @@
     },
     {
       "when": {
-        "west": "true"
+        "west": "connected"
       },
       "apply": {
         "model": "mechanix:block/cable/gilded_connector",
@@ -46,7 +46,7 @@
     },
     {
       "when": {
-        "up": "true"
+        "up": "connected"
       },
       "apply": {
         "model": "mechanix:block/cable/gilded_connector",
@@ -55,7 +55,7 @@
     },
     {
       "when": {
-        "down": "true"
+        "down": "connected"
       },
       "apply": {
         "model": "mechanix:block/cable/gilded_connector"

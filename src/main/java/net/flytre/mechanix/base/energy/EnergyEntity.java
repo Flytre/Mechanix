@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.flytre.mechanix.base.Formatter;
 import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cable.CableResult;
+import net.flytre.mechanix.block.cable.CableSide;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -188,9 +189,13 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             BlockPos pos = startingPos.offset(direction);
             BlockState state = world.getBlockState(pos);
             BlockEntity entity = world.getBlockEntity(pos);
-            if(state.getBlock() instanceof Cable ||
-                    (entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite())))
+            if((entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite())))
                 result.add(direction);
+
+            if (state.getBlock() instanceof Cable) {
+                if (state.get(Cable.getProperty(direction)) == CableSide.CONNECTED)
+                    result.add(direction);
+            }
         }
 
         return result;

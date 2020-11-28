@@ -35,11 +35,11 @@ public class FluidTankRenderer extends BlockEntityRenderer<FluidTankBlockEntity>
             float percent = (float)((double)stack.getAmount() / max);
 
             if(percent > 0)
-                percent = Math.max(0.1f,percent);
+                percent = Math.max(0.04f,percent);
 
             Sprite texture = textureName(entity.getWorld(),entity.getPos(), stack.getFluid());
             int[] color = unpackColor(color(entity.getWorld(),entity.getPos(), stack.getFluid()));
-            renderBlockSprite(buffer.getBuffer(RenderLayer.getTranslucent()), matrix.peek().getModel(), texture, light, overlay, 2.1f / 16, 13.9f / 16, 1.1f / 16, (15*percent) / 16, 2.1f / 16, 13.9f / 16, color);
+            renderBlockSprite(buffer.getBuffer(RenderLayer.getTranslucent()), matrix.peek().getModel(), texture, light, overlay, 2.1f / 16, 13.9f / 16, 2.1f / 16, (15*percent) / 16, 2.1f / 16, 13.9f / 16, color);
 
             }
 
