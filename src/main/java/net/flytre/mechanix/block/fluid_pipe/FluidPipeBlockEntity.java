@@ -227,16 +227,16 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
         //Tiers/
         if(!corrected && world !=null && !world.isClient) {
             Block block = world.getBlockState(pos).getBlock();
-            if(block == MachineRegistry.FLUID_PIPE) {
+            if(block == MachineRegistry.FLUID_PIPES.getStandard()) {
                 perTick = 50;
             }
-            if(block == MachineRegistry.GILDED_FLUID_PIPE) {
+            if(block ==  MachineRegistry.FLUID_PIPES.getGilded()) {
                 perTick = 150;
             }
-            if(block == MachineRegistry.VYSTERIUM_FLUID_PIPE) {
+            if(block ==  MachineRegistry.FLUID_PIPES.getVysterium()) {
                 perTick = 500;
             }
-            if(block == MachineRegistry.NEPTUNIUM_FLUID_PIPE) {
+            if(block ==  MachineRegistry.FLUID_PIPES.getNeptunium()) {
                 perTick = 1500;
             }
             corrected = true;
@@ -271,16 +271,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
                         newPath.add(current);
 
                         int amount = (int) Math.min(stack.getAmount(), popped.getAmount());
-                        BlockState state = world.getBlockState(current.offset(d));
-                        if (state.getBlock() == MachineRegistry.FLUID_PIPE)
-                            amount = Math.min(amount, 50);
-                        if (state.getBlock() == MachineRegistry.GILDED_FLUID_PIPE)
-                            amount = Math.min(amount, 150);
-                        if (state.getBlock() == MachineRegistry.VYSTERIUM_FLUID_PIPE)
-                            amount = Math.min(amount, 500);
-                        if (state.getBlock() == MachineRegistry.NEPTUNIUM_FLUID_PIPE)
-                            amount = Math.min(amount, 1500);
-
+                        BlockEntity entity1 = world.getBlockEntity(current.offset(d));
+                        if(entity1 instanceof FluidPipeBlockEntity) {
+                            amount = Math.min(amount,((FluidPipeBlockEntity) entity1).getPerTick());
+                        }
                         to_visit.add(new FluidPipeResult(current.offset(d), amount, d.getOpposite(), newPath));
                     }
                 }
@@ -289,6 +283,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
         }
 
         return null;
+    }
+
+    public int getPerTick() {
+        return perTick;
     }
 
     @Override

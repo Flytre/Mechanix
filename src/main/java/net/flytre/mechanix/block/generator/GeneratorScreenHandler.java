@@ -22,7 +22,7 @@ public class GeneratorScreenHandler extends EnergyScreenHandler {
     }
 
     public GeneratorScreenHandler(int syncId, PlayerInventory playerInventory, GeneratorBlockEntity entity, PropertyDelegate propertyDelegate) {
-        super(MachineRegistry.GENERATOR_SCREEN_HANDLER,syncId,playerInventory,entity,propertyDelegate);
+        super(MachineRegistry.GENERATOR.getHandlerType(),syncId,playerInventory,entity,propertyDelegate);
         pos = BlockPos.ORIGIN;
         this.addSlot(new GeneratorFuelSlot(this, entity, 0, 88, 37));
 

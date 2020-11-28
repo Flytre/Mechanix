@@ -42,7 +42,7 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
 
 
     public PoweredFurnaceBlockEntity() {
-        super(MachineRegistry.POWERED_FURNACE_ENTITY);
+        super(MachineRegistry.POWERED_FURNACE.getEntityType());
 
         setMaxEnergy(25000);
         setMaxTransferRate(30);

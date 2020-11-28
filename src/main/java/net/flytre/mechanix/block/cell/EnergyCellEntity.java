@@ -67,19 +67,19 @@ public class EnergyCellEntity extends EnergyEntity implements Tickable {
 
         if(!corrected && world !=null && !world.isClient) {
             Block block = world.getBlockState(pos).getBlock();
-            if(block == MachineRegistry.ENERGY_CELL) {
+            if(block == MachineRegistry.ENERGY_CELLS.getStandard()) {
                 setMaxEnergy(100000);
                 setMaxTransferRate(25);
             }
-            if(block == MachineRegistry.GILDED_ENERGY_CELL) {
+            if(block == MachineRegistry.ENERGY_CELLS.getGilded()) {
                 setMaxEnergy(500000);
                 setMaxTransferRate(75);
             }
-            if(block == MachineRegistry.VYSTERIUM_ENERGY_CELL) {
+            if(block == MachineRegistry.ENERGY_CELLS.getVysterium()) {
                 setMaxEnergy(1500000);
                 setMaxTransferRate(250);
             }
-            if(block == MachineRegistry.NEPTUNIUM_ENERGY_CELL) {
+            if(block == MachineRegistry.ENERGY_CELLS.getNeptunium()) {
                 setMaxEnergy(5000000);
                 setMaxTransferRate(750);
             }

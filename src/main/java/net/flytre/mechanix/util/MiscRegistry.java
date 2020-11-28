@@ -9,7 +9,7 @@ public class MiscRegistry {
 
     public static final ItemGroup TAB = FabricItemGroupBuilder.build(
             new Identifier("mechanix", "all"),
-            () -> new ItemStack(MachineRegistry.CABLE));
+            () -> new ItemStack(MachineRegistry.CABLES.getStandard()));
 
     public static void init() {
     }

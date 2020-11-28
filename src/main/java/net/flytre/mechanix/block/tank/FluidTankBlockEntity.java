@@ -121,16 +121,16 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         //Tiers/
         if(!corrected && world !=null && !world.isClient) {
             Block block = world.getBlockState(pos).getBlock();
-            if(block == MachineRegistry.FLUID_TANK) {
+            if(block == MachineRegistry.FLUID_TANKS.getStandard()) {
                 capacity = 16000;
             }
-            if(block == MachineRegistry.GILDED_FLUID_TANK) {
+            if(block == MachineRegistry.FLUID_TANKS.getGilded()) {
                 capacity = 64000;
             }
-            if(block == MachineRegistry.VYSTERIUM_FLUID_TANK) {
+            if(block == MachineRegistry.FLUID_TANKS.getVysterium()) {
                 capacity = 256000;
             }
-            if(block == MachineRegistry.NEPTUNIUM_FLUID_TANK) {
+            if(block == MachineRegistry.FLUID_TANKS.getNeptunium()) {
                 capacity = 1024000;
             }
             corrected = true;

@@ -24,20 +24,20 @@ public class MechanixClient implements ClientModInitializer {
 
 
         ScreenRegistry.register(MachineRegistry.ENERGY_CELL_SCREEN_HANDLER, EnergyCellScreen::new);
-        ScreenRegistry.register(MachineRegistry.GENERATOR_SCREEN_HANDLER, GeneratorScreen::new);
-        ScreenRegistry.register(MachineRegistry.POWERED_FURNACE_SCREEN_HANDLER, PoweredFurnaceScreen::new);
+        ScreenRegistry.register(MachineRegistry.GENERATOR.getHandlerType(), GeneratorScreen::new);
+        ScreenRegistry.register(MachineRegistry.POWERED_FURNACE.getHandlerType(), PoweredFurnaceScreen::new);
         ScreenRegistry.register(MachineRegistry.FLUID_TANK_SCREEN_HANDLER, FluidTankScreen::new);
 
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.GILDED_FLUID_TANK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.VYSTERIUM_FLUID_TANK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.NEPTUNIUM_FLUID_TANK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getStandard(), RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getGilded(), RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getVysterium(), RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getNeptunium(), RenderLayer.getCutout());
 
 
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.GILDED_FLUID_PIPE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.VYSTERIUM_FLUID_PIPE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.NEPTUNIUM_FLUID_PIPE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getStandard(), RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getGilded(), RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getVysterium(), RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getNeptunium(), RenderLayer.getCutout());
 
 
     }

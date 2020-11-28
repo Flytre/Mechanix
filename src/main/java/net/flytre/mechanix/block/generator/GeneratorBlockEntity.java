@@ -32,7 +32,7 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
 
 
     public GeneratorBlockEntity() {
-        super(MachineRegistry.GENERATOR_ENTITY);
+        super(MachineRegistry.GENERATOR.getEntityType());
 
         setMaxEnergy(25000);
         setMaxTransferRate(20);

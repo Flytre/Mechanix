@@ -30,7 +30,7 @@ public class PoweredFurnaceScreenHandler extends EnergyScreenHandler {
     }
 
     public PoweredFurnaceScreenHandler(int syncId, PlayerInventory playerInventory, PoweredFurnaceBlockEntity entity, PropertyDelegate propertyDelegate) {
-        super(MachineRegistry.POWERED_FURNACE_SCREEN_HANDLER,syncId,playerInventory,entity,propertyDelegate);
+        super(MachineRegistry.POWERED_FURNACE.getHandlerType(), syncId,playerInventory,entity,propertyDelegate);
 
         this.pos = BlockPos.ORIGIN;
         this.addSlot(new Slot(entity, 0, 61, 36));

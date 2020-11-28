@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 public class Formatter {
 
+    private static final String[] PREFIX_VALUES = new String[]{"","k","M","G","T","P"};
+
 
     public static int hashToInt(HashMap<Direction, Boolean> hash) {
         boolean[] array = new boolean[]{
@@ -66,15 +68,15 @@ public class Formatter {
 
 
     public static String formatNumber(double num, String suffix) {
-        if(num <= 999)
-            return String.format("%.1f", num) + suffix;
-        if(num <= 999999)
-            return String.format("%.1f", num/1000) + "k" + suffix;
-        if(num <= 999999999)
-            return String.format("%.1f", num/1000000) + "M" + suffix;
-        else
-            return String.format("%.1f", num/1000000000) + "G" + suffix;
+        int suffixIndex = 0;
+        while(num >= 1000.0) {
+            suffixIndex++;
+            num /= 1000.0;
+        }
+        if(suffix.equals("J"))
+            suffixIndex++;
 
+        return String.format("%.1f", num) + PREFIX_VALUES[suffixIndex] + suffix;
 
     }
 }

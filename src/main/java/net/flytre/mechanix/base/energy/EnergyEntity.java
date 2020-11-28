@@ -234,13 +234,13 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                         } else {
                             //cable transfer rates:
                             Block cable = world.getBlockState(currentPos.offset(d)).getBlock();
-                            if(cable == MachineRegistry.CABLE)
+                            if(cable == MachineRegistry.CABLES.getStandard())
                                 maxAmount = Math.min(maxAmount,25);
-                            if(cable == MachineRegistry.GILDED_CABLE)
+                            if(cable == MachineRegistry.CABLES.getGilded())
                                 maxAmount = Math.min(maxAmount,100);
-                            if(cable == MachineRegistry.VYSTERIUM_CABLE)
+                            if(cable == MachineRegistry.CABLES.getVysterium())
                                 maxAmount = Math.min(maxAmount,300);
-                            if(cable == MachineRegistry.NEPTUNIUM_CABLE)
+                            if(cable == MachineRegistry.CABLES.getNeptunium())
                                 maxAmount = Math.min(maxAmount,1000);
                         }
                         to_visit.add(new CableResult(currentPos.offset(d),maxAmount));

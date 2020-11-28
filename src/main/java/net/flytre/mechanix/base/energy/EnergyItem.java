@@ -29,7 +29,7 @@ public class EnergyItem extends BlockItem {
             tooltip.add(line);
 
             line = new TranslatableText("tooltip.mechanix.transfer_rate").append(
-                    Text.of(" " + Formatter.formatNumber(bet.getDouble("transferRate"),"J")));
+                    Text.of(" " + Formatter.formatNumber(bet.getDouble("transferRate"),"J") + "/tick"));
             tooltip.add(line);
 
         }
