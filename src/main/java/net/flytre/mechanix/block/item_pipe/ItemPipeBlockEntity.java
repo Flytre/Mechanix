@@ -38,19 +38,6 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         roundRobinMode = false;
     }
 
-    public PipeSide getSide(Direction d) {
-        if(world == null)
-            return null;
-        BlockState state = world.getBlockState(pos);
-        if(!(state.getBlock() instanceof ItemPipe))
-            return null;
-        return state.get(ItemPipe.getProperty(d));
-    }
-
-    public boolean hasServo(Direction d) {
-        return getSide(d) == PipeSide.SERVO;
-    }
-
     public static ArrayList<Direction> transferableDirections(BlockPos startingPos, World world, ItemStack stack) {
         ArrayList<Direction> result = new ArrayList<>();
 
@@ -62,21 +49,23 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         for (Direction direction : Direction.values()) {
 
             if (me instanceof ItemPipeBlockEntity) {
-                if ((((ItemPipeBlockEntity) me).getSide(direction) == PipeSide.CONNECTED))
+                if ((((ItemPipeBlockEntity) me).getSide(direction) == PipeSide.CONNECTED) &&
+                        world.getBlockEntity(startingPos.offset(direction)) instanceof ItemPipeBlockEntity) {
                     result.add(direction);
-                continue;
+                    continue;
+                }
             }
             BlockPos pos = startingPos.offset(direction);
             BlockEntity entity = world.getBlockEntity(pos);
 
 
-            if (entity instanceof  Inventory) {
+            if (entity instanceof Inventory) {
                 Inventory dInv = (Inventory) entity;
                 int[] slots = getAvailableSlots(dInv, direction.getOpposite()).toArray();
                 for (int i : slots) {
                     ItemStack currentStack = dInv.getStack(i);
                     if (canInsert(dInv, stack, i, direction.getOpposite())) {
-                        if (currentStack.isEmpty() || (canMergeItems(currentStack,stack) && currentStack.getCount() < currentStack.getMaxCount()) ) {
+                        if (currentStack.isEmpty() || (canMergeItems(currentStack, stack) && currentStack.getCount() < currentStack.getMaxCount())) {
                             result.add(direction);
                             break;
                         }
@@ -109,7 +98,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
     }
 
     private static boolean canExtract(Inventory inv, ItemStack stack, int slot, Direction facing) {
-        return !(inv instanceof SidedInventory) || ((SidedInventory)inv).canExtract(slot, stack, facing);
+        return !(inv instanceof SidedInventory) || ((SidedInventory) inv).canExtract(slot, stack, facing);
     }
 
     private static boolean isInventoryEmpty(Inventory inv, Direction facing) {
@@ -151,6 +140,19 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         }
 
         return inventory;
+    }
+
+    public PipeSide getSide(Direction d) {
+        if (world == null)
+            return null;
+        BlockState state = world.getBlockState(pos);
+        if (!(state.getBlock() instanceof ItemPipe))
+            return null;
+        return state.get(ItemPipe.getProperty(d));
+    }
+
+    public boolean hasServo(Direction d) {
+        return getSide(d) == PipeSide.SERVO;
     }
 
     @Override
@@ -217,7 +219,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
                 for (int i : arr) {
 
                     ItemStack stack = out.getStack(i);
-                    if(!canExtract(out,stack,i,opp))
+                    if (!canExtract(out, stack, i, opp))
                         continue;
 
                     if (stack.isEmpty())
@@ -226,14 +228,14 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
                     one.setCount(1);
 
                     PipeResult result;
-                    if(isRoundRobinMode()) {
+                    if (isRoundRobinMode()) {
                         ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d), false);
                         if (results.size() <= roundRobinIndex) {
                             roundRobinIndex = 0;
                         }
                         result = results.get(roundRobinIndex++);
                     } else {
-                        ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d),true);
+                        ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d), true);
                         result = results.size() == 0 ? null : results.get(0);
                     }
                     if (result != null) {
@@ -313,21 +315,21 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             BlockEntity entity = world.getBlockEntity(current);
             if (!current.equals(start) && entity instanceof Inventory) {
                 boolean bl = true;
-                for(PipeResult rr : result) {
+                for (PipeResult rr : result) {
                     if (rr.getDestination().equals(current)) {
                         bl = false;
                         break;
                     }
                 }
 
-                if(bl) {
+                if (bl) {
                     result.add(popped);
 
-                    if(one)
+                    if (one)
                         return result;
                 }
             }
-            if((entity instanceof ItemPipeBlockEntity)) {
+            if ((entity instanceof ItemPipeBlockEntity)) {
                 ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferableDirections(current, world, stack);
                 for (Direction d : neighbors) {
                     if (!visited.contains(current.offset(d))) {
