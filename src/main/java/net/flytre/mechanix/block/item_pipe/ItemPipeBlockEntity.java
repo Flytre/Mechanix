@@ -227,13 +227,14 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
 
                     PipeResult result;
                     if(isRoundRobinMode()) {
-                        ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d));
+                        ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d), false);
                         if (results.size() <= roundRobinIndex) {
                             roundRobinIndex = 0;
                         }
                         result = results.get(roundRobinIndex++);
                     } else {
-                        result = findDestination(one, this.pos.offset(d));
+                        ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d),true);
+                        result = results.size() == 0 ? null : results.get(0);
                     }
                     if (result != null) {
                         items.add(result);
@@ -295,7 +296,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
     }
 
 
-    public ArrayList<PipeResult> findDestinations(ItemStack stack, BlockPos start) {
+    public ArrayList<PipeResult> findDestinations(ItemStack stack, BlockPos start, boolean one) {
 
         ArrayList<PipeResult> result = new ArrayList<>();
         if (world == null)
@@ -311,14 +312,29 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             ArrayList<BlockPos> path = popped.getPath();
             BlockEntity entity = world.getBlockEntity(current);
             if (!current.equals(start) && entity instanceof Inventory) {
-                result.add(popped);
+                boolean bl = true;
+                for(PipeResult rr : result) {
+                    if (rr.getDestination().equals(current)) {
+                        bl = false;
+                        break;
+                    }
+                }
+
+                if(bl) {
+                    result.add(popped);
+
+                    if(one)
+                        return result;
+                }
             }
-            ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferableDirections(current, world, stack);
-            for (Direction d : neighbors) {
-                if (!visited.contains(current.offset(d))) {
-                    ArrayList<BlockPos> newPath = new ArrayList<>(path);
-                    newPath.add(current);
-                    to_visit.add(new PipeResult(current.offset(d), newPath, stack, d.getOpposite()));
+            if((entity instanceof ItemPipeBlockEntity)) {
+                ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferableDirections(current, world, stack);
+                for (Direction d : neighbors) {
+                    if (!visited.contains(current.offset(d))) {
+                        ArrayList<BlockPos> newPath = new ArrayList<>(path);
+                        newPath.add(current);
+                        to_visit.add(new PipeResult(current.offset(d), newPath, stack, d.getOpposite()));
+                    }
                 }
             }
             visited.add(current);
@@ -326,36 +342,5 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
 
         return result;
     }
-
-    public @Nullable PipeResult findDestination(ItemStack stack, BlockPos start) {
-        if (world == null)
-            return null;
-
-        Deque<PipeResult> to_visit = new LinkedList<>();
-        Set<BlockPos> visited = new HashSet<>();
-        to_visit.add(new PipeResult(this.getPos(), new ArrayList<>(), stack, Direction.NORTH));
-
-        while (to_visit.size() > 0) {
-            PipeResult popped = to_visit.pop();
-            BlockPos current = popped.getDestination();
-            ArrayList<BlockPos> path = popped.getPath();
-            BlockEntity entity = world.getBlockEntity(current);
-            if (!current.equals(start) && entity instanceof Inventory) {
-                return popped;
-            }
-            ArrayList<Direction> neighbors = ItemPipeBlockEntity.transferableDirections(current, world, stack);
-            for (Direction d : neighbors) {
-                if (!visited.contains(current.offset(d))) {
-                    ArrayList<BlockPos> newPath = new ArrayList<>(path);
-                    newPath.add(current);
-                    to_visit.add(new PipeResult(current.offset(d), newPath, stack, d.getOpposite()));
-                }
-            }
-            visited.add(current);
-        }
-
-        return null;
-    }
-
 
 }

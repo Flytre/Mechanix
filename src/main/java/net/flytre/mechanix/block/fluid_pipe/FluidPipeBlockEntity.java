@@ -262,24 +262,27 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
             if (!current.equals(start) && entity instanceof FluidInventory) {
                 return popped;
             }
-            ArrayList<Direction> neighbors = FluidPipeBlockEntity.transferableDirections(current, world, stack);
-            for (Direction d : neighbors) {
-                if (!visited.contains(current.offset(d))) {
-                    ArrayList<BlockPos> newPath = new ArrayList<>(popped.getPath());
-                    newPath.add(current);
 
-                    int amount = (int)Math.min(stack.getAmount(),popped.getAmount());
-                    BlockState state = world.getBlockState(current.offset(d));
-                    if(state.getBlock() == MachineRegistry.FLUID_PIPE)
-                        amount = Math.min(amount,50);
-                    if(state.getBlock() == MachineRegistry.GILDED_FLUID_PIPE)
-                        amount = Math.min(amount,150);
-                    if(state.getBlock() == MachineRegistry.VYSTERIUM_FLUID_PIPE)
-                        amount = Math.min(amount,500);
-                    if(state.getBlock() == MachineRegistry.NEPTUNIUM_FLUID_PIPE)
-                        amount = Math.min(amount,1500);
+            if(entity instanceof FluidPipeBlockEntity) {
+                ArrayList<Direction> neighbors = FluidPipeBlockEntity.transferableDirections(current, world, stack);
+                for (Direction d : neighbors) {
+                    if (!visited.contains(current.offset(d))) {
+                        ArrayList<BlockPos> newPath = new ArrayList<>(popped.getPath());
+                        newPath.add(current);
 
-                    to_visit.add(new FluidPipeResult(current.offset(d), amount, d.getOpposite(), newPath));
+                        int amount = (int) Math.min(stack.getAmount(), popped.getAmount());
+                        BlockState state = world.getBlockState(current.offset(d));
+                        if (state.getBlock() == MachineRegistry.FLUID_PIPE)
+                            amount = Math.min(amount, 50);
+                        if (state.getBlock() == MachineRegistry.GILDED_FLUID_PIPE)
+                            amount = Math.min(amount, 150);
+                        if (state.getBlock() == MachineRegistry.VYSTERIUM_FLUID_PIPE)
+                            amount = Math.min(amount, 500);
+                        if (state.getBlock() == MachineRegistry.NEPTUNIUM_FLUID_PIPE)
+                            amount = Math.min(amount, 1500);
+
+                        to_visit.add(new FluidPipeResult(current.offset(d), amount, d.getOpposite(), newPath));
+                    }
                 }
             }
             visited.add(current);
