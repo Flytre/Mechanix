@@ -154,10 +154,15 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
                         world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
                     } else if (!(current == PipeSide.WRENCHED)) {
                         world.setBlockState(pos, state.with(getProperty(side), PipeSide.WRENCHED));
-                        if(state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO)
+                        if(state1.getBlock() instanceof FluidPipe && state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO)
                             world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
                     } else {
                         world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
+                        Block block = state1.getBlock();
+                        BlockEntity entity = world.getBlockEntity(pos.offset(side));
+                        if(isConnectable(block,entity))
+                            world.setBlockState(pos, state.with(getProperty(side), PipeSide.CONNECTED));
+
                     }
                 }
             }

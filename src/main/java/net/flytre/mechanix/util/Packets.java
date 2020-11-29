@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.flytre.mechanix.base.energy.EnergyEntity;
 import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
+import net.flytre.mechanix.block.item_pipe.FilterInventory;
+import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +17,8 @@ import java.util.HashMap;
 public class Packets {
     public static final Identifier IO_CHANGE = new Identifier("mechanix", "io_change");
     public static final Identifier FLUID_IO_CHANGE = new Identifier("mechanix", "fluid_io_change");
+    public static final Identifier FILTER_TYPE = new Identifier("mechanix", "filter_type");
+    public static final Identifier PIPE_MODE = new Identifier("mechanix", "pipe_mode");
 
 
     public static void serverPacketRecieved() {
@@ -92,6 +96,34 @@ public class Packets {
                 entity.markDirty();
             });
         });
+
+        ServerSidePacketRegistry.INSTANCE.register(FILTER_TYPE, (packetContext, attachedData) -> {
+            BlockPos pos = attachedData.readBlockPos();
+            int newMode = attachedData.readInt();
+            World world = packetContext.getPlayer().getEntityWorld();
+            packetContext.getTaskQueue().execute(() -> {
+                BlockEntity entity = world.getBlockEntity(pos);
+                if (!(entity instanceof ItemPipeBlockEntity))
+                    return;
+                ItemPipeBlockEntity ip = (ItemPipeBlockEntity)entity;
+                FilterInventory iv = ip.getFilter();
+                iv.setFilterType(newMode);
+            });
+        });
+
+        ServerSidePacketRegistry.INSTANCE.register(PIPE_MODE, (packetContext, attachedData) -> {
+            BlockPos pos = attachedData.readBlockPos();
+            int newMode = attachedData.readInt();
+            World world = packetContext.getPlayer().getEntityWorld();
+            packetContext.getTaskQueue().execute(() -> {
+                BlockEntity entity = world.getBlockEntity(pos);
+                if (!(entity instanceof ItemPipeBlockEntity))
+                    return;
+                ItemPipeBlockEntity ip = (ItemPipeBlockEntity)entity;
+                ip.setRoundRobinMode(newMode != 0);
+            });
+        });
+
 
 
     }

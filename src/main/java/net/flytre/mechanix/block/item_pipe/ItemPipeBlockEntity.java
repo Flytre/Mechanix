@@ -1,5 +1,7 @@
 package net.flytre.mechanix.block.item_pipe;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -8,12 +10,21 @@ import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -24,18 +35,38 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
+public class ItemPipeBlockEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 
     private final Queue<PipeResult> items;
     private int roundRobinIndex;
     private boolean roundRobinMode;
     private int cooldown;
+    private FilterInventory filter;
+    private final PropertyDelegate properties;
 
     public ItemPipeBlockEntity() {
         super(MachineRegistry.ITEM_PIPE_ENTITY);
         items = new LinkedList<>();
         roundRobinIndex = 0;
         roundRobinMode = false;
+        properties = new ArrayPropertyDelegate(3);
+        filter = new FilterInventory(new CompoundTag(),0);
+    }
+
+    public PropertyDelegate getProperties() {
+        return properties;
+    }
+
+    public void updateDelegate() {
+        properties.set(0, 1); //when this is 1 you know its synced
+        properties.set(1, this.filter.getFilterType());
+        properties.set(2, this.isRoundRobinMode() ? 1 : 0);
+    }
+
+
+
+    public FilterInventory getFilter() {
+        return filter;
     }
 
     public static ArrayList<Direction> transferableDirections(BlockPos startingPos, World world, ItemStack stack) {
@@ -165,6 +196,8 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             list.add(piped.toTag(new CompoundTag()));
         tag.put("queue", list);
 
+        tag.put("filter",filter.toTag());
+
         return super.toTag(tag);
     }
 
@@ -187,6 +220,9 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
             items.add(result);
         }
         super.fromTag(state, tag);
+
+        CompoundTag filter = tag.getCompound("filter");
+        this.filter = new FilterInventory(filter,0);
     }
 
     @Override
@@ -200,6 +236,9 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
 
 //        //Remove from queue
         boolean succeeded = transferItem();
+
+        updateDelegate();
+        sync();
 
         if (cooldown > 0)
             cooldown--;
@@ -219,7 +258,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
                 for (int i : arr) {
 
                     ItemStack stack = out.getStack(i);
-                    if (!canExtract(out, stack, i, opp))
+                    if (!canExtract(out, stack, i, opp) || (!filter.isEmpty() && !filter.passFilterTest(stack)))
                         continue;
 
                     if (stack.isEmpty())
@@ -345,4 +384,28 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable {
         return result;
     }
 
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
+        packetByteBuf.writeBlockPos(pos);
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return new TranslatableText("block.mechanix.item_pipe");
+    }
+
+    @Override
+    public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        return new ItemPipeScreenHandler(syncId,inv,this,getProperties());
+    }
+
+    @Override
+    public void fromClientTag(CompoundTag compoundTag) {
+        this.fromTag(MachineRegistry.ITEM_PIPE.getDefaultState(),compoundTag);
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag compoundTag) {
+        return this.toTag(compoundTag);
+    }
 }

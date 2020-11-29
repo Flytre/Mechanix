@@ -18,6 +18,7 @@ import net.flytre.mechanix.block.generator.GeneratorBlockEntity;
 import net.flytre.mechanix.block.generator.GeneratorScreenHandler;
 import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
+import net.flytre.mechanix.block.item_pipe.ItemPipeScreenHandler;
 import net.flytre.mechanix.block.tank.FluidTank;
 import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
 import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
@@ -43,6 +44,7 @@ public class MachineRegistry {
 
     public static final Block ITEM_PIPE = new ItemPipe(FabricBlockSettings.of(Material.METAL).hardness(0.9f));
     public static BlockEntityType<ItemPipeBlockEntity> ITEM_PIPE_ENTITY;
+    public static ScreenHandlerType<ItemPipeScreenHandler> ITEM_PIPE_SCREEN_HANDLER;
 
     public static MachineList<FluidPipe> FLUID_PIPES;
     public static BlockEntityType<FluidPipeBlockEntity> FLUID_PIPE_ENTITY;
@@ -70,6 +72,7 @@ public class MachineRegistry {
 
         registerMachine(ITEM_PIPE,"item_pipe", (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)));
         ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
+        ITEM_PIPE_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:item_pipe"), ItemPipeScreenHandler::new);
 
 
         FLUID_TANKS = registerTier(

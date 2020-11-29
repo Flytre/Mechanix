@@ -9,6 +9,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.ActionResult;
@@ -104,11 +105,13 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
 
         Item item = player.getStackInHand(hand).getItem();
         if (world.isClient) {
-            return item == ItemRegistery.SERVO || item == ItemRegistery.WRENCH ? ActionResult.SUCCESS : ActionResult.PASS;
+            return ActionResult.SUCCESS;
         } else {
 
-            if (!(item == ItemRegistery.SERVO) && !(item == ItemRegistery.WRENCH))
-                return ActionResult.PASS;
+            if (!(item == ItemRegistery.SERVO) && !(item == ItemRegistery.WRENCH)) {
+                this.openScreen(world, pos, player);
+                return ActionResult.CONSUME;
+            }
 
             Direction side = hit.getSide();
             PipeSide current = state.get(getProperty(side));
@@ -129,14 +132,19 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
                     world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
                 } else {
                     BlockState state1 = world.getBlockState(pos.offset(side));
-                    if(state1.getBlock() instanceof ItemPipe && state.get(getProperty(side)) == PipeSide.NONE && state1.get(getProperty(side.getOpposite())) == PipeSide.WRENCHED) {
-                        world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
+                    if (state1.getBlock() instanceof ItemPipe && state.get(getProperty(side)) == PipeSide.NONE && state1.get(getProperty(side.getOpposite())) == PipeSide.WRENCHED) {
+                        world.setBlockState(pos.offset(side), state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
                     } else if (!(current == PipeSide.WRENCHED)) {
                         world.setBlockState(pos, state.with(getProperty(side), PipeSide.WRENCHED));
-                        if(state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO)
-                            world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
+                        if (state1.getBlock() instanceof ItemPipe && state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO)
+                            world.setBlockState(pos.offset(side), state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
                     } else {
                         world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
+                        Block block = state1.getBlock();
+                        BlockEntity entity = world.getBlockEntity(pos.offset(side));
+                        if(isConnectable(block,entity))
+                            world.setBlockState(pos, state.with(getProperty(side), PipeSide.CONNECTED));
+
                     }
                 }
             }
@@ -241,5 +249,21 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockView world) {
         return new ItemPipeBlockEntity();
+    }
+
+    private void openScreen(World world, BlockPos pos, PlayerEntity player) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof ItemPipeBlockEntity) {
+            boolean bl = false;
+            BlockState state = world.getBlockState(pos);
+            for (Direction dir : Direction.values()) {
+                if (state.get(getProperty(dir)) == PipeSide.SERVO)
+                    bl = true;
+            }
+
+            if (bl)
+                player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
+        }
+
     }
 }

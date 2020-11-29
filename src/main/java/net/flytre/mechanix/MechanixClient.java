@@ -9,6 +9,7 @@ import net.flytre.mechanix.block.cell.EnergyCellScreen;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeRenderer;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceScreen;
 import net.flytre.mechanix.block.generator.GeneratorScreen;
+import net.flytre.mechanix.block.item_pipe.ItemPipeScreen;
 import net.flytre.mechanix.block.tank.FluidTankRenderer;
 import net.flytre.mechanix.block.tank.FluidTankScreen;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -27,6 +28,8 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.GENERATOR.getHandlerType(), GeneratorScreen::new);
         ScreenRegistry.register(MachineRegistry.POWERED_FURNACE.getHandlerType(), PoweredFurnaceScreen::new);
         ScreenRegistry.register(MachineRegistry.FLUID_TANK_SCREEN_HANDLER, FluidTankScreen::new);
+        ScreenRegistry.register(MachineRegistry.ITEM_PIPE_SCREEN_HANDLER, ItemPipeScreen::new);
+
 
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getStandard(), RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getGilded(), RenderLayer.getCutout());

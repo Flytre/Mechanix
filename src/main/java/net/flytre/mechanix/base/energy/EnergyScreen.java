@@ -5,7 +5,7 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.flytre.mechanix.base.ToggleButton;
+import net.flytre.mechanix.base.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;

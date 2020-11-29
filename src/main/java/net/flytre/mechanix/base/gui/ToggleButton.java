@@ -1,4 +1,4 @@
-package net.flytre.mechanix.base;
+package net.flytre.mechanix.base.gui;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -9,16 +9,24 @@ import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.Collections;
+
 public class ToggleButton extends ButtonWidget {
 
     private final int textureWidth;
     private final int textureHeight;
     private final Identifier texture;
     private int frame;
-    private final char id;
+    private final String id;
+    private Text[] tooltips;
+    private ButtonTooltipRenderer tooltipRenderer;
 
 
     public ToggleButton(int x, int y, int width, int height, int state, Identifier texture, PressAction onPress, char id) {
+        this(x,y,width,height,state,texture,onPress,id + "");
+    }
+
+    public ToggleButton(int x, int y, int width, int height, int state, Identifier texture, PressAction onPress, String id) {
         super(x, y, width, height, LiteralText.EMPTY, onPress);
         this.textureHeight = height * 4;
         this.textureWidth = width;
@@ -33,9 +41,35 @@ public class ToggleButton extends ButtonWidget {
     }
 
 
+    public void setTooltips(Text frame1, Text frame2) {
+        this.tooltips = new Text[]{frame1,frame2};
+    }
+
+    public ButtonTooltipRenderer getTooltipRenderer() {
+        return tooltipRenderer;
+    }
+
+    public void setTooltipRenderer(ButtonTooltipRenderer tooltipRenderer) {
+        this.tooltipRenderer = tooltipRenderer;
+    }
+
+
     public void toggleState() {
         this.frame += 2;
         this.frame %= 4;
+    }
+
+    @Override
+    public void renderToolTip(MatrixStack matrices, int mouseX, int mouseY) {
+
+        if(tooltips == null)
+            return;
+
+        if (getState() == 0)
+            getTooltipRenderer().draw(matrices, Collections.singletonList(tooltips[0]),mouseX,mouseY);
+        else
+            getTooltipRenderer().draw(matrices, Collections.singletonList(tooltips[1]),mouseX,mouseY);
+
     }
 
     public int getState() {
