@@ -1,0 +1,7 @@
+{
+	"textures": {
+		"texture": "mechanix:block/machine/top_in",
+		"particle": "mechanix:block/machine/top_in"
+	},
+	"parent" : "mechanix:block/machine/top_out"
+}

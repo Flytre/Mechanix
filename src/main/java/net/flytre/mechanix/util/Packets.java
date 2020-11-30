@@ -34,7 +34,7 @@ public class Packets {
                     return;
                 EnergyEntity cell = (EnergyEntity) entity;
                 ((EnergyEntity) entity).sync();
-                HashMap<Direction,Boolean> map = panelMode == 0 ? cell.energyMode : cell.itemMode;
+                HashMap<Direction,Boolean> map = panelMode == 0 ? cell.energyMode : cell.ioMode;
                 switch (side) {
                     case 0:
                         map.put(Direction.NORTH, state == 0);

@@ -102,11 +102,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
     }
 
     private static boolean isInventoryEmpty(FluidInventory inv, Direction facing) {
-        return getAvailableSlots(inv, facing).allMatch((i) -> inv.getStack(i).isEmpty());
+        return getAvailableSlots(inv, facing).allMatch((i) -> inv.getFluidStack(i).isEmpty());
     }
 
     private static IntStream getAvailableSlots(FluidInventory inventory, Direction side) {
-        return IntStream.of(inventory.getAvailableSlots(side));
+        return IntStream.of(inventory.getAvailableFluidSlots(side));
     }
 
     @Nullable
@@ -194,7 +194,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
                     int[] arr = getAvailableSlots(out, opp).toArray();
                     for (int i : arr) {
 
-                        FluidStack stack = out.getStack(i);
+                        FluidStack stack = out.getFluidStack(i);
                         if (!canExtract(out, stack, i, opp) || stack.isEmpty())
                             continue;
 

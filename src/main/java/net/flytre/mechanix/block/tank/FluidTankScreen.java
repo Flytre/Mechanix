@@ -5,12 +5,18 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.flytre.mechanix.base.Formatter;
+import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.base.fluid.FluidMeterWidget;
 import net.flytre.mechanix.base.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -77,8 +83,19 @@ public class FluidTankScreen extends HandledScreen<FluidTankScreenHandler> {
         //behind
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16,  handler.fluidButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
-        meter = new FluidMeterWidget(x + 73, y + 15,30,60,handler.getDelegate(),handler.getPos());
+        meter = new FluidMeterWidget(x + 73, y + 15,30,60,handler.getDelegate(),handler.getPos(), 0,
+                () -> Formatter.unsplit(new int[]{handler.getDelegate().get(1),handler.getDelegate().get(2)}),
+        () ->  Formatter.unsplit(new int[]{handler.getDelegate().get(3),handler.getDelegate().get(4)}),
+                this::getFluid);
         this.addButton(meter);
+    }
+
+
+    private Fluid getFluid(int stackIndex) {
+        BlockEntity entity = MinecraftClient.getInstance().world.getBlockEntity(handler.getPos());
+        if(!(entity instanceof FluidInventory))
+            return Fluids.EMPTY;
+        return ((FluidInventory) entity).getFluidStack(stackIndex).getFluid();
     }
 
 

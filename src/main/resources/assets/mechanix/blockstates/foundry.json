@@ -1,0 +1,466 @@
+{
+    "multipart": [
+        {
+            "when": {
+                "activated": "false",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry"
+            }
+        },
+        {
+            "when": {
+                "activated": "true",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry_activated"
+            }
+        },
+        {
+            "when": {
+                "east": "true",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "west": "true",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "up": "true",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_out"
+            }
+        },
+        {
+            "when": {
+                "down": "true",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_out"
+            }
+        },
+        {
+            "when": {
+                "east": "false",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "south": "false",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "west": "false",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "up": "false",
+                "facing" : "north"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_in"
+            }
+        },
+        {
+            "when": {
+                "down": "false",
+                "facing" : "north"
+
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_in"
+            }
+        },
+        {
+            "when": {
+                "activated": "false",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry", "y" : 90
+            }
+        },
+        {
+            "when": {
+                "activated": "true",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry_activated", "y" : 90
+            }
+        },
+        {
+            "when": {
+                "east": "true",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "west": "true",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 0
+            }
+        },
+        {
+            "when": {
+                "up": "true",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_out",  "y" : 90
+            }
+        },
+        {
+            "when": {
+                "down": "true",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_out",  "y" : 90
+            }
+        },
+        {
+            "when": {
+                "east": "false",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "south": "false",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "west": "false",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 0
+            }
+        },
+        {
+            "when": {
+                "up": "false",
+                "facing" : "east"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_in",   "y" : 90
+            }
+        },
+        {
+            "when": {
+                "down": "false",
+                "facing" : "east"
+
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_in",  "y" : 90
+            }
+        },
+
+        {
+            "when": {
+                "activated": "false",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "activated": "true",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry_activated", "y" : 180
+            }
+        },
+        {
+            "when": {
+                "east": "true",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 0
+            }
+        },
+        {
+            "when": {
+                "west": "true",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "up": "true",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_out", "y" : 180
+            }
+        },
+        {
+            "when": {
+                "down": "true",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_out", "y" : 180
+            }
+        },
+        {
+            "when": {
+                "east": "false",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "south": "false",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 0
+            }
+        },
+        {
+            "when": {
+                "west": "false",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "up": "false",
+                "facing" : "south"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_in", "y" : 180
+            }
+        },
+        {
+            "when": {
+                "down": "false",
+                "facing" : "south"
+
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_in","y" : 180
+            }
+        },
+        {
+            "when": {
+                "activated": "false",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry", "y" : 270
+            }
+        },
+        {
+            "when": {
+                "activated": "true",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/foundry_activated", "y" : 270
+            }
+        },
+        {
+            "when": {
+                "east": "true",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 0
+            }
+        },
+        {
+            "when": {
+                "south": "true",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "west": "true",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_out",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "up": "true",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_out", "y" : 270
+            }
+        },
+        {
+            "when": {
+                "down": "true",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_out", "y" : 270
+            }
+        },
+        {
+            "when": {
+                "east": "false",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 0
+            }
+        },
+        {
+            "when": {
+                "south": "false",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "west": "false",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/side_in",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "up": "false",
+                "facing" : "west"
+            },
+            "apply": {
+                "model": "mechanix:block/machine/top_in", "y" : 270
+            }
+        },
+        {
+            "when": {
+                "down": "false",
+                "facing" : "west"
+
+            },
+            "apply": {
+                "model": "mechanix:block/machine/bottom_in" ,"y" : 270
+            }
+        }
+    ]
+}

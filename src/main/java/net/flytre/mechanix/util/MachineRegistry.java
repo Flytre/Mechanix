@@ -10,15 +10,22 @@ import net.flytre.mechanix.block.cell.EnergyCellEntity;
 import net.flytre.mechanix.block.cell.EnergyCellScreenHandler;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipe;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeBlockEntity;
+import net.flytre.mechanix.block.foundry.FoundryBlock;
+import net.flytre.mechanix.block.foundry.FoundryBlockEntity;
+import net.flytre.mechanix.block.foundry.FoundryScreenHandler;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceBlock;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceBlockEntity;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceScreenHandler;
 import net.flytre.mechanix.block.generator.GeneratorBlock;
 import net.flytre.mechanix.block.generator.GeneratorBlockEntity;
 import net.flytre.mechanix.block.generator.GeneratorScreenHandler;
+import net.flytre.mechanix.block.hydrator.HydratorBlock;
+import net.flytre.mechanix.block.hydrator.HydratorBlockEntity;
+import net.flytre.mechanix.block.hydrator.HydratorScreenHandler;
 import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreenHandler;
+import net.flytre.mechanix.block.liquifier.LiquifierBlock;
 import net.flytre.mechanix.block.tank.FluidTank;
 import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
 import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
@@ -58,9 +65,12 @@ public class MachineRegistry {
     public static BlockEntityType<EnergyCellEntity> ENERGY_CELL_ENTITY;
     public static ScreenHandlerType<EnergyCellScreenHandler> ENERGY_CELL_SCREEN_HANDLER;
 
-    public static MachineType<GeneratorBlock,GeneratorBlockEntity,GeneratorScreenHandler> GENERATOR;
-    public static MachineType<PoweredFurnaceBlock,PoweredFurnaceBlockEntity,PoweredFurnaceScreenHandler> POWERED_FURNACE;
+    public static MachineType<GeneratorBlock, GeneratorBlockEntity, GeneratorScreenHandler> GENERATOR;
+    public static MachineType<PoweredFurnaceBlock, PoweredFurnaceBlockEntity, PoweredFurnaceScreenHandler> POWERED_FURNACE;
+    public static MachineType<HydratorBlock, HydratorBlockEntity, HydratorScreenHandler> HYDRATOR;
+    public static MachineType<FoundryBlock, FoundryBlockEntity, FoundryScreenHandler> FOUNDRY;
 
+    public static Block LIQUIFIER = new LiquifierBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f));
 
     public static void init() {
 
@@ -70,7 +80,7 @@ public class MachineRegistry {
                 (cable) -> new BlockItem(cable, new Item.Settings().group(MiscRegistry.TAB))
         );
 
-        registerMachine(ITEM_PIPE,"item_pipe", (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)));
+        registerMachine(ITEM_PIPE, "item_pipe", (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)));
         ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
         ITEM_PIPE_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:item_pipe"), ItemPipeScreenHandler::new);
 
@@ -81,7 +91,7 @@ public class MachineRegistry {
                 (tank) -> new BlockItem(tank, new Item.Settings().group(MiscRegistry.TAB)) {
                     @Override
                     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-                        FluidInventory.toToolTip(stack,tooltip);
+                        FluidInventory.toToolTip(stack, tooltip);
                         super.appendTooltip(stack, world, tooltip, context);
                     }
                 });
@@ -89,7 +99,7 @@ public class MachineRegistry {
         FLUID_TANK_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:tank"), FluidTankScreenHandler::new);
 
         FLUID_PIPES = registerTier(
-                () ->  new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f)),
+                () -> new FluidPipe(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(0.9f)),
                 "fluid_pipe",
                 (pipe) -> new BlockItem(pipe, new Item.Settings().group(MiscRegistry.TAB))
         );
@@ -98,7 +108,7 @@ public class MachineRegistry {
 
         ENERGY_CELLS = registerTier(
                 () -> new EnergyCell(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
-                        "energy_cell",
+                "energy_cell",
                 (cell) -> new EnergyItem(cell, new Item.Settings().group(MiscRegistry.TAB))
         );
         ENERGY_CELL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:energy_cell", BlockEntityType.Builder.create(EnergyCellEntity::new, ENERGY_CELLS.toArray(new EnergyCell[4])).build(null));
@@ -107,7 +117,7 @@ public class MachineRegistry {
 
         GENERATOR = new MachineType<>(
                 new GeneratorBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
-                        "generator",
+                "generator",
                 (block) -> new EnergyItem(block, new Item.Settings().group(MiscRegistry.TAB)),
                 GeneratorBlockEntity::new,
                 GeneratorScreenHandler::new);
@@ -118,17 +128,34 @@ public class MachineRegistry {
                 (block) -> new EnergyItem(block, new Item.Settings().group(MiscRegistry.TAB)),
                 PoweredFurnaceBlockEntity::new,
                 PoweredFurnaceScreenHandler::new);
+
+        HYDRATOR = new MachineType<>(
+                new HydratorBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "hydrator",
+                (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)),
+                HydratorBlockEntity::new,
+                HydratorScreenHandler::new);
+
+        FOUNDRY = new MachineType<>(
+                new FoundryBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "foundry",
+                (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)),
+                FoundryBlockEntity::new,
+                FoundryScreenHandler::new
+        );
+
+        registerMachine(LIQUIFIER,"liquifier", (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)));
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {
         MachineList<T> result = new MachineList<>();
 
-        String[] tiers = new String[]{"","gilded","vysterium","neptunium"};
+        String[] tiers = new String[]{"", "gilded", "vysterium", "neptunium"};
 
-        for(String tier : tiers) {
+        for (String tier : tiers) {
             T blk = maker.create();
             result.add(blk);
-            registerMachine(blk,tier + (tier.length() > 0 ? "_" : "") + id, creator);
+            registerMachine(blk, tier + (tier.length() > 0 ? "_" : "") + id, creator);
         }
         return result;
     }

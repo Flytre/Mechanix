@@ -26,7 +26,7 @@ import java.util.*;
 public abstract class EnergyEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 
     public HashMap<Direction, Boolean> energyMode; //true = output, false = input
-    public HashMap<Direction, Boolean> itemMode; //true = output, false = input
+    public HashMap<Direction, Boolean> ioMode; //true = output, false = input
     private final PropertyDelegate properties;
     private double energy;
     private double maxEnergy;
@@ -37,7 +37,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     public EnergyEntity(BlockEntityType<?> type) {
         super(type);
         energyMode = new HashMap<>();
-        itemMode = new HashMap<>();
+        ioMode = new HashMap<>();
         properties = new ArrayPropertyDelegate(12); //4 unused for subclasses
 
         //defaults - PLEASE OVERRIDE
@@ -45,7 +45,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         maxTransferRate = 300;
         panelMode = 0;
         setEnergyMode(true, true, true, true, true, true);
-        setItemMode(false, true, true, true, true, true);
+        setIOMode(false, true, true, true, true, true);
 
     }
 
@@ -61,7 +61,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
         properties.set(0, 1); //when this is 1 you know its synced
         properties.set(1, Formatter.hashToInt(this.energyMode));
-        properties.set(2, Formatter.hashToInt(this.itemMode));
+        properties.set(2, Formatter.hashToInt(this.ioMode));
         int[] en = Formatter.splitInt((int) getEnergy());
         int[] max = Formatter.splitInt((int) getMaxEnergy());
         properties.set(3, en[0]);
@@ -86,14 +86,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
 
         energyMode = Formatter.intToHash(tag.getInt("EnergyMode"));
-        itemMode = Formatter.intToHash(tag.getInt("ItemMode"));
+        ioMode = Formatter.intToHash(tag.getInt("IOMode"));
     }
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
 
         tag.putInt("EnergyMode", Formatter.hashToInt(energyMode));
-        tag.putInt("ItemMode", Formatter.hashToInt(itemMode));
+        tag.putInt("IOMode", Formatter.hashToInt(ioMode));
 
         tag.putDouble("energy", this.energy);
         tag.putDouble("maxEnergy", this.maxEnergy);
@@ -262,13 +262,13 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         energyMode.put(Direction.WEST, west);
     }
 
-    public void setItemMode(boolean up, boolean down, boolean north, boolean east, boolean south, boolean west) {
-        itemMode.put(Direction.UP, up);
-        itemMode.put(Direction.DOWN, down);
-        itemMode.put(Direction.NORTH, north);
-        itemMode.put(Direction.EAST, east);
-        itemMode.put(Direction.SOUTH, south);
-        itemMode.put(Direction.WEST, west);
+    public void setIOMode(boolean up, boolean down, boolean north, boolean east, boolean south, boolean west) {
+        ioMode.put(Direction.UP, up);
+        ioMode.put(Direction.DOWN, down);
+        ioMode.put(Direction.NORTH, north);
+        ioMode.put(Direction.EAST, east);
+        ioMode.put(Direction.SOUTH, south);
+        ioMode.put(Direction.WEST, west);
     }
 
 

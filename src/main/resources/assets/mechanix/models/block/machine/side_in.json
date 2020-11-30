@@ -1,0 +1,7 @@
+{
+	"textures": {
+		"texture": "mechanix:block/machine/side_in",
+		"particle": "mechanix:block/machine/side_in"
+	},
+	"parent" : "mechanix:block/machine/side_out"
+}

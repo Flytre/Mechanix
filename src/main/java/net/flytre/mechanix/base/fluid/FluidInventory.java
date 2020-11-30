@@ -28,7 +28,7 @@ public interface FluidInventory extends Clearable {
         return slot >= 0 && slot < stacks.size() && !stacks.get(slot).isEmpty() && amount > 0 ? stacks.get(slot).split(amount) : FluidStack.EMPTY;
     }
 
-    static FluidStack removeStack(List<FluidStack> stacks, int slot) {
+    static FluidStack removeFluidStack(List<FluidStack> stacks, int slot) {
         return slot >= 0 && slot < stacks.size() ? stacks.set(slot, FluidStack.EMPTY) : FluidStack.EMPTY;
     }
 
@@ -87,18 +87,18 @@ public interface FluidInventory extends Clearable {
         return getFluids().size();
     }
 
-    default boolean isEmpty() {
+    default boolean isFluidInventoryEmpty() {
         for (FluidStack stack : getFluids())
             if (!stack.isEmpty())
                 return false;
         return true;
     }
 
-    default FluidStack getStack(int slot) {
+    default FluidStack getFluidStack(int slot) {
         return getFluids().get(slot);
     }
 
-    default FluidStack removeStack(int slot, int amount) {
+    default FluidStack removeFluidStack(int slot, int amount) {
         FluidStack result = FluidInventory.splitStack(getFluids(), slot, amount);
         if (!result.isEmpty()) {
             markDirty();
@@ -106,15 +106,15 @@ public interface FluidInventory extends Clearable {
         return result;
     }
 
-    default FluidStack removeStack(int slot) {
-        return FluidInventory.removeStack(getFluids(), slot);
+    default FluidStack removeFluidStack(int slot) {
+        return FluidInventory.removeFluidStack(getFluids(), slot);
 
     }
 
     default int currentCapacity() {
         int x = 0;
         for (int i = 0; i < slots(); i++) {
-            FluidStack stack = getStack(i);
+            FluidStack stack = getFluidStack(i);
             x += stack.isEmpty() ? 0 : stack.getAmount();
         }
         return x;
@@ -141,21 +141,22 @@ public interface FluidInventory extends Clearable {
             return stack;
 
         for(int i = 0; i < slots(); i++) {
-            if(getStack(i) == FluidStack.EMPTY) {
+            if(!isValid(i,stack))
+                continue;
+            if(getFluidStack(i) == FluidStack.EMPTY) {
                 setStack(i,stack);
                 return FluidStack.EMPTY;
-            } else if(getStack(i).getFluid() == stack.getFluid()) {
-                getStack(i).increment(stack.getAmount());
+            } else if(getFluidStack(i).getFluid() == stack.getFluid()) {
+                getFluidStack(i).increment(stack.getAmount());
                 return FluidStack.EMPTY;
             }
         }
-
         return stack;
     }
 
     default boolean slotsFilled() {
         for(int i = 0; i < slots(); i++) {
-            if(getStack(i).isEmpty())
+            if(getFluidStack(i).isEmpty())
                 return false;
         }
         return true;
@@ -179,14 +180,14 @@ public interface FluidInventory extends Clearable {
     }
 
     default boolean isValid(int slot, FluidStack stack) {
-        return (getStack(slot) == FluidStack.EMPTY ||
-                (getStack(slot).getFluid() == stack.getFluid()  && stack.getAmount() + getStack(slot).getAmount() <= slotCapacity()))
+        return (getFluidStack(slot) == FluidStack.EMPTY ||
+                (getFluidStack(slot).getFluid() == stack.getFluid()  && stack.getAmount() + getFluidStack(slot).getAmount() <= slotCapacity()))
                 && currentCapacity() + stack.getAmount() <= capacity();
     }
 
     default int count(Fluid fluid) {
         for (int j = 0; j < this.slots(); ++j) {
-            FluidStack fluidStack = this.getStack(j);
+            FluidStack fluidStack = this.getFluidStack(j);
             if (fluidStack.getFluid().equals(fluid)) {
                 return fluidStack.getAmount();
             }
@@ -195,9 +196,9 @@ public interface FluidInventory extends Clearable {
         return 0;
     }
 
-    default boolean containsAny(Set<Fluid> fluids) {
+    default boolean containsAnyFluid(Set<Fluid> fluids) {
         for (int i = 0; i < this.slots(); ++i) {
-            FluidStack fluidStack = this.getStack(i);
+            FluidStack fluidStack = this.getFluidStack(i);
             if (fluids.contains(fluidStack.getFluid()) && fluidStack.getAmount() > 0) {
                 return true;
             }
@@ -206,7 +207,7 @@ public interface FluidInventory extends Clearable {
         return false;
     }
 
-    default int[] getAvailableSlots(Direction side)  {
+    default int[] getAvailableFluidSlots(Direction side)  {
         return IntStream.range(0,slots()).toArray();
     };
 

@@ -3,6 +3,7 @@ package net.flytre.mechanix.block.tank;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.flytre.mechanix.base.fluid.FluidStack;
+import net.flytre.mechanix.util.FluidRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -56,12 +57,16 @@ public class FluidTankRenderer extends BlockEntityRenderer<FluidTankBlockEntity>
     }
 
     public static int color2(World world, BlockPos pos, Fluid fluid) {
-        int c = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidColor(world, pos, fluid.getDefaultState());
+        FluidRenderHandler handler = FluidRenderHandlerRegistry.INSTANCE.get(fluid);
+        int c = handler == null ? -1 : handler.getFluidColor(world, pos, fluid.getDefaultState());
         if(fluid.isIn(FluidTags.WATER))
             c += 0xFF000000;
 
         if(fluid.isIn(FluidTags.LAVA))
             c += 0xFFbd5902;
+
+        if(fluid == FluidRegistry.STILL_PERLIUM || fluid == FluidRegistry.FLOWING_PERLIUM)
+            c += 0xFFff1fdf;
 
         return c;
     }

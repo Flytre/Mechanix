@@ -57,7 +57,7 @@ public abstract class EnergyScreen<T extends EnergyScreenHandler> extends Handle
         }
     }
 
-    private void onSynced() {
+    protected void onSynced() {
 
         int baseX = x + backgroundWidth;
         this.addButton(new ToggleButton(baseX + 24, this.y + 24, 16, 16, handler.getPanelMode() == 0 ? handler.energyButtonState(Direction.NORTH) : handler.itemButtonState(Direction.NORTH), BUTTONS, (buttonWidget) -> onClicked(0, (ToggleButton) buttonWidget), 'N'));

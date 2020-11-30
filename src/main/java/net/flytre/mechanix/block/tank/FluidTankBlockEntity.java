@@ -37,7 +37,7 @@ import java.util.HashMap;
 
 public class FluidTankBlockEntity extends BlockEntity implements Tickable, BlockEntityClientSerializable, FluidInventory, ExtendedScreenHandlerFactory {
 
-    public HashMap<Direction, Boolean> fluidMode; //true = output, false = input
+    public HashMap<Direction, Boolean> ioMode; //true = output, false = input
     private final PropertyDelegate properties;
     private final DefaultedList<FluidStack> inventory;
     private int capacity;
@@ -47,7 +47,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         super(MachineRegistry.FLUID_TANK_ENTITY);
 
         this.properties = new ArrayPropertyDelegate(7);
-        fluidMode = new HashMap<>();
+        ioMode = new HashMap<>();
         setFluidMode(false, true, true, true, true, true);
         inventory = DefaultedList.ofSize(1,FluidStack.EMPTY);
         capacity = 16000;
@@ -76,17 +76,17 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         properties.set(2, splitFluid[1]);
         properties.set(3, maxFluid[0]);
         properties.set(4, maxFluid[1]);
-        properties.set(5, Formatter.hashToInt(fluidMode));
+        properties.set(5, Formatter.hashToInt(ioMode));
         properties.set(6,1);
     }
 
     public void setFluidMode(boolean up, boolean down, boolean north, boolean east, boolean south, boolean west) {
-        fluidMode.put(Direction.UP, up);
-        fluidMode.put(Direction.DOWN, down);
-        fluidMode.put(Direction.NORTH, north);
-        fluidMode.put(Direction.EAST, east);
-        fluidMode.put(Direction.SOUTH, south);
-        fluidMode.put(Direction.WEST, west);
+        ioMode.put(Direction.UP, up);
+        ioMode.put(Direction.DOWN, down);
+        ioMode.put(Direction.NORTH, north);
+        ioMode.put(Direction.EAST, east);
+        ioMode.put(Direction.SOUTH, south);
+        ioMode.put(Direction.WEST, west);
     }
 
 
@@ -96,7 +96,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         this.capacity = tag.getInt("capacity");
         FluidInventory.fromTag(tag,inventory);
 
-        fluidMode = Formatter.intToHash(tag.getInt("FluidMode"));
+        ioMode = Formatter.intToHash(tag.getInt("IOMode"));
         corrected = tag.getBoolean("init");
     }
 
@@ -105,7 +105,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         FluidInventory.toTag(tag,inventory);
         tag.putInt("capacity", this.capacity);
 
-        tag.putInt("FluidMode", Formatter.hashToInt(fluidMode));
+        tag.putInt("IOMode", Formatter.hashToInt(ioMode));
         tag.putBoolean("init",corrected);
         return super.toTag(tag);
     }
@@ -193,7 +193,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
 
     @Override
     public HashMap<Direction, Boolean> getFluidIO() {
-        return fluidMode;
+        return ioMode;
     }
 
     @Override

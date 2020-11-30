@@ -48,7 +48,7 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
         setMaxTransferRate(30);
         panelMode = 1;
         setEnergyMode(false, false, false, false, false, false);
-        setItemMode(false, false, false, false, false, false);
+        setIOMode(false, false, false, false, false, false);
 
         inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
         this.recipesUsed = new Object2IntOpenHashMap<>();
@@ -211,12 +211,12 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
 
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
         //input mode, input slot, & valid item
-        return slot == 0 && !itemMode.get(dir) && this.isValid(slot, stack);
+        return slot == 0 && !ioMode.get(dir) && this.isValid(slot, stack);
     }
 
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
         //output mode & output slot
-        return slot == 1 && itemMode.get(dir);
+        return slot == 1 && ioMode.get(dir);
     }
 
     public int size() {

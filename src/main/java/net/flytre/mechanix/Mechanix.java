@@ -1,10 +1,7 @@
 package net.flytre.mechanix;
 
 import net.fabricmc.api.ModInitializer;
-import net.flytre.mechanix.util.ItemRegistery;
-import net.flytre.mechanix.util.MachineRegistry;
-import net.flytre.mechanix.util.MiscRegistry;
-import net.flytre.mechanix.util.Packets;
+import net.flytre.mechanix.util.*;
 
 public class Mechanix implements ModInitializer {
 	@Override
@@ -13,6 +10,7 @@ public class Mechanix implements ModInitializer {
 		MiscRegistry.init();
 		MachineRegistry.init();
 		ItemRegistery.init();
+		FluidRegistry.init();
 		Packets.serverPacketRecieved();
 	}
 }

@@ -38,7 +38,7 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
         setMaxTransferRate(20);
         panelMode = 1;
         setEnergyMode(true, true, true, true, true, true);
-        setItemMode(false, false, false, false, false, false);
+        setIOMode(false, false, false, false, false, false);
 
         inventory = DefaultedList.ofSize(1,ItemStack.EMPTY);
     }
@@ -145,11 +145,11 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
 
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
         //input mode & valid item
-        return !itemMode.get(dir) && this.isValid(slot, stack);
+        return !ioMode.get(dir) && this.isValid(slot, stack);
     }
 
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return itemMode.get(dir);
+        return ioMode.get(dir);
     }
 
     public int size() {

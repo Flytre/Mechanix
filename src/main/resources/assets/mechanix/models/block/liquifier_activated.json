@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "3": "mechanix:block/liquifier_activated",
+    "particle": "mechanix:block/liquifier_activated"
+  },
+  "parent" : "mechanix:block/machine/base"
+}

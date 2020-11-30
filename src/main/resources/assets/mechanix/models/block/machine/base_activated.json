@@ -1,0 +1,8 @@
+{
+	"textures": {
+		"0": "mechanix:block/machine/bottom_out",
+		"3": "mechanix:block/machine/front_activated",
+		"particle": "mechanix:block/machine/front_activated"
+	},
+	"parent" : "mechanix:block/machine/base"
+}
