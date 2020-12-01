@@ -80,7 +80,7 @@ public class MachineRegistry {
                 (cable) -> new BlockItem(cable, new Item.Settings().group(MiscRegistry.TAB))
         );
 
-        registerMachine(ITEM_PIPE, "item_pipe", (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)));
+        registerBlock(ITEM_PIPE, "item_pipe", IconMaker.STANDARD);
         ITEM_PIPE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:item_pipe", BlockEntityType.Builder.create(ItemPipeBlockEntity::new, ITEM_PIPE).build(null));
         ITEM_PIPE_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:item_pipe"), ItemPipeScreenHandler::new);
 
@@ -132,19 +132,19 @@ public class MachineRegistry {
         HYDRATOR = new MachineType<>(
                 new HydratorBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
                 "hydrator",
-                (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)),
+                IconMaker.STANDARD,
                 HydratorBlockEntity::new,
                 HydratorScreenHandler::new);
 
         FOUNDRY = new MachineType<>(
                 new FoundryBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
                 "foundry",
-                (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)),
+                IconMaker.STANDARD,
                 FoundryBlockEntity::new,
                 FoundryScreenHandler::new
         );
 
-        registerMachine(LIQUIFIER,"liquifier", (block) -> new BlockItem(block, new Item.Settings().group(MiscRegistry.TAB)));
+        registerBlock(LIQUIFIER,"liquifier", IconMaker.STANDARD);
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {
@@ -155,12 +155,12 @@ public class MachineRegistry {
         for (String tier : tiers) {
             T blk = maker.create();
             result.add(blk);
-            registerMachine(blk, tier + (tier.length() > 0 ? "_" : "") + id, creator);
+            registerBlock(blk, tier + (tier.length() > 0 ? "_" : "") + id, creator);
         }
         return result;
     }
 
-    private static <T extends Block> void registerMachine(T block, String id, IconMaker<T> creator) {
+    public static <T extends Block> void registerBlock(T block, String id, IconMaker<T> creator) {
         Registry.register(Registry.BLOCK, new Identifier("mechanix", id), block);
         Registry.register(Registry.ITEM, new Identifier("mechanix", id), creator.create(block));
     }

@@ -3,6 +3,8 @@ package net.flytre.mechanix.mixin;
 import net.minecraft.client.gui.screen.LevelLoadingScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +22,10 @@ public abstract class LevelLoadingScreenMixin extends Screen {
     public void loadMechanix(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         int i = this.width / 2;
         int j = this.height / 2;
-        drawCenteredText(matrices, this.textRenderer, new TranslatableText("gui.mechanix.world_load"), i, j - 9 / 2 + 100, 16777215);
+
+        TranslatableText msg =  new TranslatableText("gui.mechanix.world_load");
+        Style style = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,"https://www.flytre.net/mechanix"));
+        msg.setStyle(style);
+        drawCenteredText(matrices, this.textRenderer,msg, i, j - 9 / 2 + 100, 16777215);
     }
 }

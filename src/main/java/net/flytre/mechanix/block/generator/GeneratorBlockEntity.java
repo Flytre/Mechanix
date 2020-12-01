@@ -12,18 +12,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory, Tickable, NamedScreenHandlerFactory {
+public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory {
 
     protected DefaultedList<ItemStack> inventory;
     private int burnTime;
@@ -78,14 +76,15 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
         return this.burnTime > 0;
     }
 
-    public void tick() {
+    @Override
+    public void repeatTick() {
         boolean isBurning = this.isBurning();
         boolean updateData = false;
         if (this.isBurning()) {
             --this.burnTime;
         }
 
-        if (!this.world.isClient) {
+        if (this.world != null && !this.world.isClient) {
 
             if(this.hasEnergy(this.getMaxEnergy() - genPerTick + 0.001))
                 return;
@@ -121,8 +120,10 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
         if (updateData) {
             this.markDirty();
         }
+    }
 
-        super.tick();
+    @Override
+    public void onceTick() {
 
     }
 

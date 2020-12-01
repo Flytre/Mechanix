@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "ppp",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "p": {
+      "item": "mechanix:item_pipe"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_fluid_pipe",
+    "count": 3
+  }
+}

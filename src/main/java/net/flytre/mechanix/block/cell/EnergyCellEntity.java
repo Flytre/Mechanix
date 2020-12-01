@@ -59,12 +59,15 @@ public class EnergyCellEntity extends EnergyEntity implements Tickable {
 
 
     @Override
-    public void tick() {
+    public void repeatTick() {
         if (world != null && !world.isClient && !isFull()) {
             double amount = Math.min(this.getMaxTransferRate(), this.getMaxEnergy() - this.getEnergy());
             requestEnergy(amount);
         }
+    }
 
+    @Override
+    public void onceTick() {
         if(!corrected && world !=null && !world.isClient) {
             Block block = world.getBlockState(pos).getBlock();
             if(block == MachineRegistry.ENERGY_CELLS.getStandard()) {
@@ -85,8 +88,6 @@ public class EnergyCellEntity extends EnergyEntity implements Tickable {
             }
             corrected = true;
         }
-
-        super.tick();
     }
 
     @Override

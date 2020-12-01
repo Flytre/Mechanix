@@ -3,6 +3,7 @@ package net.flytre.mechanix.base.energy;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.flytre.mechanix.base.Formatter;
+import net.flytre.mechanix.base.TieredMachine;
 import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cable.CableResult;
 import net.flytre.mechanix.block.cable.CableSide;
@@ -23,16 +24,18 @@ import net.minecraft.world.World;
 
 import java.util.*;
 
-public abstract class EnergyEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
+public abstract class EnergyEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable, TieredMachine {
 
+    private final PropertyDelegate properties;
     public HashMap<Direction, Boolean> energyMode; //true = output, false = input
     public HashMap<Direction, Boolean> ioMode; //true = output, false = input
-    private final PropertyDelegate properties;
+    protected int panelMode; //whether using the panel should change item mode / energy mode, 0 = energy, 1 = item
     private double energy;
     private double maxEnergy;
     private double maxTransferRate;
-    protected int panelMode; //whether using the panel should change item mode / energy mode, 0 = energy, 1 = item
     private boolean sync;
+    private int tier;
+
 
     public EnergyEntity(BlockEntityType<?> type) {
         super(type);
@@ -47,6 +50,34 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         setEnergyMode(true, true, true, true, true, true);
         setIOMode(false, true, true, true, true, true);
 
+    }
+
+    public static ArrayList<Direction> transferrableDirections(BlockPos startingPos, World world) {
+        ArrayList<Direction> result = new ArrayList<>();
+
+        if (world == null)
+            return result;
+
+        for (Direction direction : Direction.values()) {
+
+            BlockEntity thisEntity = world.getBlockEntity(startingPos);
+            if (thisEntity instanceof EnergyEntity && ((EnergyEntity) thisEntity).energyMode.get(direction)) {
+                continue;
+            }
+
+            BlockPos pos = startingPos.offset(direction);
+            BlockState state = world.getBlockState(pos);
+            BlockEntity entity = world.getBlockEntity(pos);
+            if ((entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite())))
+                result.add(direction);
+
+            if (state.getBlock() instanceof Cable) {
+                if (state.get(Cable.getProperty(direction)) == CableSide.CONNECTED)
+                    result.add(direction);
+            }
+        }
+
+        return result;
     }
 
     public void syncEntity() {
@@ -81,10 +112,10 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         this.maxTransferRate = tag.getDouble("transferRate");
 
 
-        if(tag.contains("maxEnergy"))
+        if (tag.contains("maxEnergy"))
             this.maxEnergy = tag.getDouble("maxEnergy");
 
-
+        TieredMachine.fromTag(tag, this);
         energyMode = Formatter.intToHash(tag.getInt("EnergyMode"));
         ioMode = Formatter.intToHash(tag.getInt("IOMode"));
     }
@@ -97,14 +128,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
         tag.putDouble("energy", this.energy);
         tag.putDouble("maxEnergy", this.maxEnergy);
-        tag.putDouble("transferRate",this.maxTransferRate);
+        tag.putDouble("transferRate", this.maxTransferRate);
+        TieredMachine.toTag(this, tag);
         return super.toTag(tag);
     }
 
     public boolean canTransferFrom(Direction d) {
         return energyMode.get(d);
     }
-
 
     public double getMaxEnergy() {
         return maxEnergy;
@@ -151,9 +182,6 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         sync = true;
     }
 
-
-
-
     /*
     Transfer energy and return the amount remaining needed to transfer
     */
@@ -172,78 +200,47 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         }
     }
 
-
-    public static ArrayList<Direction> transferrableDirections(BlockPos startingPos, World world) {
-        ArrayList<Direction> result = new ArrayList<>();
-
-        if(world == null)
-            return result;
-
-        for(Direction direction : Direction.values()) {
-
-            BlockEntity thisEntity = world.getBlockEntity(startingPos);
-            if(thisEntity instanceof EnergyEntity && ((EnergyEntity)thisEntity).energyMode.get(direction)) {
-                continue;
-            }
-
-            BlockPos pos = startingPos.offset(direction);
-            BlockState state = world.getBlockState(pos);
-            BlockEntity entity = world.getBlockEntity(pos);
-            if((entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite())))
-                result.add(direction);
-
-            if (state.getBlock() instanceof Cable) {
-                if (state.get(Cable.getProperty(direction)) == CableSide.CONNECTED)
-                    result.add(direction);
-            }
-        }
-
-        return result;
-    }
-
-
-
     public void requestEnergy(double amt) {
 
-        if(world == null)
+        if (world == null)
             return;
 
         BlockPos start = this.getPos();
 
         Deque<CableResult> to_visit = new LinkedList<>();
-        Set<BlockPos> visited  = new HashSet<>();
-        to_visit.add(new CableResult(this.getPos(),this.maxTransferRate));
+        Set<BlockPos> visited = new HashSet<>();
+        to_visit.add(new CableResult(this.getPos(), this.maxTransferRate));
 
-        while(to_visit.size() > 0) {
+        while (to_visit.size() > 0) {
             CableResult cableResult = to_visit.pop();
             BlockPos currentPos = cableResult.getPos();
             BlockEntity entity = world.getBlockEntity(currentPos);
-            if(entity instanceof EnergyEntity && !(this.getPos().equals(currentPos))) {
-                amt = transferEnergy((EnergyEntity) entity,Math.min(amt,cableResult.getMax()));
-                if(amt == 0)
+            if (entity instanceof EnergyEntity && !(this.getPos().equals(currentPos))) {
+                amt = transferEnergy((EnergyEntity) entity, Math.min(amt, cableResult.getMax()));
+                if (amt == 0)
                     return;
             }
-            if(entity == null || currentPos.equals(start)) {
+            if (entity == null || currentPos.equals(start)) {
                 ArrayList<Direction> neighbors = EnergyEntity.transferrableDirections(currentPos, world);
                 for (Direction d : neighbors) {
                     if (!visited.contains(currentPos.offset(d))) {
                         BlockEntity childEntity = world.getBlockEntity(currentPos.offset(d));
                         double maxAmount = cableResult.getMax();
-                        if(childEntity instanceof EnergyEntity) {
+                        if (childEntity instanceof EnergyEntity) {
                             maxAmount = Math.min(maxAmount, ((EnergyEntity) childEntity).maxTransferRate);
                         } else {
                             //cable transfer rates:
                             Block cable = world.getBlockState(currentPos.offset(d)).getBlock();
-                            if(cable == MachineRegistry.CABLES.getStandard())
-                                maxAmount = Math.min(maxAmount,25);
-                            if(cable == MachineRegistry.CABLES.getGilded())
-                                maxAmount = Math.min(maxAmount,100);
-                            if(cable == MachineRegistry.CABLES.getVysterium())
-                                maxAmount = Math.min(maxAmount,300);
-                            if(cable == MachineRegistry.CABLES.getNeptunium())
-                                maxAmount = Math.min(maxAmount,1000);
+                            if (cable == MachineRegistry.CABLES.getStandard())
+                                maxAmount = Math.min(maxAmount, 25);
+                            if (cable == MachineRegistry.CABLES.getGilded())
+                                maxAmount = Math.min(maxAmount, 100);
+                            if (cable == MachineRegistry.CABLES.getVysterium())
+                                maxAmount = Math.min(maxAmount, 300);
+                            if (cable == MachineRegistry.CABLES.getNeptunium())
+                                maxAmount = Math.min(maxAmount, 1000);
                         }
-                        to_visit.add(new CableResult(currentPos.offset(d),maxAmount));
+                        to_visit.add(new CableResult(currentPos.offset(d), maxAmount));
                     }
                 }
             }
@@ -273,26 +270,52 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
 
     @Override
-    public void tick() {
+    public final void tick() {
+
+        for (int i = 0; i <= tier; i++) {
+            repeatTick();
+        }
+        onceTick();
+
         updateDelegate();
-        if(sync) {
-            if (world != null && !world.isClient ) {
+        if (sync) {
+            if (world != null && !world.isClient) {
                 sync();
             }
             sync = false;
         }
     }
 
+    public abstract void repeatTick();
+    public abstract void onceTick();
+
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf packetByteBuf) {
         packetByteBuf.writeBlockPos(pos);
     }
 
+    @Override
     public void fromClientTag(CompoundTag var1) {
-        this.fromTag(null,var1);
-    };
+        this.fromTag(null, var1);
+    }
 
+    ;
+
+    @Override
     public CompoundTag toClientTag(CompoundTag var1) {
         return this.toTag(var1);
-    };
+    }
+
+    ;
+
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public void setTier(int tier) {
+        this.tier = tier;
+    }
 }

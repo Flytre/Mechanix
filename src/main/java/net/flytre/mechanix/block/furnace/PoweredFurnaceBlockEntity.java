@@ -17,12 +17,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -32,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInventory, Tickable, NamedScreenHandlerFactory {
+public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInventory {
     protected final RecipeType<? extends AbstractCookingRecipe> recipeType;
     private final int energyPerTick;
     private final Object2IntOpenHashMap<Identifier> recipesUsed;
@@ -109,10 +107,13 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
         return tag;
     }
 
-    public void tick() {
+//    public void tick() {
+//        this.updateDelegate();
+//        super.tick();
+//    }
 
-        this.updateDelegate();
-        super.tick();
+    @Override
+    public void repeatTick() {
 
         if (world != null && !world.isClient && !isFull()) {
             double amount = Math.min(this.getMaxTransferRate(), this.getMaxEnergy() - this.getEnergy());
@@ -160,7 +161,10 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
         if (bl2) {
             this.markDirty();
         }
+    }
 
+    @Override
+    public void onceTick() {
 
     }
 

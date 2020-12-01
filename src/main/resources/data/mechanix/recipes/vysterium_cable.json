@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "CCC",
+    "ggg"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "C": {
+      "item": "mechanix:gilded_cable"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_cable",
+    "count": 3
+  }
+}

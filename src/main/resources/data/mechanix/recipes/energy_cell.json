@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iGi",
+    "GOG",
+    "iGi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "O": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "mechanix:energy_cell",
+    "count": 1
+  }
+}

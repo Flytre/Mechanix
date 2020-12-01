@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iGi",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "G": {
+      "item": "mechanix:vysterium_energy_cell"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_energy_cell",
+    "count": 1
+  }
+}

@@ -17,7 +17,7 @@ public class MachineType<T extends Block, E extends BlockEntity, H extends Scree
     private final BlockEntityType<E> entityType;
     private final ScreenHandlerType<H> handlerType;
 
-    public MachineType(T block, String id, IconMaker<T> blockItem, Supplier<E> blockEntityCreator, ScreenHandlerRegistry.ExtendedClientHandlerFactory<H> factory) {
+    public MachineType(T block, String id, IconMaker<Block> blockItem, Supplier<E> blockEntityCreator, ScreenHandlerRegistry.ExtendedClientHandlerFactory<H> factory) {
         this.block = block;
         this.id = id;
         Registry.register(Registry.BLOCK, new Identifier("mechanix", id), block);

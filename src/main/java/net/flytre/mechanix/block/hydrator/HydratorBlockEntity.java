@@ -1,8 +1,10 @@
 package net.flytre.mechanix.block.hydrator;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.flytre.mechanix.base.Formatter;
 import net.flytre.mechanix.base.MachineBlock;
+import net.flytre.mechanix.base.TieredMachine;
 import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.base.fluid.FluidStack;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -29,10 +31,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
-public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidInventory, ExtendedScreenHandlerFactory {
+public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidInventory, ExtendedScreenHandlerFactory, TieredMachine, BlockEntityClientSerializable {
     public HashMap<Direction, Boolean> ioMode; //true = output, false = input
     private final DefaultedList<FluidStack> inventory;
     private final PropertyDelegate properties;
+    private int tier;
 
 
     public HydratorBlockEntity() {
@@ -91,8 +94,8 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
             shouldBeActivated = true;
         }
         if(shouldBeActivated) {
-            if(canAdd(new FluidStack(Fluids.WATER,100)))
-                add(new FluidStack(Fluids.WATER,100));
+            if(canAdd(new FluidStack(Fluids.WATER,100 * (tier + 1))))
+                add(new FluidStack(Fluids.WATER,100 * (tier + 1)));
         }
 
         if(shouldBeActivated != currActivated) {
@@ -105,6 +108,7 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
     public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
         FluidInventory.fromTag(tag,inventory);
+        TieredMachine.fromTag(tag,this);
         ioMode = Formatter.intToHash(tag.getInt("IOMode"));
     }
 
@@ -112,6 +116,7 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
     public CompoundTag toTag(CompoundTag tag) {
         FluidInventory.toTag(tag,inventory);
         tag.putInt("IOMode", Formatter.hashToInt(ioMode));
+        TieredMachine.toTag(this,tag);
         return super.toTag(tag);
     }
 
@@ -158,5 +163,32 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new HydratorScreenHandler(syncId,inv,this,this.getProperties());
+    }
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public void setTier(int tier) {
+        this.tier = tier;
+        markDirty();
+    }
+
+    @Override
+    public void markDirty() {
+        if(world != null && !world.isClient)
+        sync();
+    }
+
+    @Override
+    public void fromClientTag(CompoundTag compoundTag) {
+        this.fromTag(this.getCachedState(),compoundTag);
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag compoundTag) {
+        return this.toTag(compoundTag);
     }
 }

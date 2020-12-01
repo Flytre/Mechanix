@@ -6,7 +6,6 @@ import net.flytre.mechanix.base.MachineBlock;
 import net.flytre.mechanix.base.energy.EnergyEntity;
 import net.flytre.mechanix.base.fluid.FluidInventory;
 import net.flytre.mechanix.base.fluid.FluidStack;
-import net.flytre.mechanix.block.hydrator.HydratorBlock;
 import net.flytre.mechanix.util.FluidRegistry;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -145,9 +144,7 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
     }
 
     @Override
-    public void tick() {
-        super.tick();
-
+    public void onceTick() {
         if(this.world == null || this.world.isClient)
             return;
 
@@ -155,13 +152,13 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         boolean currActivated = world.getBlockState(getPos()).get(FoundryBlock.ACTIVATED);
         boolean shouldBeActivated = false;
         boolean reset = false;
-
-        if(getEnergy() + 100 < getMaxEnergy())
-            requestEnergy(100);
-        if(this.hasEnergy(60) && this.canCraft()) {
-                this.addEnergy(-60);
+        int tierTimes = getTier() + 1;
+        if(getEnergy() + 100*tierTimes < getMaxEnergy())
+            requestEnergy(100*tierTimes);
+        if(this.hasEnergy(60*tierTimes) && this.canCraft()) {
+                this.addEnergy(-60*tierTimes);
                 shouldBeActivated = true;
-                this.craftTime--;
+                this.craftTime -= tierTimes;
                 if(this.craftTime <= 0)
                     craft();
         } else
@@ -174,7 +171,10 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
             craftTime = 120;
 
         if(shouldBeActivated != currActivated) {
-            world.setBlockState(getPos(),world.getBlockState(pos).with(HydratorBlock.ACTIVATED,shouldBeActivated));
+            world.setBlockState(getPos(),world.getBlockState(pos).with(FoundryBlock.ACTIVATED,shouldBeActivated));
         }
     }
+
+    @Override
+    public void repeatTick() {}
 }

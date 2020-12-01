@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "CCC",
+    "ggg"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "C": {
+      "item": "mechanix:vysterium_cable"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_cable",
+    "count": 3
+  }
+}

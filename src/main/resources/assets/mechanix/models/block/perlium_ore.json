@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "mechanix:block/perlium_ore",
+    "particle" : "mechanix:block/perlium_ore"
+  }
+}

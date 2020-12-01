@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "ppp",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "p": {
+      "item": "mechanix:gilded_fluid_pipe"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_fluid_pipe",
+    "count": 3
+  }
+}

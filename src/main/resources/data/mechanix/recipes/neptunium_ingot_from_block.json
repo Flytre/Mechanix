@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "mechanix:neptunium_ingot",
+  "ingredients": [
+    {
+      "item": "mechanix:neptunium_block"
+    }
+  ],
+  "result": {
+    "item": "mechanix:neptunium_ingot",
+    "count": 9
+  }
+}
