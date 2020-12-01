@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "gIg",
+    "RgR"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "I": {
+      "item": "mechanix:gilded_upgrade"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_upgrade",
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "gIg",
+    "RgR"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "I": {
+      "item": "mechanix:vysterium_upgrade"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_upgrade",
+    "count": 1
+  }
+}
