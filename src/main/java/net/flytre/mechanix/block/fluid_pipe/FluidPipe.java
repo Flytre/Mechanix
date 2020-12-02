@@ -2,7 +2,8 @@ package net.flytre.mechanix.block.fluid_pipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.base.fluid.FluidInventory;
+import net.flytre.mechanix.api.connectable.FluidPipeConnectable;
+import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.block.item_pipe.PipeSide;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.minecraft.block.*;
@@ -138,7 +139,7 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
                 if (current == PipeSide.CONNECTED || current == PipeSide.NONE) {
                     BlockState newState = state.with(getProperty(side), PipeSide.SERVO);
                     world.setBlockState(pos, newState);
-
+                    setWrenched(world,pos,side,false);
                     if (!player.isCreative()) {
                         player.getStackInHand(hand).decrement(1);
                     }
@@ -148,16 +149,21 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
                 if (current == PipeSide.SERVO) {
                     ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistery.SERVO));
                     world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
+                    setWrenched(world,pos,side,false);
                 } else {
                     BlockState state1 = world.getBlockState(pos.offset(side));
-                    if(state1.getBlock() instanceof FluidPipe && state.get(getProperty(side)) == PipeSide.NONE && state1.get(getProperty(side.getOpposite())) == PipeSide.WRENCHED) {
+                    if(state1.getBlock() instanceof FluidPipe && state.get(getProperty(side)) == PipeSide.NONE && isWrenched(world,pos.offset(side),side.getOpposite())) {
                         world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
-                    } else if (!(current == PipeSide.WRENCHED)) {
-                        world.setBlockState(pos, state.with(getProperty(side), PipeSide.WRENCHED));
-                        if(state1.getBlock() instanceof FluidPipe && state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO)
-                            world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
+                        setWrenched(world,pos.offset(side),side.getOpposite(),false);
+                    } else if (!isWrenched(world,pos,side)) {
+                        setWrenched(world,pos,side,true);
+                        if(state1.getBlock() instanceof FluidPipe && state1.get(getProperty(side.getOpposite())) != PipeSide.SERVO) {
+                            world.setBlockState(pos.offset(side), state1.with(getProperty(side.getOpposite()), PipeSide.NONE));
+                            setWrenched(world, pos.offset(side), side.getOpposite(), false);
+                        }
                     } else {
                         world.setBlockState(pos, state.with(getProperty(side), PipeSide.NONE));
+                        setWrenched(world,pos,side,false);
                         Block block = state1.getBlock();
                         BlockEntity entity = world.getBlockEntity(pos.offset(side));
                         if(isConnectable(block,entity))
@@ -173,17 +179,17 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         VoxelShape shape = NODE;
-        if (state.get(UP) != PipeSide.NONE && state.get(UP) != PipeSide.WRENCHED)
+        if (state.get(UP) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_UP, BooleanBiFunction.OR);
-        if (state.get(DOWN) != PipeSide.NONE && state.get(DOWN) != PipeSide.WRENCHED)
+        if (state.get(DOWN) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_DOWN, BooleanBiFunction.OR);
-        if (state.get(NORTH) != PipeSide.NONE && state.get(NORTH) != PipeSide.WRENCHED)
+        if (state.get(NORTH) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_NORTH, BooleanBiFunction.OR);
-        if (state.get(EAST) != PipeSide.NONE && state.get(EAST) != PipeSide.WRENCHED)
+        if (state.get(EAST) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_EAST, BooleanBiFunction.OR);
-        if (state.get(SOUTH) != PipeSide.NONE && state.get(SOUTH) != PipeSide.WRENCHED)
+        if (state.get(SOUTH) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_SOUTH, BooleanBiFunction.OR);
-        if (state.get(WEST) != PipeSide.NONE && state.get(WEST) != PipeSide.WRENCHED)
+        if (state.get(WEST) != PipeSide.NONE)
             shape = VoxelShapes.combineAndSimplify(shape, C_WEST, BooleanBiFunction.OR);
 
         if (state.get(UP) == PipeSide.SERVO)
@@ -212,10 +218,10 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
 
         Block neighbor = world.getBlockState(posFrom).getBlock();
         BlockState neighborState = world.getBlockState(posFrom);
-        if (state.get(getProperty(direction)) == PipeSide.SERVO || state.get(getProperty(direction)) == PipeSide.WRENCHED)
+        if (state.get(getProperty(direction)) == PipeSide.SERVO || isWrenched(world,pos,direction))
             return state;
 
-        if (neighbor instanceof FluidPipe && neighborState.get(getProperty(direction.getOpposite())) == PipeSide.WRENCHED) {
+        if (neighbor instanceof FluidPipe && isWrenched(world,posFrom,direction.getOpposite())) {
             return state;
         }
 
@@ -230,7 +236,7 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
             BlockState neighborState = ctx.getWorld().getBlockState(blockPos.offset(direction));
             Block neighbor = neighborState.getBlock();
 
-            if (neighbor instanceof FluidPipe && neighborState.get(getProperty(direction.getOpposite())) == PipeSide.WRENCHED)
+            if (neighbor instanceof FluidPipe && isWrenched(ctx.getWorld(),blockPos.offset(direction),direction.getOpposite()))
                 state = state.with(getProperty(direction), PipeSide.NONE);
             else
                 state = state.with(getProperty(direction), isConnectable(neighbor, ctx.getWorld().getBlockEntity(blockPos.offset(direction))) ? PipeSide.CONNECTED : PipeSide.NONE);
@@ -266,5 +272,20 @@ public class FluidPipe extends BlockWithEntity implements FluidPipeConnectable {
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockView world) {
         return new FluidPipeBlockEntity();
+    }
+
+
+    private boolean isWrenched(WorldAccess world, BlockPos pos, Direction d) {
+        BlockEntity b = world.getBlockEntity(pos);
+        if(!(b instanceof FluidPipeBlockEntity))
+            return false;
+        return ((FluidPipeBlockEntity) b).wrenched.get(d);
+    }
+
+    private void setWrenched(WorldAccess world, BlockPos pos, Direction d, boolean value) {
+        BlockEntity b = world.getBlockEntity(pos);
+        if(!(b instanceof FluidPipeBlockEntity))
+            return;
+        ((FluidPipeBlockEntity) b).wrenched.put(d,value);
     }
 }

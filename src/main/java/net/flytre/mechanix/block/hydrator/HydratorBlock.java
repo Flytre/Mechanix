@@ -1,16 +1,8 @@
 package net.flytre.mechanix.block.hydrator;
 
-import net.flytre.mechanix.base.MachineBlock;
-import net.minecraft.block.BlockState;
+import net.flytre.mechanix.api.machine.MachineBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class HydratorBlock extends MachineBlock {
@@ -22,25 +14,4 @@ public class HydratorBlock extends MachineBlock {
     public @Nullable BlockEntity createBlockEntity(BlockView world) {
         return new HydratorBlockEntity();
     }
-
-
-    @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if(world.isClient)
-            return ActionResult.SUCCESS;
-        else {
-            this.openScreen(world, pos, player);
-            return ActionResult.CONSUME;
-        }
-    }
-
-
-    private void openScreen(World world, BlockPos pos, PlayerEntity player) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof HydratorBlockEntity) {
-            player.openHandledScreen((NamedScreenHandlerFactory)blockEntity);
-        }
-
-    }
-
 }

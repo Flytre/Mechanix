@@ -5,7 +5,6 @@ import net.minecraft.util.StringIdentifiable;
 public enum PipeSide implements StringIdentifiable {
     NONE("none"),
     CONNECTED("connected"),
-    WRENCHED("wrenched"),
     SERVO("servo");
 
     private final String name;

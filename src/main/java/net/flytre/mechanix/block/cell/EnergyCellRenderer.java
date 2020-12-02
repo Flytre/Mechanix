@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.cell;
 
-import net.flytre.mechanix.base.Formatter;
+import net.flytre.mechanix.api.util.Formatter;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;

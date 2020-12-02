@@ -3,9 +3,9 @@ package net.flytre.mechanix.item;
 import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cable.CableSide;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipe;
+import net.flytre.mechanix.block.fluid_pipe.FluidPipeBlockEntity;
 import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
-import net.flytre.mechanix.block.item_pipe.PipeSide;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -42,14 +42,14 @@ public class WrenchItem extends Item {
     }
 
 
-    private void inventoryTickPipeNoShift(BlockHitResult hitResult, Block block, PlayerEntity player, BlockState state) {
+    private void inventoryTickPipeNoShift(BlockHitResult hitResult, Block block, PlayerEntity player, BlockState state, BlockEntity blockEntity) {
         boolean wrenched = false;
         if (block instanceof Cable)
             wrenched = state.get(Cable.getProperty(hitResult.getSide())) == CableSide.WRENCHED;
-        if (block instanceof ItemPipe)
-            wrenched = state.get(ItemPipe.getProperty(hitResult.getSide())) == PipeSide.WRENCHED;
-        if (block instanceof FluidPipe)
-            wrenched = state.get(FluidPipe.getProperty(hitResult.getSide())) == PipeSide.WRENCHED;
+        if (block instanceof ItemPipe && blockEntity instanceof ItemPipeBlockEntity)
+            wrenched = ((ItemPipeBlockEntity) blockEntity).wrenched.get(hitResult.getSide());
+        if (block instanceof FluidPipe && blockEntity instanceof FluidPipeBlockEntity)
+            wrenched =  ((FluidPipeBlockEntity) blockEntity).wrenched.get(hitResult.getSide());
 
         player.sendMessage(new TranslatableText("item.mechanix.wrench.1").append(" (" + hitResult.getSide().name() + "): " + wrenched), true);
 
@@ -77,13 +77,14 @@ public class WrenchItem extends Item {
 
         BlockPos pos = hitResult.getBlockPos();
         BlockState state = world.getBlockState(pos);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
         Block block = state.getBlock();
 
         if (((block instanceof Cable)) || ((block instanceof FluidPipe)) || ((block instanceof ItemPipe)))
             if (player.isSneaking())
                 inventoryTickPipeShift(world, hitResult, block, player, state);
             else
-                inventoryTickPipeNoShift(hitResult, block, player, state);
+                inventoryTickPipeNoShift(hitResult, block, player, state,blockEntity);
     }
 
 }

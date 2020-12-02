@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.cell;
 
-import net.flytre.mechanix.base.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.energy.EnergyScreenHandler;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

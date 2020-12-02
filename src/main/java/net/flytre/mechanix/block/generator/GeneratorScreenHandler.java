@@ -2,7 +2,7 @@ package net.flytre.mechanix.block.generator;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.base.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.energy.EnergyScreenHandler;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

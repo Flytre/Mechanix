@@ -2,6 +2,7 @@ package net.flytre.mechanix.util;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.screen.ScreenHandler;
@@ -11,7 +12,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.function.Supplier;
 
-public class MachineType<T extends Block, E extends BlockEntity, H extends ScreenHandler> {
+public class MachineType<T extends BlockWithEntity, E extends BlockEntity, H extends ScreenHandler> {
     private final String id;
     private final T block;
     private final BlockEntityType<E> entityType;

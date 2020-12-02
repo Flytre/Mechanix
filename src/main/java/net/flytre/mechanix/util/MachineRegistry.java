@@ -2,8 +2,8 @@ package net.flytre.mechanix.util;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.flytre.mechanix.base.energy.EnergyItem;
-import net.flytre.mechanix.base.fluid.FluidInventory;
+import net.flytre.mechanix.api.energy.EnergyItem;
+import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cell.EnergyCell;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
@@ -26,6 +26,8 @@ import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreenHandler;
 import net.flytre.mechanix.block.liquifier.LiquifierBlock;
+import net.flytre.mechanix.block.liquifier.LiquifierBlockEntity;
+import net.flytre.mechanix.block.liquifier.LiquifierScreenHandler;
 import net.flytre.mechanix.block.tank.FluidTank;
 import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
 import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
@@ -47,9 +49,8 @@ import java.util.List;
 
 public class MachineRegistry {
 
-    public static MachineList<Cable> CABLES;
-
     public static final Block ITEM_PIPE = new ItemPipe(FabricBlockSettings.of(Material.METAL).hardness(0.9f));
+    public static MachineList<Cable> CABLES;
     public static BlockEntityType<ItemPipeBlockEntity> ITEM_PIPE_ENTITY;
     public static ScreenHandlerType<ItemPipeScreenHandler> ITEM_PIPE_SCREEN_HANDLER;
 
@@ -70,7 +71,7 @@ public class MachineRegistry {
     public static MachineType<HydratorBlock, HydratorBlockEntity, HydratorScreenHandler> HYDRATOR;
     public static MachineType<FoundryBlock, FoundryBlockEntity, FoundryScreenHandler> FOUNDRY;
 
-    public static Block LIQUIFIER = new LiquifierBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f));
+    public static MachineType<LiquifierBlock, LiquifierBlockEntity, LiquifierScreenHandler> LIQUIFIER;
 
     public static void init() {
 
@@ -144,7 +145,13 @@ public class MachineRegistry {
                 FoundryScreenHandler::new
         );
 
-        registerBlock(LIQUIFIER,"liquifier", IconMaker.STANDARD);
+        LIQUIFIER = new MachineType<>(
+                new LiquifierBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "liquifier",
+                IconMaker.STANDARD,
+                LiquifierBlockEntity::new,
+                LiquifierScreenHandler::new
+        );
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {

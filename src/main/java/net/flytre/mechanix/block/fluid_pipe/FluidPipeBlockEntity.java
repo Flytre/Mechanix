@@ -1,8 +1,9 @@
 package net.flytre.mechanix.block.fluid_pipe;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.flytre.mechanix.base.fluid.FluidInventory;
-import net.flytre.mechanix.base.fluid.FluidStack;
+import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.block.item_pipe.PipeSide;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
@@ -27,11 +28,16 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
     private FluidStack currentFluid;
     private int renderTime;
     private boolean corrected = false;
+    public HashMap<Direction,Boolean> wrenched;
 
     public FluidPipeBlockEntity() {
         super(MachineRegistry.FLUID_PIPE_ENTITY);
         currentFluid = FluidStack.EMPTY;
         perTick = 50;
+        wrenched = new HashMap<>();
+        for(Direction dir : Direction.values()) {
+            wrenched.put(dir,false);
+        }
     }
 
 
@@ -143,6 +149,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
         CompoundTag fluid = new CompoundTag();
         this.currentFluid.toTag(fluid);
         tag.put("fluid",fluid);
+        tag.putInt("wrenched", Formatter.hashToInt(wrenched));
         return super.toTag(tag);
     }
 
@@ -158,6 +165,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         this.setFluidStack(FluidStack.fromTag(tag.getCompound("fluid")));
+        this.wrenched = Formatter.intToHash(tag.getInt("wrenched"));
         super.fromTag(state, tag);
     }
 

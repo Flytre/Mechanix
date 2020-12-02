@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.fluid_pipe;
 
-import net.flytre.mechanix.base.RenderUtils;
+import net.flytre.mechanix.api.util.RenderUtils;
 import net.flytre.mechanix.block.item_pipe.PipeSide;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

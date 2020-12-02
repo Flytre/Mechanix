@@ -5,10 +5,10 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.flytre.mechanix.base.Formatter;
-import net.flytre.mechanix.base.fluid.FluidInventory;
-import net.flytre.mechanix.base.fluid.FluidMeterWidget;
-import net.flytre.mechanix.base.gui.ToggleButton;
+import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.api.gui.FluidMeterWidget;
+import net.flytre.mechanix.api.gui.ToggleButton;
+import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.util.Packets;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -22,7 +22,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
-import static net.flytre.mechanix.base.energy.EnergyScreen.BUTTONS;
+import static net.flytre.mechanix.api.energy.EnergyScreen.BUTTONS;
 
 public class FluidTankScreen extends HandledScreen<FluidTankScreenHandler> {
 
@@ -83,7 +83,7 @@ public class FluidTankScreen extends HandledScreen<FluidTankScreenHandler> {
         //behind
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16,  handler.fluidButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
-        meter = new FluidMeterWidget(x + 73, y + 15,30,60,handler.getDelegate(),handler.getPos(), 0,
+        meter = new FluidMeterWidget(x + 73, y + 15, handler.getPos(), 0,
                 () -> Formatter.unsplit(new int[]{handler.getDelegate().get(1),handler.getDelegate().get(2)}),
         () ->  Formatter.unsplit(new int[]{handler.getDelegate().get(3),handler.getDelegate().get(4)}),
                 this::getFluid);

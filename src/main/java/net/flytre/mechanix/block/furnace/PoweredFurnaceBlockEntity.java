@@ -3,7 +3,7 @@ package net.flytre.mechanix.block.furnace;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.flytre.mechanix.base.energy.EnergyEntity;
+import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.block.generator.GeneratorBlock;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.BlockState;

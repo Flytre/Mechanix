@@ -1,8 +1,8 @@
 package net.flytre.mechanix.util;
 
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.flytre.mechanix.base.energy.EnergyEntity;
-import net.flytre.mechanix.base.fluid.FluidInventory;
+import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
 import net.flytre.mechanix.block.item_pipe.FilterInventory;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;

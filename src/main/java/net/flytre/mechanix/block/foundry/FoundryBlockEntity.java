@@ -1,11 +1,11 @@
 package net.flytre.mechanix.block.foundry;
 
-import net.flytre.mechanix.base.DoubleInventory;
-import net.flytre.mechanix.base.EasyInventory;
-import net.flytre.mechanix.base.MachineBlock;
-import net.flytre.mechanix.base.energy.EnergyEntity;
-import net.flytre.mechanix.base.fluid.FluidInventory;
-import net.flytre.mechanix.base.fluid.FluidStack;
+import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.api.inventory.DoubleInventory;
+import net.flytre.mechanix.api.inventory.EasyInventory;
+import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.util.FluidRegistry;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -44,7 +44,7 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         fluidInventory = DefaultedList.ofSize(1,FluidStack.EMPTY);
         itemInventory = DefaultedList.ofSize(1,ItemStack.EMPTY);
         setEnergyMode(false, false, false, false, false, false);
-        setIOMode(false,false,false,false,false,false);
+        setIOMode(false,true,false,false,false,false);
         setMaxEnergy(300000);
         setMaxTransferRate(200);
         panelMode = 1;

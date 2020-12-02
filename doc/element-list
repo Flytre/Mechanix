@@ -1,0 +1,7 @@
+net.flytre.mechanix.api.connectable
+net.flytre.mechanix.api.energy
+net.flytre.mechanix.api.fluid
+net.flytre.mechanix.api.gui
+net.flytre.mechanix.api.inventory
+net.flytre.mechanix.api.machine
+net.flytre.mechanix.api.util

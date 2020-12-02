@@ -2,8 +2,8 @@ package net.flytre.mechanix.block.furnace;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.block.cable.CableConnectable;
-import net.flytre.mechanix.block.item_pipe.ItemPipeConnectable;
+import net.flytre.mechanix.api.connectable.CableConnectable;
+import net.flytre.mechanix.api.connectable.ItemPipeConnectable;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;

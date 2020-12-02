@@ -1,6 +1,6 @@
 package net.flytre.mechanix.item;
 
-import net.flytre.mechanix.base.TieredMachine;
+import net.flytre.mechanix.api.machine.TieredMachine;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;

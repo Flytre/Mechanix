@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.flytre.mechanix.base.MachineBlockEntityRenderer;
+import net.flytre.mechanix.api.machine.MachineBlockEntityRenderer;
 import net.flytre.mechanix.block.cell.EnergyCellRenderer;
 import net.flytre.mechanix.block.cell.EnergyCellScreen;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeRenderer;
@@ -18,6 +18,7 @@ import net.flytre.mechanix.block.furnace.PoweredFurnaceScreen;
 import net.flytre.mechanix.block.generator.GeneratorScreen;
 import net.flytre.mechanix.block.hydrator.HydratorScreen;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreen;
+import net.flytre.mechanix.block.liquifier.LiquifierScreen;
 import net.flytre.mechanix.block.tank.FluidTankRenderer;
 import net.flytre.mechanix.block.tank.FluidTankScreen;
 import net.flytre.mechanix.util.BlockRegistry;
@@ -59,6 +60,8 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.ITEM_PIPE_SCREEN_HANDLER, ItemPipeScreen::new);
         ScreenRegistry.register(MachineRegistry.HYDRATOR.getHandlerType(), HydratorScreen::new);
         ScreenRegistry.register(MachineRegistry.FOUNDRY.getHandlerType(), FoundryScreen::new);
+        ScreenRegistry.register(MachineRegistry.LIQUIFIER.getHandlerType(), LiquifierScreen::new);
+
 
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getStandard(), RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getGilded(), RenderLayer.getCutout());

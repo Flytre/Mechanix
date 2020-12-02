@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.cell;
 
-import net.flytre.mechanix.block.cable.CableConnectable;
+import net.flytre.mechanix.api.connectable.CableConnectable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

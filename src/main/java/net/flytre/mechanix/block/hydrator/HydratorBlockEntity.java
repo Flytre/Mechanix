@@ -2,11 +2,11 @@ package net.flytre.mechanix.block.hydrator;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.flytre.mechanix.base.Formatter;
-import net.flytre.mechanix.base.MachineBlock;
-import net.flytre.mechanix.base.TieredMachine;
-import net.flytre.mechanix.base.fluid.FluidInventory;
-import net.flytre.mechanix.base.fluid.FluidStack;
+import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.api.machine.MachineBlock;
+import net.flytre.mechanix.api.machine.TieredMachine;
+import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -142,6 +142,11 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
 
     @Override
     public boolean isValid(int slot, FluidStack stack) {
+        return stack.getFluid() == Fluids.WATER;
+    }
+
+    @Override
+    public boolean canInsert(int slot, FluidStack stack, @Nullable Direction dir) {
         return false;
     }
 

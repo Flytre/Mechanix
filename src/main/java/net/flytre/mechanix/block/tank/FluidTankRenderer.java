@@ -1,7 +1,7 @@
 package net.flytre.mechanix.block.tank;
 
-import net.flytre.mechanix.base.RenderUtils;
-import net.flytre.mechanix.base.fluid.FluidStack;
+import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.api.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;

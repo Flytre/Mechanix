@@ -5,8 +5,8 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.flytre.mechanix.base.fluid.FluidMeterWidget;
-import net.flytre.mechanix.base.gui.ToggleButton;
+import net.flytre.mechanix.api.gui.FluidMeterWidget;
+import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -17,7 +17,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
-import static net.flytre.mechanix.base.energy.EnergyScreen.BUTTONS;
+import static net.flytre.mechanix.api.energy.EnergyScreen.BUTTONS;
 
 public class HydratorScreen extends HandledScreen<HydratorScreenHandler> {
     protected final HydratorScreenHandler handler;
@@ -77,7 +77,7 @@ public class HydratorScreen extends HandledScreen<HydratorScreenHandler> {
         //behind
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16,  handler.fluidButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
-        meter = new FluidMeterWidget(x + 73, y + 15,30,60,handler.getDelegate(),handler.getPos(), 0,
+        meter = new FluidMeterWidget(x + 73, y + 15, handler.getPos(), 0,
                 () -> handler.getAmount(),
                 () -> 8000,
                 (i) -> Fluids.WATER);

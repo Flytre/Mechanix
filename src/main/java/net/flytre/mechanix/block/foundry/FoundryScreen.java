@@ -3,9 +3,9 @@ package net.flytre.mechanix.block.foundry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.flytre.mechanix.base.energy.EnergyScreen;
-import net.flytre.mechanix.base.fluid.FluidInventory;
-import net.flytre.mechanix.base.fluid.FluidMeterWidget;
+import net.flytre.mechanix.api.energy.EnergyScreen;
+import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.api.gui.FluidMeterWidget;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -32,7 +32,7 @@ public class FoundryScreen extends EnergyScreen<FoundryScreenHandler> {
     @Override
     protected void onSynced() {
         super.onSynced();
-        FluidMeterWidget meter = new FluidMeterWidget(x + 56, y + 13,30,60,handler.getPropertyDelegate(),handler.getPos(), 0,
+        FluidMeterWidget meter = new FluidMeterWidget(x + 56, y + 13, handler.getPos(), 0,
                 () -> handler.getPropertyDelegate().get(9),
                 () ->  8000,
                 this::getFluid);

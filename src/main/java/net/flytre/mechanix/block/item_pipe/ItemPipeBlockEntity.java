@@ -2,6 +2,7 @@ package net.flytre.mechanix.block.item_pipe;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -43,6 +44,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
     private int cooldown;
     private FilterInventory filter;
     private final PropertyDelegate properties;
+    public HashMap<Direction,Boolean> wrenched;
 
     public ItemPipeBlockEntity() {
         super(MachineRegistry.ITEM_PIPE_ENTITY);
@@ -51,7 +53,13 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
         roundRobinMode = false;
         properties = new ArrayPropertyDelegate(3);
         filter = new FilterInventory(new CompoundTag(),0);
+        wrenched = new HashMap<>();
+        for(Direction dir : Direction.values()) {
+            wrenched.put(dir,false);
+        }
     }
+
+
 
     public PropertyDelegate getProperties() {
         return properties;
@@ -195,7 +203,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
         for (PipeResult piped : items)
             list.add(piped.toTag(new CompoundTag()));
         tag.put("queue", list);
-
+        tag.putInt("wrenched", Formatter.hashToInt(wrenched));
         tag.put("filter",filter.toTag());
 
         return super.toTag(tag);
@@ -214,6 +222,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
         this.cooldown = tag.getInt("cooldown");
         this.roundRobinIndex = tag.getInt("rri");
         this.roundRobinMode = tag.getBoolean("rrm");
+        this.wrenched = Formatter.intToHash(tag.getInt("wrenched"));
         ListTag list = tag.getList("queue", 10);
         for (int i = 0; i < list.size(); i++) {
             PipeResult result = PipeResult.fromTag(list.getCompound(i));

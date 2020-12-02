@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.hydrator;
 
-import net.flytre.mechanix.base.Formatter;
+import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

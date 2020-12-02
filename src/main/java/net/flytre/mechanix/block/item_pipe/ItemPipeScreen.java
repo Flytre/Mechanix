@@ -3,7 +3,7 @@ package net.flytre.mechanix.block.item_pipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.flytre.mechanix.base.gui.ToggleButton;
+import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;

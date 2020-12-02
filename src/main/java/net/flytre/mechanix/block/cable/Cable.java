@@ -1,5 +1,6 @@
 package net.flytre.mechanix.block.cable;
 
+import net.flytre.mechanix.api.connectable.CableConnectable;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
