@@ -66,7 +66,6 @@ public abstract class EnergyScreen<T extends EnergyScreenHandler> extends Handle
         passedData.writeInt(buttonWidget.getState());
         passedData.writeInt(handler.getPanelMode());
         ClientSidePacketRegistry.INSTANCE.sendToServer(Packets.IO_CHANGE, passedData);
-
     }
 
     @Override
