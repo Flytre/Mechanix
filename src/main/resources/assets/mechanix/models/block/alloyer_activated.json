@@ -1,7 +1,7 @@
 {
   "textures": {
-    "3": "mechanix:block/alloyer_activated",
+    "0": "mechanix:block/alloyer_activated",
     "particle": "mechanix:block/alloyer_activated"
   },
-  "parent" : "mechanix:block/machine/base"
+  "parent" : "mechanix:block/machine"
 }

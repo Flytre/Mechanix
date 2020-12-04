@@ -76,6 +76,10 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
     }
 
+    public HashMap<Direction,Boolean> getIO() {
+        return ioMode;
+    }
+
 
     private static ArrayList<Direction> transferrableDirections(BlockPos startingPos, World world) {
         ArrayList<Direction> result = new ArrayList<>();

@@ -1,11 +1,12 @@
 package net.flytre.mechanix.api.machine;
 
+import net.flytre.mechanix.api.inventory.IOMode;
 import net.minecraft.nbt.CompoundTag;
 
 /**
  * Simple interface to tell Java that ur machine has tiers
  */
-public interface TieredMachine {
+public interface TieredMachine extends IOMode {
 
     int getTier();
 

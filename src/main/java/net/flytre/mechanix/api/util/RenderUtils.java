@@ -1,11 +1,12 @@
 package net.flytre.mechanix.api.util;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.flytre.mechanix.util.FluidRegistry;
 import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
@@ -31,7 +32,7 @@ public class RenderUtils {
      */
     public static int color(World world, BlockPos pos, Fluid fluid) {
         int c = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidColor(world, pos, fluid.getDefaultState());
-        if(fluid.isIn(FluidTags.WATER))
+        if (fluid.isIn(FluidTags.WATER))
             c += 0xFF000000;
         return c;
     }
@@ -47,13 +48,13 @@ public class RenderUtils {
     public static int meterColor(World world, BlockPos pos, Fluid fluid) {
         FluidRenderHandler handler = FluidRenderHandlerRegistry.INSTANCE.get(fluid);
         int c = handler == null ? -1 : handler.getFluidColor(world, pos, fluid.getDefaultState());
-        if(fluid.isIn(FluidTags.WATER))
+        if (fluid.isIn(FluidTags.WATER))
             c += 0xFF000000;
 
-        if(fluid.isIn(FluidTags.LAVA))
+        if (fluid.isIn(FluidTags.LAVA))
             c += 0xFFbd5902;
 
-        if(fluid == FluidRegistry.STILL_PERLIUM || fluid == FluidRegistry.FLOWING_PERLIUM)
+        if (fluid == FluidRegistry.STILL_PERLIUM || fluid == FluidRegistry.FLOWING_PERLIUM)
             c += 0xFFff1fdf;
 
         return c;
@@ -79,7 +80,7 @@ public class RenderUtils {
      * @param color the color
      * @return the unpacked int
      */
-    public static int[] unpackColor (int color) {
+    public static int[] unpackColor(int color) {
 
         final int[] colors = new int[4];
         colors[0] = color >> 24 & 0xff; // alpha
@@ -99,7 +100,7 @@ public class RenderUtils {
      * @param overlay the overlay
      * @param color   the color
      */
-    public static void renderBlockSprite (VertexConsumer builder, MatrixStack stack, Sprite sprite, int light, int overlay, int[] color) {
+    public static void renderBlockSprite(VertexConsumer builder, MatrixStack stack, Sprite sprite, int light, int overlay, int[] color) {
 
         renderBlockSprite(builder, stack.peek().getModel(), sprite, light, overlay, 0f, 1f, 0f, 1f, 0f, 1f, color);
     }
@@ -217,31 +218,39 @@ public class RenderUtils {
      */
     public static void render(Identifier id, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(
-                RenderLayer.of(
-                        "vmscreen",
-                        VertexFormats.POSITION_COLOR_TEXTURE,
-                        7,
-                        16,
-                        false,
-                        true,
-                        RenderLayer.MultiPhaseParameters.builder().texture(
-                                new RenderPhase.Texture(
-                                        id,
-                                        false,
-                                        false
-                                )
-                        ).alpha(new RenderPhase.Alpha(0.003921569F)).transparency(
-                                new RenderPhase.Transparency("translucent_transparency", () -> {
-                                    RenderSystem.enableBlend();
-                                    RenderSystem.defaultBlendFunc();
-                                }, RenderSystem::disableBlend)
-                        ).build(false)
-                )
-        );
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getBlockBreaking(id));
         ModelPart model = new ModelPart(16, 16, 0, 0);
         model.addCuboid(-0.01F, -0.01F, -0.01F, 16.02F, 16.02F, 16.02F);
         model.render(matrices, vertexConsumer, light, overlay);
         matrices.pop();
     }
+
+    public static void renderSide(Identifier id, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction dir) {
+        matrices.push();
+        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getBlockBreaking(id));
+        ModelPart model = new ModelPart(16, 16, 0, 0);
+        switch (dir) {
+            case WEST:
+                model.addCuboid(-0.01F, -0.01F, -0.01F, 0.00F, 16.02F, 16.02F);
+                break;
+            case EAST:
+                model.addCuboid(16.01F, -0.01F, -0.01F, 0.00F, 16.02F, 16.02F);
+                break;
+            case NORTH:
+                model.addCuboid(-0.01F, -0.01F, -0.01F, 16.02F, 16.02F, 0.00F);
+                break;
+            case SOUTH:
+                model.addCuboid(-0.01F, -0.01F, 16.01F, 16.02F, 16.02F, 0.00F);
+                break;
+            case UP:
+                model.addCuboid(-0.01F, 16.01F, -0.01F, 16.02F, 0.00F, 16.02F);
+                break;
+            case DOWN:
+                model.addCuboid(-0.01F, -0.01F, -0.01F, 16.02F, 0.00F, 16.02F);
+                break;
+        }
+        model.render(matrices, vertexConsumer, light, overlay);
+        matrices.pop();
+    }
+
 }

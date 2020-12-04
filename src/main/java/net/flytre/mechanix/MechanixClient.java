@@ -49,6 +49,7 @@ public class MechanixClient implements ClientModInitializer {
 
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.HYDRATOR.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FOUNDRY.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.LIQUIFIER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.POWERED_FURNACE.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
 
@@ -61,6 +62,7 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.HYDRATOR.getHandlerType(), HydratorScreen::new);
         ScreenRegistry.register(MachineRegistry.FOUNDRY.getHandlerType(), FoundryScreen::new);
         ScreenRegistry.register(MachineRegistry.LIQUIFIER.getHandlerType(), LiquifierScreen::new);
+
 
 
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_TANKS.getStandard(), RenderLayer.getCutout());

@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
-import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.api.machine.TieredMachine;
 import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -75,7 +74,6 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
         if(world == null || world.isClient)
             return;
 
-        MachineBlock.fixBlockState(ioMode,getPos(),world);
         updateDelegate();
 
         boolean currActivated = world.getBlockState(getPos()).get(HydratorBlock.ACTIVATED);
@@ -195,5 +193,10 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
     @Override
     public CompoundTag toClientTag(CompoundTag compoundTag) {
         return this.toTag(compoundTag);
+    }
+
+    @Override
+    public HashMap<Direction, Boolean> getIO() {
+        return ioMode;
     }
 }

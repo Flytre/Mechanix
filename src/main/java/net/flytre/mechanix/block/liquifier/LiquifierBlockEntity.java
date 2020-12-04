@@ -4,7 +4,6 @@ import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
-import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.util.FluidRegistry;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -156,7 +155,6 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
         if (this.world == null || this.world.isClient)
             return;
 
-        MachineBlock.fixBlockState(ioMode, this.pos, this.world);
         boolean currActivated = world.getBlockState(getPos()).get(LiquifierBlock.ACTIVATED);
         boolean shouldBeActivated = false;
         boolean reset = false;

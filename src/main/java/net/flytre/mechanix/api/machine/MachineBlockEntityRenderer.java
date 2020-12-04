@@ -7,6 +7,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 /**
  * Draws the tier brackets on the side of machines. PLEASE use this for your machines or its gonna look
@@ -15,6 +16,12 @@ import net.minecraft.util.Identifier;
  * @param <MachineTier>
  */
 public class MachineBlockEntityRenderer<T extends BlockEntity, MachineTier> extends BlockEntityRenderer {
+
+    private static final Identifier IN = new Identifier("mechanix","textures/machine/in.png");
+    private static final Identifier OUT = new Identifier("mechanix","textures/machine/out.png");
+    private static final Identifier GILDED = new Identifier("mechanix","textures/machine/gilded.png");
+    private static final Identifier VYSTERIUM = new Identifier("mechanix","textures/machine/vysterium.png");
+    private static final Identifier NEPTUNIUM = new Identifier("mechanix","textures/machine/neptunium.png");
 
 
     public MachineBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
@@ -29,16 +36,27 @@ public class MachineBlockEntityRenderer<T extends BlockEntity, MachineTier> exte
 
         int tier = ((TieredMachine) entity).getTier();
 
+        if(entity.getWorld() == null)
+            return;
+
         Identifier id = null;
 
         if(tier == 1)
-            id = new Identifier("mechanix","textures/machine/gilded.png");
+            id = GILDED;
         if(tier == 2)
-            id = new Identifier("mechanix","textures/machine/vysterium.png");
+            id = VYSTERIUM;
         if(tier == 3)
-            id = new Identifier("mechanix","textures/machine/neptunium.png");
+            id = NEPTUNIUM;
 
         if(tier >= 1 && tier <= 3)
             RenderUtils.render(id, matrices,vertexConsumers,light,overlay);
+
+        Direction facing = entity.getCachedState().get(MachineBlock.FACING);
+        for(Direction direction : Direction.values()) {
+            if(direction == facing)
+                continue;
+            RenderUtils.renderSide(((TieredMachine) entity).getIO().get(direction) ? OUT : IN, matrices, vertexConsumers, light, overlay, direction);
+        }
+
     }
 }

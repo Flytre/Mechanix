@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
  * Highly recommended over default inventory unless you need absolutely crazy
  * behavior!
  */
-public interface EasyInventory extends SidedInventory {
+public interface EasyInventory extends SidedInventory, IOMode {
     DefaultedList<ItemStack> getItems();
 
     HashMap<Direction,Boolean> getItemIO();

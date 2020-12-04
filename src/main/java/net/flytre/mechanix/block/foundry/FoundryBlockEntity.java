@@ -5,7 +5,6 @@ import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
 import net.flytre.mechanix.api.inventory.EasyInventory;
-import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.util.FluidRegistry;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -148,7 +147,6 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         if(this.world == null || this.world.isClient)
             return;
 
-        MachineBlock.fixBlockState(ioMode,this.pos,this.world);
         boolean currActivated = world.getBlockState(getPos()).get(FoundryBlock.ACTIVATED);
         boolean shouldBeActivated = false;
         boolean reset = false;

@@ -1,6 +1,3 @@
 {
-  "parent" : "mechanix:block/machine/icon",
-  "textures": {
-    "3": "mechanix:block/liquifier"
-  }
+  "parent" : "mechanix:block/liquifier"
 }
