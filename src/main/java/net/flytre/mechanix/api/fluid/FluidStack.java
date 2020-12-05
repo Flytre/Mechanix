@@ -1,9 +1,12 @@
 package net.flytre.mechanix.api.fluid;
 
+import com.google.gson.JsonObject;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
@@ -182,5 +185,28 @@ public class FluidStack {
             tag.putString("id", Registry.FLUID.getId(fluid).toString());
         tag.putInt("amount", this.mB);
         return tag;
+    }
+
+    public static FluidStack fromJson(JsonObject object) {
+        int amount = 1000;
+        if(JsonHelper.hasPrimitive(object,"amount")) {
+            amount = JsonHelper.getInt(object,"amount");
+        }
+        String attempt = JsonHelper.getString(object, "fluid");
+        Identifier fluid = new Identifier(attempt);
+        return new FluidStack(Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + attempt + " does not exist")),amount);
+    }
+
+    public static FluidStack fromPacket(PacketByteBuf buf) {
+        Identifier fluid = buf.readIdentifier();
+        Fluid f = Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + fluid + " does not exist"));
+        int amount = buf.readInt();
+        return new FluidStack(f,amount);
+    }
+
+    public static void toPacket(PacketByteBuf packet, FluidStack stack) {
+        Identifier fluid = Registry.FLUID.getId(stack.getFluid());
+        packet.writeIdentifier(fluid);
+        packet.writeInt(stack.getAmount());
     }
 }

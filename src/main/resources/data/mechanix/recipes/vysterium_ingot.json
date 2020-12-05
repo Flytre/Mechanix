@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "mechanix:perlium_ingot"
+    },
+    {
+      "item": "mechanix:reinforced_iron_ingot"
+    },
+    {
+      "item" : "minecraft:diamond"
+    }
+  ],
+  "result": "mechanix:vysterium_ingot"
+}

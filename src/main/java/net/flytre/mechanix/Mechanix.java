@@ -12,6 +12,7 @@ public class Mechanix implements ModInitializer {
 		ItemRegistery.init();
 		FluidRegistry.init();
 		BlockRegistry.init();
+		RecipeRegistry.init();
 		Packets.serverPacketRecieved();
 	}
 }

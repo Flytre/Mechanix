@@ -5,15 +5,12 @@ import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
 import net.flytre.mechanix.api.inventory.EasyInventory;
-import net.flytre.mechanix.util.FluidRegistry;
-import net.flytre.mechanix.util.ItemRegistery;
 import net.flytre.mechanix.util.MachineRegistry;
+import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
@@ -30,13 +27,6 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
     private final DefaultedList<ItemStack> itemInventory;
     private final DefaultedList<FluidStack> fluidInventory;
     private int craftTime;
-
-    private static final HashMap<Fluid, Item> recipes;
-
-    static {
-        recipes = new HashMap<>();
-        recipes.put(FluidRegistry.STILL_PERLIUM, ItemRegistery.PERLIUM_INGOT);
-    }
 
     public FoundryBlockEntity() {
         super(MachineRegistry.FOUNDRY.getEntityType());
@@ -110,36 +100,26 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
     }
 
     @Override
-    public boolean isValid(int slot, ItemStack stack) {
+    public boolean canInsert(int slot, ItemStack stack, Direction dir) {
         return false;
     }
 
     @Override
     public boolean isValid(int slot, FluidStack stack) {
-        return DoubleInventory.super.isValid(slot,stack)
-                && recipes.containsKey(stack.getFluid());
-    }
-
-    public boolean canCraft() {
-        FluidStack stack = getFluidStack(0);
-        if(stack.getAmount() < 1000)
-            return false;
-        Item result = recipes.get(stack.getFluid());
-        return isEmpty() || EasyInventory.canMergeItems(getStack(0),new ItemStack(result));
+        return DoubleInventory.super.isValid(slot,stack);
     }
 
 
-    public void craft() {
-        if(!canCraft())
-            return;
-        FluidStack stack = getFluidStack(0);
-
-        if(!isEmpty())
-            getStack(0).increment(1);
-        else
-            setStack(0, new ItemStack(recipes.get(stack.getFluid())));
-
-        stack.decrement(1000);
+    public void craft(FoundryRecipe recipe) {
+        getFluidStack(0).decrement(recipe.getInput().getAmount());
+        ItemStack result = recipe.craft(this);
+        if (this.getStack(0).isEmpty()) {
+            this.setStack(0, result);
+        } else {
+            if (EasyInventory.canMergeItems(getStack(0), result)) {
+                this.getStack(0).increment(result.getCount());
+            }
+        }
     }
 
     @Override
@@ -153,12 +133,13 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         int tierTimes = getTier() + 1;
         if(getEnergy() + 100*tierTimes < getMaxEnergy())
             requestEnergy(100*tierTimes);
-        if(this.hasEnergy(60*tierTimes) && this.canCraft()) {
+        FoundryRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.FOUNDRY_RECIPE, this, this.world).orElse(null);
+        if(this.hasEnergy(60*tierTimes) && canAcceptRecipeOutput(recipe)) {
                 this.addEnergy(-60*tierTimes);
                 shouldBeActivated = true;
                 this.craftTime -= tierTimes;
                 if(this.craftTime <= 0)
-                    craft();
+                    craft(recipe);
         } else
 
             reset = true;
@@ -171,6 +152,12 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         if(shouldBeActivated != currActivated) {
             world.setBlockState(getPos(),world.getBlockState(pos).with(FoundryBlock.ACTIVATED,shouldBeActivated));
         }
+    }
+
+    private boolean canAcceptRecipeOutput(FoundryRecipe recipe) {
+        if(recipe == null)
+            return false;
+        return this.getStack(0).isEmpty() || EasyInventory.canMergeItems(this.getStack(0),recipe.getOutput());
     }
 
     @Override

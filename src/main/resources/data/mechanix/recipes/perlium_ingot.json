@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:casting",
+  "input" : {
+    "fluid" : "mechanix:molten_perlium_still",
+    "amount" : 1000
+  },
+  "result" : {
+    "item": "mechanix:perlium_ingot",
+    "count": 1
+  }
+}

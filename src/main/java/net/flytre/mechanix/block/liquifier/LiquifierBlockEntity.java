@@ -4,14 +4,13 @@ import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
-import net.flytre.mechanix.util.FluidRegistry;
-import net.flytre.mechanix.util.ItemRegistery;
+import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.util.MachineRegistry;
+import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
@@ -24,15 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventory {
-
-    private static final HashMap<Item, FluidStack> recipes;
-
-    static {
-        recipes = new HashMap<>();
-        recipes.put(ItemRegistery.PERLIUM_INGOT, new FluidStack(FluidRegistry.STILL_PERLIUM,1000));
-        recipes.put(ItemRegistery.PERLIUM_DUST, new FluidStack(FluidRegistry.STILL_PERLIUM,250));
-
-    }
 
     private final DefaultedList<ItemStack> itemInventory;
     private final DefaultedList<FluidStack> fluidInventory;
@@ -113,36 +103,16 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
 
     @Override
     public boolean isValid(int slot, ItemStack stack) {
-        return DoubleInventory.super.isValid(slot, stack)
-                && recipes.containsKey(stack.getItem());
-    }
-
-    public boolean canCraft() {
-        ItemStack stack = getStack(0);
-        if (stack.isEmpty())
-            return false;
-        FluidStack result =  recipes.get(stack.getItem()).copy();
-        return isFluidInventoryEmpty() || DoubleInventory.super.isValid(0, result);
+        return DoubleInventory.super.isValid(slot, stack);
     }
 
 
-    public void craft() {
-        if (!canCraft())
-            return;
-        ItemStack stack = getStack(0);
-
+    public void craft(LiquifierRecipe recipe) {
+        getStack(0).decrement(1);
         if (!isFluidInventoryEmpty())
-            getFluidStack(0).increment(recipes.get(stack.getItem()).getAmount());
+            getFluidStack(0).increment(recipe.fluidOutput().getAmount());
         else
-            setStack(0, recipes.get(stack.getItem()).copy());
-
-        stack.decrement(1);
-    }
-
-
-    @Override
-    public boolean isValid(int slot, FluidStack stack) {
-        return false;
+            setStack(0, recipe.fluidOutput());
     }
 
     @Override
@@ -150,30 +120,35 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
 
     }
 
+    private boolean canAcceptRecipeOutput(@Nullable LiquifierRecipe recipe) {
+        if(recipe == null)
+            return false;
+        return getFluidStack(0).isEmpty() || isValid(0,recipe.fluidOutput());
+    }
+
     @Override
     public void onceTick() {
         if (this.world == null || this.world.isClient)
             return;
 
-        boolean currActivated = world.getBlockState(getPos()).get(LiquifierBlock.ACTIVATED);
+        boolean currActivated = world.getBlockState(getPos()).get(MachineBlock.ACTIVATED);
         boolean shouldBeActivated = false;
         boolean reset = false;
         int tierTimes = getTier() + 1;
         if (getEnergy() + 100 * tierTimes < getMaxEnergy())
             requestEnergy(100 * tierTimes);
-        if (this.hasEnergy(60 * tierTimes) && this.canCraft()) {
+        LiquifierRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.LIQUIFIER_RECIPE, this, this.world).orElse(null);
+        if (this.hasEnergy(60 * tierTimes) && canAcceptRecipeOutput(recipe)) {
             this.addEnergy(-60 * tierTimes);
             shouldBeActivated = true;
             this.craftTime -= tierTimes;
             if (this.craftTime <= 0) {
-                craft();
+                craft(recipe);
                 reset = true;
             }
         } else
+            reset = true;
 
-            reset = true;
-        if (this.craftTime <= 0)
-            reset = true;
 
         if (reset)
             craftTime = 120;
@@ -181,5 +156,10 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
         if (shouldBeActivated != currActivated) {
             world.setBlockState(getPos(), world.getBlockState(pos).with(LiquifierBlock.ACTIVATED, shouldBeActivated));
         }
+    }
+
+    @Override
+    public boolean canInsert(int slot, FluidStack stack, @Nullable Direction dir) {
+        return false;
     }
 }

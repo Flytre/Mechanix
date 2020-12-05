@@ -4,6 +4,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.flytre.mechanix.api.energy.EnergyItem;
 import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.block.alloyer.AlloyerBlock;
+import net.flytre.mechanix.block.alloyer.AlloyerBlockEntity;
+import net.flytre.mechanix.block.alloyer.AlloyerScreenHandler;
 import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cell.EnergyCell;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
@@ -70,7 +73,7 @@ public class MachineRegistry {
     public static MachineType<PoweredFurnaceBlock, PoweredFurnaceBlockEntity, PoweredFurnaceScreenHandler> POWERED_FURNACE;
     public static MachineType<HydratorBlock, HydratorBlockEntity, HydratorScreenHandler> HYDRATOR;
     public static MachineType<FoundryBlock, FoundryBlockEntity, FoundryScreenHandler> FOUNDRY;
-
+    public static MachineType<AlloyerBlock, AlloyerBlockEntity, AlloyerScreenHandler> ALLOYER;
     public static MachineType<LiquifierBlock, LiquifierBlockEntity, LiquifierScreenHandler> LIQUIFIER;
 
     public static void init() {
@@ -151,6 +154,13 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 LiquifierBlockEntity::new,
                 LiquifierScreenHandler::new
+        );
+        ALLOYER = new MachineType<>(
+                new AlloyerBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "alloyer",
+                IconMaker.STANDARD,
+                AlloyerBlockEntity::new,
+                AlloyerScreenHandler::new
         );
     }
 
