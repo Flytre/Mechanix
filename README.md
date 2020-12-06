@@ -9,13 +9,13 @@
 </p>
 
 ## Features
-For a list of features please check the mods [wiki](https://www.flytre.net/mechanix)
+For a list of features please check the mods [wiki](https://www.flytre.net/mechanix)!
 
 ## License
 Distributed under the [MIT License](https://www.mit.edu/~amini/LICENSE.md).
 
 ## Devs
-Check out the [recipes](https://github.com/Flytre/Mechanix/tree/master/src/main/resources/data/mechanix/recipes) this mod comes with for examples on how to add recipes to support your other mods
+Check out the [recipes](https://github.com/Flytre/Mechanix/tree/master/src/main/resources/data/mechanix/recipes) this mod comes with for examples on how to add recipes to support your other mods.
 
-Check out the [api](https://github.com/Flytre/Mechanix/tree/master/src/main/java/net/flytre/mechanix/api) folder on how to add your own generators and machines easily!
+Check out the [api](https://github.com/Flytre/Mechanix/tree/master/src/main/java/net/flytre/mechanix/api) folder on how to add your own generators and machines easily.
 
