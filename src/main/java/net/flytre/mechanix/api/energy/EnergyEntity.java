@@ -76,11 +76,6 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
     }
 
-    public HashMap<Direction,Boolean> getIO() {
-        return ioMode;
-    }
-
-
     private static ArrayList<Direction> transferrableDirections(BlockPos startingPos, World world) {
         ArrayList<Direction> result = new ArrayList<>();
 
@@ -108,6 +103,10 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         }
 
         return result;
+    }
+
+    public HashMap<Direction, Boolean> getIO() {
+        return ioMode;
     }
 
     /**
@@ -431,7 +430,6 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     }
 
 
-
     @Override
     public int getTier() {
         return tier;
@@ -440,5 +438,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     @Override
     public void setTier(int tier) {
         this.tier = tier;
+        if(world != null && !world.isClient)
+            sync();
+        markDirty();
+    }
+
+    @Override
+    public void markDirty() {
+        if(world != null && !world.isClient)
+            sync();
     }
 }

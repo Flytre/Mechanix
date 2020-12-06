@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "mechanix:perlium_ingot"
+    }
+  },
+  "result": {
+    "item": "mechanix:perlium_block"
+  }
+}

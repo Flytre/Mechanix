@@ -23,6 +23,9 @@
     ],
     "client" : [
       "net.flytre.mechanix.MechanixClient"
+    ],
+    "rei_plugins": [
+      "net.flytre.mechanix.compat.rei.MechanixPlugin"
     ]
   },
   "mixins": [

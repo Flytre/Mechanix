@@ -9,8 +9,6 @@
     "FluidBlockMixin"
   ],
   "client": [
-    "LevelLoadingScreenMixin",
-    "SaveLevelScreenMixin",
     "SpriteMixin"
   ],
   "injectors": {

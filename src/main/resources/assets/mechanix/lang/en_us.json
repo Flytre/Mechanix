@@ -1,6 +1,7 @@
 {
   "block.mechanix.alloyer": "Alloyer",
   "block.mechanix.cable": "Cable",
+  "block.mechanix.endalum_block": "Endalum Block",
   "block.mechanix.energy_cell": "Energy Cell",
   "block.mechanix.fluid_pipe": "Fluid Pipe",
   "block.mechanix.foundry": "Foundry",
@@ -24,7 +25,9 @@
   "block.mechanix.neptunium_energy_cell": "Neptunium Energy Cell",
   "block.mechanix.neptunium_fluid_pipe": "Neptunium Fluid Pipe",
   "block.mechanix.neptunium_tank": "Neptunium Fluid Tank",
+  "block.mechanix.perlium_block": "Perlium Block",
   "block.mechanix.perlium_ore": "Perlium Ore",
+  "block.mechanix.reinforced_iron_block": "Reinforced Iron Block",
   "block.mechanix.tank": "Fluid Tank",
   "block.mechanix.vysterium_block": "Vysterium Block",
   "block.mechanix.vysterium_cable": "Vysterium Cable",
