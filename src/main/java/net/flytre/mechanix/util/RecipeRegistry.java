@@ -6,6 +6,8 @@ import net.flytre.mechanix.block.foundry.FoundryRecipe;
 import net.flytre.mechanix.block.foundry.FoundryRecipeSerializer;
 import net.flytre.mechanix.block.liquifier.LiquifierRecipe;
 import net.flytre.mechanix.block.liquifier.LiquifierRecipeSerializer;
+import net.flytre.mechanix.block.pressurizer.PressurizerRecipe;
+import net.flytre.mechanix.block.pressurizer.PressurizerRecipeSerializer;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -19,6 +21,8 @@ public class RecipeRegistry {
     public static RecipeType<LiquifierRecipe> LIQUIFIER_RECIPE;
     public static FoundryRecipeSerializer FOUNDRY_SERIALIZER;
     public static RecipeType<FoundryRecipe> FOUNDRY_RECIPE;
+    public static PressurizerRecipeSerializer PRESSURIZER_SERIALIZER;
+    public static RecipeType<PressurizerRecipe> PRESSURIZER_RECIPE;
 
     public static void init() {
         ALLOYING_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:alloying"), new RecipeType<AlloyingRecipe>() {
@@ -41,5 +45,13 @@ public class RecipeRegistry {
             }
         });
         FOUNDRY_SERIALIZER = RecipeSerializer.register("mechanix:casting", new FoundryRecipeSerializer(FoundryRecipe::new));
+
+        PRESSURIZER_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:compressing"), new RecipeType<PressurizerRecipe>() {
+            public String toString() {
+                return "mechanix:compressing";
+            }
+        });
+        PRESSURIZER_SERIALIZER = RecipeSerializer.register("mechanix:compressing", new PressurizerRecipeSerializer(PressurizerRecipe::new));
+
     }
 }

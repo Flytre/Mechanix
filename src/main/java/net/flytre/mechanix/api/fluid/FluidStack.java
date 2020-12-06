@@ -204,9 +204,9 @@ public class FluidStack {
         return new FluidStack(f,amount);
     }
 
-    public static void toPacket(PacketByteBuf packet, FluidStack stack) {
-        Identifier fluid = Registry.FLUID.getId(stack.getFluid());
+    public void toPacket(PacketByteBuf packet) {
+        Identifier fluid = Registry.FLUID.getId(getFluid());
         packet.writeIdentifier(fluid);
-        packet.writeInt(stack.getAmount());
+        packet.writeInt(getAmount());
     }
 }

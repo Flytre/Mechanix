@@ -36,7 +36,7 @@ public class LiquifierRecipeSerializer implements RecipeSerializer<LiquifierReci
     @Override
     public void write(PacketByteBuf buf, LiquifierRecipe recipe) {
         recipe.getInput().write(buf);
-        FluidStack.toPacket(buf,recipe.fluidOutput());
+        recipe.fluidOutput().toPacket(buf);
     }
 
     public interface RecipeFactory {

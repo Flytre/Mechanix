@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.alloyer;
+package net.flytre.mechanix.block.pressurizer;
 
 import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
@@ -19,21 +19,22 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
-public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
+public class PressurizerBlockEntity extends EnergyEntity implements EasyInventory {
     private final DefaultedList<ItemStack> items;
     private int craftTime;
+    private PressurizerRecipe recipe;
 
-    public AlloyerBlockEntity() {
-        super(MachineRegistry.ALLOYER.getEntityType());
-        items = DefaultedList.ofSize(4, ItemStack.EMPTY);
+    public PressurizerBlockEntity() {
+        super(MachineRegistry.PRESSURIZER.getEntityType());
+        items = DefaultedList.ofSize(2, ItemStack.EMPTY);
         setEnergyMode(false, false, false, false, false, false);
         setIOMode(false, true, false, false, false, false);
         setMaxEnergy(300000);
         setMaxTransferRate(200);
         panelMode = 1;
     }
+
 
     @Override
     public DefaultedList<ItemStack> getItems() {
@@ -45,37 +46,17 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
         return ioMode;
     }
 
-
-    private boolean canAcceptRecipeOutput(@Nullable AlloyingRecipe recipe) {
-        if(recipe == null)
-            return false;
-        return getStack(3).isEmpty() || EasyInventory.canMergeItems(getStack(3),recipe.craft(this));
-    }
-
-    public void craft(AlloyingRecipe recipe) {
-        ItemStack result = recipe.craft(this);
-        boolean crafted = false;
-        if (this.getStack(3).isEmpty()) {
-            this.setStack(3, result);
-            crafted = true;
-        } else {
-            if (EasyInventory.canMergeItems(getStack(3), result)) {
-                this.getStack(3).increment(result.getCount());
-                crafted = true;
-            }
-        }
-
-        if (crafted) {
-            HashSet<Integer> used = recipe.getUsedStacks(this);
-            for (int i : used)
-                this.getStack(i).decrement(1);
-        }
-    }
-
     @Override
     public void updateDelegate() {
         super.updateDelegate();
-        getProperties().set(8, craftTime);
+
+        if (recipe != null) {
+            getProperties().set(8, craftTime);
+            getProperties().set(9, recipe.getCraftTime());
+        }else {
+            getProperties().set(8, 0);
+            getProperties().set(9,1);
+        }
     }
 
 
@@ -86,35 +67,50 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
 
     @Override
     public void onceTick() {
-
         if (this.world == null || this.world.isClient)
             return;
-
         boolean currActivated = world.getBlockState(getPos()).get(MachineBlock.ACTIVATED);
         boolean shouldBeActivated = false;
         boolean reset = false;
         int tierTimes = getTier() + 1;
-        if (getEnergy() + 100 * tierTimes < getMaxEnergy())
-            requestEnergy(100 * tierTimes);
-        AlloyingRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.ALLOYING_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(60 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-60 * tierTimes);
+        if (getEnergy() + 80 * tierTimes < getMaxEnergy())
+            requestEnergy(80 * tierTimes);
+        recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.PRESSURIZER_RECIPE, this, this.world).orElse(null);
+        if (this.hasEnergy(30 * tierTimes) && canAcceptRecipeOutput(recipe)) {
+            this.addEnergy(-30 * tierTimes);
             shouldBeActivated = true;
-            this.craftTime -= tierTimes;
-            if (this.craftTime <= 0) {
+            this.craftTime += 1;
+            if (this.craftTime >= recipe.getCraftTime()) {
                 craft(recipe);
                 reset = true;
             }
         } else
-
             reset = true;
 
         if (reset)
-            craftTime = 120;
+            craftTime = 0;
 
         if (shouldBeActivated != currActivated) {
             world.setBlockState(getPos(), world.getBlockState(pos).with(MachineBlock.ACTIVATED, shouldBeActivated));
         }
+    }
+
+    private void craft(PressurizerRecipe recipe) {
+        ItemStack result = recipe.craft(this);
+        if (this.getStack(1).isEmpty()) {
+            this.setStack(1, result);
+        } else {
+            if (EasyInventory.canMergeItems(getStack(1), result)) {
+                this.getStack(1).increment(result.getCount());
+            }
+        }
+        getStack(0).decrement(1);
+    }
+
+    private boolean canAcceptRecipeOutput(PressurizerRecipe recipe) {
+        if (recipe == null)
+            return false;
+        return getStack(1).isEmpty() || EasyInventory.canMergeItems(getStack(1), recipe.craft(this));
     }
 
     @Override
@@ -132,28 +128,25 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
     }
 
     @Override
-    public boolean isValid(int slot, ItemStack stack) {
-        return slot <= 2;
-    }
-
-    @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return slot <= 2 && EasyInventory.super.canInsert(slot, stack, dir);
+        return slot == 0 && EasyInventory.super.canInsert(slot, stack, dir);
     }
 
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return slot == 3 && EasyInventory.super.canExtract(slot, stack, dir);
-
+        return slot == 1 && EasyInventory.super.canExtract(slot, stack, dir);
     }
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("block.mechanix.alloyer");
+        return new TranslatableText("block.mechanix.pressurizer");
     }
+
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new AlloyerScreenHandler(syncId,inv,this,this.getProperties());
+        return new PressurizerScreenHandler(syncId,inv,this,this.getProperties());
+
     }
+
 }

@@ -33,7 +33,7 @@ public class FoundryRecipeSerializer implements RecipeSerializer<FoundryRecipe> 
 
     @Override
     public void write(PacketByteBuf buf, FoundryRecipe recipe) {
-        FluidStack.toPacket(buf,recipe.getInput());
+        recipe.getInput().toPacket(buf);
         buf.writeItemStack(recipe.getOutput());
     }
 

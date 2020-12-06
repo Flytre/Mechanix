@@ -1,5 +1,6 @@
 {
   "block.mechanix.alloyer": "Alloyer",
+  "block.mechanix.pressurizer" : "Pressurizer",
   "block.mechanix.cable": "Cable",
   "block.mechanix.endalum_block": "Endalum Block",
   "block.mechanix.energy_cell": "Energy Cell",
@@ -44,7 +45,7 @@
   "item.mechanix.neptunium_upgrade": "Neptunium Upgrade Kit",
   "item.mechanix.perlium_dust": "Perlium Dust",
   "item.mechanix.perlium_ingot": "Perlium Ingot",
-  "item.mechanix.reinforced_iron_ingot": "RIron Plating",
+  "item.mechanix.iron_plating": "Iron Plating",
   "item.mechanix.servo": "Servo",
   "item.mechanix.upgrade.tooltip": "Shift right-click to upgrade!",
   "item.mechanix.vysterium_ingot": "Vysterium Ingot",

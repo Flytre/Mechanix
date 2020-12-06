@@ -31,6 +31,9 @@ import net.flytre.mechanix.block.item_pipe.ItemPipeScreenHandler;
 import net.flytre.mechanix.block.liquifier.LiquifierBlock;
 import net.flytre.mechanix.block.liquifier.LiquifierBlockEntity;
 import net.flytre.mechanix.block.liquifier.LiquifierScreenHandler;
+import net.flytre.mechanix.block.pressurizer.PressurizerBlock;
+import net.flytre.mechanix.block.pressurizer.PressurizerBlockEntity;
+import net.flytre.mechanix.block.pressurizer.PressurizerScreenHandler;
 import net.flytre.mechanix.block.tank.FluidTank;
 import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
 import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
@@ -75,6 +78,7 @@ public class MachineRegistry {
     public static MachineType<FoundryBlock, FoundryBlockEntity, FoundryScreenHandler> FOUNDRY;
     public static MachineType<AlloyerBlock, AlloyerBlockEntity, AlloyerScreenHandler> ALLOYER;
     public static MachineType<LiquifierBlock, LiquifierBlockEntity, LiquifierScreenHandler> LIQUIFIER;
+    public static MachineType<PressurizerBlock, PressurizerBlockEntity, PressurizerScreenHandler> PRESSURIZER;
 
     public static void init() {
 
@@ -161,6 +165,14 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 AlloyerBlockEntity::new,
                 AlloyerScreenHandler::new
+        );
+
+        PRESSURIZER = new MachineType<>(
+                new PressurizerBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "pressurizer",
+                IconMaker.STANDARD,
+                PressurizerBlockEntity::new,
+                PressurizerScreenHandler::new
         );
     }
 

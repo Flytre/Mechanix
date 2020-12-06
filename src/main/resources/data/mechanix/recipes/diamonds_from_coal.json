@@ -1,0 +1,9 @@
+{
+  "type": "mechanix:compressing",
+  "ingredient" :
+    {
+      "item": "minecraft:coal"
+    },
+  "time" : 6000,
+  "result": "minecraft:diamond"
+}

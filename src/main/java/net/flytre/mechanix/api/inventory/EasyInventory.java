@@ -120,7 +120,7 @@ public interface EasyInventory extends SidedInventory, IOMode {
         } else if (first.getCount() > first.getMaxCount()) {
             return false;
         } else {
-            return ItemStack.areTagsEqual(first, second);
+            return first.getCount() + second.getCount() <= first.getMaxCount() && ItemStack.areTagsEqual(first, second);
         }
     }
 

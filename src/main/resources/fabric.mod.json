@@ -10,11 +10,11 @@
   ],
   "contact": {
     "homepage": "https://www.flytre.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/Flytre/Mechanix"
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/mechanix/icon.png",
 
   "environment": "*",
   "entrypoints": {

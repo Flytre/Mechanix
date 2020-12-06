@@ -1,0 +1,34 @@
+{
+    "variants": {
+        "facing=east,activated=false": {
+            "model": "mechanix:block/pressurizer",
+            "y": 90
+        },
+        "facing=east,activated=true": {
+            "model": "mechanix:block/pressurizer_activated",
+            "y": 90
+        },
+        "facing=north,activated=false": {
+            "model": "mechanix:block/pressurizer"
+        },
+        "facing=north,activated=true": {
+            "model": "mechanix:block/pressurizer_activated"
+        },
+        "facing=south,activated=false": {
+            "model": "mechanix:block/pressurizer",
+            "y": 180
+        },
+        "facing=south,activated=true": {
+            "model": "mechanix:block/pressurizer_activated",
+            "y": 180
+        },
+        "facing=west,activated=false": {
+            "model": "mechanix:block/pressurizer",
+            "y": 270
+        },
+        "facing=west,activated=true": {
+            "model": "mechanix:block/pressurizer_activated",
+            "y": 270
+        }
+    }
+}

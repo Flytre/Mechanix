@@ -1,0 +1,9 @@
+{
+  "type": "mechanix:compressing",
+  "ingredient" :
+    {
+      "item": "minecraft:iron_ingot"
+    },
+  "time" : 600,
+  "result": "mechanix:iron_plating"
+}

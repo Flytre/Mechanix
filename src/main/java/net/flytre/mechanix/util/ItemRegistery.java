@@ -18,7 +18,7 @@ public class ItemRegistery {
     public static final Item ENDALUM_INGOT = ITEM_MAKER.get();
     public static final Item NEPTUNIUM_INGOT = ITEM_MAKER.get();
     public static final Item PERLIUM_INGOT = ITEM_MAKER.get();
-    public static final Item REINFORCED_IRON_INGOT = ITEM_MAKER.get();
+    public static final Item IRON_PLATING = ITEM_MAKER.get();
     public static final Item VYSTERIUM_INGOT = ITEM_MAKER.get();
     public static final Item PERLIUM_DUST = ITEM_MAKER.get();
     public static final Item MACHINE_FRAME = ITEM_MAKER.get();
@@ -34,7 +34,7 @@ public class ItemRegistery {
         Registry.register(Registry.ITEM, new Identifier("mechanix", "endalum_ingot"), ENDALUM_INGOT);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "neptunium_ingot"), NEPTUNIUM_INGOT);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "perlium_ingot"), PERLIUM_INGOT);
-        Registry.register(Registry.ITEM, new Identifier("mechanix", "reinforced_iron_ingot"), REINFORCED_IRON_INGOT);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", "iron_plating"), IRON_PLATING);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "vysterium_ingot"), VYSTERIUM_INGOT);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "perlium_dust"), PERLIUM_DUST);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "machine"), MACHINE_FRAME);
