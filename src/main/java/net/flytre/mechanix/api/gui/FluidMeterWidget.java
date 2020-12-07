@@ -1,9 +1,8 @@
 package net.flytre.mechanix.api.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.flytre.mechanix.api.util.RenderUtils;
+import net.flytre.mechanix.api.util.SimpleFluidRenderer;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
@@ -64,9 +63,7 @@ public class FluidMeterWidget extends ButtonWidget {
             percent = Math.min(0.95,percent);
 
             Fluid fluid = this.fluid.apply(stackIndex);
-            int color = RenderUtils.meterColor(MinecraftClient.getInstance().world, pos, fluid);
-            DrawableHelper.fill(matrices, x + 1, y + height - 1, x + width - 1, (int) (y + (height * percent) + 1), color);
-
+            SimpleFluidRenderer.render(fluid,matrices,x + 1, (int) (y + (height*(percent)) + 1),width - 2, (int) Math.ceil(height*(1 - percent) - 2),getZOffset());
         }
     }
 

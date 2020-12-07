@@ -6,9 +6,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.flytre.mechanix.api.gui.FluidMeterWidget;
+import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
@@ -19,7 +19,7 @@ import net.minecraft.util.math.Direction;
 
 import static net.flytre.mechanix.api.energy.EnergyScreen.BUTTONS;
 
-public class HydratorScreen extends HandledScreen<HydratorScreenHandler> {
+public class HydratorScreen extends PanelledScreen<HydratorScreenHandler> {
     protected final HydratorScreenHandler handler;
     private boolean synced;
     private final Identifier panel;

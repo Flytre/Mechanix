@@ -6,9 +6,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.flytre.mechanix.api.gui.EnergyMeterWidget;
+import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
@@ -23,7 +23,7 @@ import net.minecraft.util.math.Direction;
  *
  * @param <T> the type parameter
  */
-public abstract class EnergyScreen<T extends EnergyScreenHandler> extends HandledScreen<T> {
+public abstract class EnergyScreen<T extends EnergyScreenHandler> extends PanelledScreen<T> {
     /**
      * Location of the buttons texture
      */

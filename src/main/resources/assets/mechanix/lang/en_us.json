@@ -56,5 +56,9 @@
   "itemGroup.mechanix.all": "Mechanix",
   "tooltip.mechanix.energy": "Energy",
   "tooltip.mechanix.max_energy": "Max Energy",
-  "tooltip.mechanix.transfer_rate": "Transfer Rate"
+  "tooltip.mechanix.transfer_rate": "Transfer Rate",
+  "recipe.mechanix.alloying" : "Alloying",
+  "recipe.mechanix.liquifying" : "Liquifying",
+  "recipe.mechanix.casting" : "Casting",
+  "recipe.mechanix.compressing" : "Compressing"
 }

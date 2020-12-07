@@ -7,12 +7,12 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.gui.FluidMeterWidget;
+import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.util.Packets;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
@@ -24,7 +24,7 @@ import net.minecraft.util.math.Direction;
 
 import static net.flytre.mechanix.api.energy.EnergyScreen.BUTTONS;
 
-public class FluidTankScreen extends HandledScreen<FluidTankScreenHandler> {
+public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
 
     protected final FluidTankScreenHandler handler;
     private boolean synced;
