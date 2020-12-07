@@ -11,6 +11,9 @@ import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cell.EnergyCell;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
 import net.flytre.mechanix.block.cell.EnergyCellScreenHandler;
+import net.flytre.mechanix.block.crusher.CrusherBlock;
+import net.flytre.mechanix.block.crusher.CrusherBlockEntity;
+import net.flytre.mechanix.block.crusher.CrusherScreenHandler;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipe;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeBlockEntity;
 import net.flytre.mechanix.block.foundry.FoundryBlock;
@@ -79,6 +82,9 @@ public class MachineRegistry {
     public static MachineType<AlloyerBlock, AlloyerBlockEntity, AlloyerScreenHandler> ALLOYER;
     public static MachineType<LiquifierBlock, LiquifierBlockEntity, LiquifierScreenHandler> LIQUIFIER;
     public static MachineType<PressurizerBlock, PressurizerBlockEntity, PressurizerScreenHandler> PRESSURIZER;
+
+    public static MachineType<CrusherBlock,CrusherBlockEntity, CrusherScreenHandler> CRUSHER;
+
 
     public static void init() {
 
@@ -173,6 +179,14 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 PressurizerBlockEntity::new,
                 PressurizerScreenHandler::new
+        );
+
+        CRUSHER = new MachineType<>(
+                new CrusherBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "crusher",
+                IconMaker.STANDARD,
+                CrusherBlockEntity::new,
+                CrusherScreenHandler::new
         );
     }
 

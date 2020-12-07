@@ -25,9 +25,20 @@ public class ArrowWidget extends WidgetWithBounds {
         this.animated = animated;
     }
 
+    public ArrowWidget(int x, int y, boolean animated, double time) {
+        this(x,y,animated);
+        this.time = time * 50; //1 tick = 20 ms
+    }
+
+
     public static ArrowWidget create(Point point, boolean animated) {
         return new ArrowWidget(point.x, point.y, animated);
     }
+
+    public static ArrowWidget create(Point point, boolean animated, double time) {
+        return new ArrowWidget(point.x, point.y, animated, time);
+    }
+
 
     public ArrowWidget time(double time) {
         this.time = time;

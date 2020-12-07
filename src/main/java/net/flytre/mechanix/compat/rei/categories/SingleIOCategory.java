@@ -29,7 +29,7 @@ public abstract class SingleIOCategory<R extends Recipe<?>> extends AbstractCust
         int h = bounds.height;
         widgets.add(Widgets.createSlot(new Point(x + w / 4 - 9, y + h / 2 - 9)).entries(getInput(recipeDisplay, 0)).markInput());
         widgets.add(Widgets.createSlot(new Point(x + 3 * w / 4 - 9, y + h / 2 - 9)).entries(getOutput(recipeDisplay, 0)).markOutput());
-        widgets.add(ArrowWidget.create(new Point(x + w / 2 - 12, y + h / 2 - 9), true));
+        widgets.add(ArrowWidget.create(new Point(x + w / 2 - 12, y + h / 2 - 9), true, recipeDisplay.getTime()));
         return widgets;
     }
 }

@@ -2,7 +2,7 @@ package net.flytre.mechanix.compat.rei.displays;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.utils.CollectionUtils;
-import net.flytre.mechanix.block.alloyer.AlloyingRecipe;
+import net.flytre.mechanix.recipe.AlloyingRecipe;
 
 import java.util.Arrays;
 import java.util.Collections;

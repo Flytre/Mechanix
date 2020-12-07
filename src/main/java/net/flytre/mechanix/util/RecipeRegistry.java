@@ -1,13 +1,6 @@
 package net.flytre.mechanix.util;
 
-import net.flytre.mechanix.block.alloyer.AlloyerRecipeSerializer;
-import net.flytre.mechanix.block.alloyer.AlloyingRecipe;
-import net.flytre.mechanix.block.foundry.FoundryRecipe;
-import net.flytre.mechanix.block.foundry.FoundryRecipeSerializer;
-import net.flytre.mechanix.block.liquifier.LiquifierRecipe;
-import net.flytre.mechanix.block.liquifier.LiquifierRecipeSerializer;
-import net.flytre.mechanix.block.pressurizer.PressurizerRecipe;
-import net.flytre.mechanix.block.pressurizer.PressurizerRecipeSerializer;
+import net.flytre.mechanix.recipe.*;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -21,8 +14,10 @@ public class RecipeRegistry {
     public static RecipeType<LiquifierRecipe> LIQUIFIER_RECIPE;
     public static FoundryRecipeSerializer FOUNDRY_SERIALIZER;
     public static RecipeType<FoundryRecipe> FOUNDRY_RECIPE;
-    public static PressurizerRecipeSerializer PRESSURIZER_SERIALIZER;
+    public static ItemProcessingRecipeSerializer PRESSURIZER_SERIALIZER;
     public static RecipeType<PressurizerRecipe> PRESSURIZER_RECIPE;
+    public static ItemProcessingRecipeSerializer CRUSHER_SERIALIZER;
+    public static RecipeType<CrusherRecipe> CRUSHER_RECIPE;
 
     public static void init() {
         ALLOYING_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:alloying"), new RecipeType<AlloyingRecipe>() {
@@ -51,7 +46,14 @@ public class RecipeRegistry {
                 return "mechanix:compressing";
             }
         });
-        PRESSURIZER_SERIALIZER = RecipeSerializer.register("mechanix:compressing", new PressurizerRecipeSerializer(PressurizerRecipe::new));
+        PRESSURIZER_SERIALIZER = RecipeSerializer.register("mechanix:compressing", new ItemProcessingRecipeSerializer(PressurizerRecipe::new));
+
+        CRUSHER_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:crushing"), new RecipeType<CrusherRecipe>() {
+            public String toString() {
+                return "mechanix:crushing";
+            }
+        });
+        CRUSHER_SERIALIZER = RecipeSerializer.register("mechanix:crushing", new ItemProcessingRecipeSerializer(CrusherRecipe::new));
 
     }
 }

@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.pressurizer;
+package net.flytre.mechanix.block.crusher;
 
 import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
@@ -21,13 +21,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
-public class PressurizerBlockEntity extends EnergyEntity implements EasyInventory {
+public class CrusherBlockEntity extends EnergyEntity implements EasyInventory {
     private final DefaultedList<ItemStack> items;
     private int craftTime;
     private ItemProcessingRecipe recipe;
 
-    public PressurizerBlockEntity() {
-        super(MachineRegistry.PRESSURIZER.getEntityType());
+    public CrusherBlockEntity() {
+        super(MachineRegistry.CRUSHER.getEntityType());
         items = DefaultedList.ofSize(2, ItemStack.EMPTY);
         setEnergyMode(false, false, false, false, false, false);
         setIOMode(false, true, false, false, false, false);
@@ -76,7 +76,7 @@ public class PressurizerBlockEntity extends EnergyEntity implements EasyInventor
         int tierTimes = getTier() + 1;
         if (getEnergy() + 80 * tierTimes < getMaxEnergy())
             requestEnergy(80 * tierTimes);
-        recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.PRESSURIZER_RECIPE, this, this.world).orElse(null);
+        recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.CRUSHER_RECIPE, this, this.world).orElse(null);
         if (this.hasEnergy(30 * tierTimes) && canAcceptRecipeOutput(recipe)) {
             this.addEnergy(-30 * tierTimes);
             shouldBeActivated = true;
@@ -140,14 +140,13 @@ public class PressurizerBlockEntity extends EnergyEntity implements EasyInventor
 
     @Override
     public Text getDisplayName() {
-        return new TranslatableText("block.mechanix.pressurizer");
+        return new TranslatableText("block.mechanix.crusher");
     }
 
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new PressurizerScreenHandler(syncId,inv,this,this.getProperties());
-
+        return new CrusherScreenHandler(syncId,inv,this,getProperties());
     }
 
 }

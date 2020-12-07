@@ -3,6 +3,7 @@ package net.flytre.mechanix.block.alloyer;
 import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
 import net.flytre.mechanix.api.machine.MachineBlock;
+import net.flytre.mechanix.recipe.AlloyingRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.block.BlockState;

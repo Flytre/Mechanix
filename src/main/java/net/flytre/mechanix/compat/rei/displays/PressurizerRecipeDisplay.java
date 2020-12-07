@@ -2,7 +2,7 @@ package net.flytre.mechanix.compat.rei.displays;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.utils.CollectionUtils;
-import net.flytre.mechanix.block.pressurizer.PressurizerRecipe;
+import net.flytre.mechanix.recipe.ItemProcessingRecipe;
 import net.minecraft.client.resource.language.I18n;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PressurizerRecipeDisplay extends AbstractRecipeDisplay<PressurizerRecipe> {
-    public PressurizerRecipeDisplay(PressurizerRecipe recipe) {
+public class PressurizerRecipeDisplay extends AbstractRecipeDisplay<ItemProcessingRecipe> {
+    public PressurizerRecipeDisplay(ItemProcessingRecipe recipe) {
         super(recipe);
     }
 

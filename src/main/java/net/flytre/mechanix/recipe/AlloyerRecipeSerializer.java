@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.alloyer;
+package net.flytre.mechanix.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

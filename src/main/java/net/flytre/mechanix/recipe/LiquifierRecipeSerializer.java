@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.liquifier;
+package net.flytre.mechanix.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

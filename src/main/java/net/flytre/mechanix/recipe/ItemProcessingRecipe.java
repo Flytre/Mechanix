@@ -1,25 +1,23 @@
-package net.flytre.mechanix.block.pressurizer;
+package net.flytre.mechanix.recipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.util.MachineRegistry;
-import net.flytre.mechanix.util.RecipeRegistry;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public class PressurizerRecipe implements Recipe<PressurizerBlockEntity> {
+public abstract class ItemProcessingRecipe implements Recipe<Inventory> {
     private final Identifier id;
     private final Ingredient input;
     private final ItemStack output;
     private final int craftTime;
 
-    public PressurizerRecipe(Identifier id, Ingredient input, ItemStack output, int craftTime) {
+    public ItemProcessingRecipe(Identifier id, Ingredient input, ItemStack output, int craftTime) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -50,7 +48,7 @@ public class PressurizerRecipe implements Recipe<PressurizerBlockEntity> {
     }
 
     @Override
-    public boolean matches(PressurizerBlockEntity inv, World world) {
+    public boolean matches(Inventory inv, World world) {
         return input.test(inv.getStack(0));
     }
 
@@ -63,19 +61,8 @@ public class PressurizerRecipe implements Recipe<PressurizerBlockEntity> {
         return true;
     }
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RecipeRegistry.PRESSURIZER_SERIALIZER;
-    }
 
-    @Override
-    public RecipeType<?> getType() {
-        return RecipeRegistry.PRESSURIZER_RECIPE;
-    }
-
-
-
-    public ItemStack craft(PressurizerBlockEntity inv) {
+    public ItemStack craft(Inventory inv) {
         return this.getOutput().copy();
     }
 

@@ -1,8 +1,7 @@
-package net.flytre.mechanix.block.foundry;
+package net.flytre.mechanix.recipe;
 
 import com.google.gson.JsonObject;
 import net.flytre.mechanix.api.fluid.FluidStack;
-import net.flytre.mechanix.block.alloyer.AlloyerRecipeSerializer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;

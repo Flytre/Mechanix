@@ -5,6 +5,7 @@ import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
 import net.flytre.mechanix.api.machine.MachineBlock;
+import net.flytre.mechanix.recipe.LiquifierRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.block.BlockState;

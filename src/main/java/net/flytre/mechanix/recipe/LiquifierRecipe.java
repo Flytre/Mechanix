@@ -1,8 +1,9 @@
-package net.flytre.mechanix.block.liquifier;
+package net.flytre.mechanix.recipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.block.liquifier.LiquifierBlockEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;

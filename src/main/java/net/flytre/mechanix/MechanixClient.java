@@ -13,6 +13,7 @@ import net.flytre.mechanix.api.machine.MachineBlockEntityRenderer;
 import net.flytre.mechanix.block.alloyer.AlloyerScreen;
 import net.flytre.mechanix.block.cell.EnergyCellRenderer;
 import net.flytre.mechanix.block.cell.EnergyCellScreen;
+import net.flytre.mechanix.block.crusher.CrusherScreen;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeRenderer;
 import net.flytre.mechanix.block.foundry.FoundryScreen;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceScreen;
@@ -56,7 +57,9 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ALLOYER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.PRESSURIZER.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRUSHER.getEntityType(), MachineBlockEntityRenderer::new);
 
+        ScreenRegistry.register(MachineRegistry.CRUSHER.getHandlerType(), CrusherScreen::new);
         ScreenRegistry.register(MachineRegistry.PRESSURIZER.getHandlerType(), PressurizerScreen::new);
         ScreenRegistry.register(MachineRegistry.ALLOYER.getHandlerType(), AlloyerScreen::new);
         ScreenRegistry.register(MachineRegistry.ENERGY_CELL_SCREEN_HANDLER, EnergyCellScreen::new);

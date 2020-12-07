@@ -2,7 +2,7 @@ package net.flytre.mechanix.compat.rei.displays;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.utils.CollectionUtils;
-import net.flytre.mechanix.block.liquifier.LiquifierRecipe;
+import net.flytre.mechanix.recipe.LiquifierRecipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;

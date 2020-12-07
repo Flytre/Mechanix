@@ -2,7 +2,7 @@ package net.flytre.mechanix.compat.rei.displays;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.utils.CollectionUtils;
-import net.flytre.mechanix.block.foundry.FoundryRecipe;
+import net.flytre.mechanix.recipe.FoundryRecipe;
 
 import java.util.Collections;
 import java.util.List;

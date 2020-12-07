@@ -1,7 +1,8 @@
-package net.flytre.mechanix.block.alloyer;
+package net.flytre.mechanix.recipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.flytre.mechanix.block.alloyer.AlloyerBlockEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;

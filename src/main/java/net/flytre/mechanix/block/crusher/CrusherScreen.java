@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.pressurizer;
+package net.flytre.mechanix.block.crusher;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
@@ -9,11 +9,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class PressurizerScreen extends EnergyScreen<PressurizerScreenHandler> {
+public class CrusherScreen extends EnergyScreen<CrusherScreenHandler> {
     private final Identifier background = new Identifier("mechanix:textures/gui/container/processing.png");
 
 
-    public PressurizerScreen(PressurizerScreenHandler handler, PlayerInventory inventory, Text title) {
+    public CrusherScreen(CrusherScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }
 
