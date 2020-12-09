@@ -85,8 +85,9 @@ public class MechanixClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getVysterium(), RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getNeptunium(), RenderLayer.getCutout());
 
-        setupFluidRendering(FluidRegistry.STILL_PERLIUM, FluidRegistry.FLOWING_PERLIUM, new Identifier("mechanix", "molten_perlium"), -1);
-
+        setupFluidRendering(FluidRegistry.STILL_MOLTEN_PERLIUM, FluidRegistry.FLOWING_MOLTEN_PERLIUM, new Identifier("mechanix", "molten_perlium"), -1);
+        setupFluidRendering(FluidRegistry.STILL_MOLTEN_GOLD, FluidRegistry.FLOWING_MOLTEN_GOLD, new Identifier("mechanix", "molten_gold"), -1);
+        setupFluidRendering(FluidRegistry.STILL_MOLTEN_IRON, FluidRegistry.FLOWING_MOLTEN_IRON, new Identifier("mechanix", "molten_iron"), -1);
     }
 
 

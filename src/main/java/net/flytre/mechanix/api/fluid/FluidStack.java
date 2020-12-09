@@ -1,14 +1,24 @@
 package net.flytre.mechanix.api.fluid;
 
 import com.google.gson.JsonObject;
+import net.flytre.mechanix.api.util.Formatter;
+import net.flytre.mechanix.mixin.FluidBlockMixin;
+import net.minecraft.block.FluidBlock;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.*;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -195,6 +205,35 @@ public class FluidStack {
         String attempt = JsonHelper.getString(object, "fluid");
         Identifier fluid = new Identifier(attempt);
         return new FluidStack(Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + attempt + " does not exist")),amount);
+    }
+
+    public List<Text> toTooltip(boolean multiline) {
+        ArrayList<Text> tooltip = new ArrayList<>();
+        for (FluidBlock block : FluidBlocks.fluidBlocks) {
+            FlowableFluid fluid = ((FluidBlockMixin) block).getFluid();
+            if(fluid == getFluid()) {
+                if(multiline) {
+                    MutableText line = new TranslatableText(block.getTranslationKey());
+                    line = line.setStyle(Style.EMPTY.withColor(Formatting.WHITE));
+                    tooltip.add(line);
+                    line = new LiteralText(Formatter.formatNumber(getAmount()/1000.0, "B "));
+                    line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
+                    tooltip.add(line);
+                    if(MinecraftClient.getInstance().options.advancedItemTooltips) {
+                        Identifier id = Registry.FLUID.getId(fluid);
+                        line = new LiteralText(id.toString());
+                        line = line.setStyle(Style.EMPTY.withColor(Formatting.DARK_GRAY));
+                        tooltip.add(line);
+                    }
+                } else {
+                    MutableText line = new LiteralText(Formatter.formatNumber(getAmount()/1000.0, "B ")).append(new TranslatableText(block.getTranslationKey()));
+                    line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
+                    tooltip.add(line);
+                }
+                break;
+            }
+        }
+        return tooltip;
     }
 
     public static FluidStack fromPacket(PacketByteBuf buf) {

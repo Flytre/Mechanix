@@ -1,9 +1,19 @@
 package net.flytre.mechanix.api.util;
 
+import com.google.common.collect.Maps;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Direction;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Used to format text and numbers in various situations
@@ -11,6 +21,7 @@ import java.util.HashMap;
 public class Formatter {
 
     private static final String[] PREFIX_VALUES = new String[]{"","k","M","G","T","P"};
+    private static final Map<String, String> modNameCache = Maps.newHashMap();
 
 
     /**
@@ -83,8 +94,8 @@ public class Formatter {
      * @return the int [ ]
      */
     public static int[] splitInt(int x) {
-        int[] result = new int[]{x, x == 0 ? 0 : Math.max((int)Math.log10(x) - 2, 0)};
-        while(result[0] >= 1000)
+        int[] result = new int[]{x, x == 0 ? 0 : Math.max((int)Math.log10(x) - 3, 0)};
+        while(result[0] >= 10000)
             result[0] /= 10;
         return result;
     }
@@ -136,7 +147,25 @@ public class Formatter {
         if(suffix.equals("J"))
             suffixIndex++;
 
-        return String.format("%.1f", num) + PREFIX_VALUES[suffixIndex] + suffix;
+        int format = num >= 100 ? 1 : 2;
+        return String.format("%." + format + "f", num) + PREFIX_VALUES[suffixIndex] + suffix;
+    }
 
+
+    public static String getModFromModId(String modid) {
+        if (modid == null)
+            return "";
+        String any = modNameCache.getOrDefault(modid, null);
+        if (any != null)
+            return any;
+        String s = FabricLoader.getInstance().getModContainer(modid).map(ModContainer::getMetadata).map(ModMetadata::getName).orElse(modid);
+        modNameCache.put(modid, s);
+        return s;
+    }
+
+    public static Text getModNameToolTip(String modid) {
+        MutableText name = new LiteralText(getModFromModId(modid)).append(new LiteralText(""));
+        name.setStyle(Style.EMPTY.withColor(Formatting.BLUE).withItalic(true));
+        return name;
     }
 }

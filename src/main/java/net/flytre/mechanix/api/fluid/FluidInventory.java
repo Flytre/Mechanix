@@ -1,17 +1,12 @@
 package net.flytre.mechanix.api.fluid;
 
-import net.flytre.mechanix.api.util.Formatter;
-import net.flytre.mechanix.mixin.FluidBlockMixin;
-import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.text.*;
+import net.minecraft.text.Text;
 import net.minecraft.util.Clearable;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
@@ -395,14 +390,8 @@ public interface FluidInventory extends Clearable {
         fromTag(blockEntityTag,stacks);
 
         for(FluidStack fluidStack : stacks) {
-            for (FluidBlock block : FluidBlocks.fluidBlocks) {
-                FlowableFluid fluid = ((FluidBlockMixin) block).getFluid();
-                if(fluid == fluidStack.getFluid()) {
-                    MutableText line = new LiteralText(Formatter.formatNumber(fluidStack.getAmount()/1000.0, "B ")).append(new TranslatableText(block.getTranslationKey()));
-                    line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
-                    tooltip.add(line);
-                }
-            }
+            List<Text> list = fluidStack.toTooltip(false);
+            tooltip.addAll(list);
         }
     }
 }

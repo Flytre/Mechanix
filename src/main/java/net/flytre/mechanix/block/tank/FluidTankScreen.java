@@ -83,10 +83,10 @@ public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
         //behind
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16,  handler.fluidButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
-        meter = new FluidMeterWidget(x + 73, y + 15, handler.getPos(), 0,
+        meter = new FluidMeterWidget(x + 73, y + 15, 0,
                 () -> Formatter.unsplit(new int[]{handler.getDelegate().get(1),handler.getDelegate().get(2)}),
         () ->  Formatter.unsplit(new int[]{handler.getDelegate().get(3),handler.getDelegate().get(4)}),
-                this::getFluid);
+                this::getFluid, this::renderTooltip);
         this.addButton(meter);
     }
 
@@ -101,6 +101,7 @@ public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
 
     @Override
     public void init() {
+        synced = false;
         super.init();
     }
 

@@ -4,7 +4,7 @@
       "item": "mechanix:perlium_dust"
     },
   "result": {
-    "fluid" : "mechanix:molten_perlium_still",
+    "fluid" : "mechanix:molten_perlium",
     "amount" : 250
   }
 }

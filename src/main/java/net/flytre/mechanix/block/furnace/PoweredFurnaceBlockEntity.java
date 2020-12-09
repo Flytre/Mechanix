@@ -42,8 +42,8 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
     public PoweredFurnaceBlockEntity() {
         super(MachineRegistry.POWERED_FURNACE.getEntityType());
 
-        setMaxEnergy(25000);
-        setMaxTransferRate(30);
+        setMaxEnergy(100000);
+        setMaxTransferRate(100);
         panelMode = 1;
         setEnergyMode(false, false, false, false, false, false);
         setIOMode(false, false, false, false, false, false);
@@ -52,7 +52,7 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
         this.recipesUsed = new Object2IntOpenHashMap<>();
         this.recipeType = RecipeType.SMELTING;
 
-        energyPerTick = 15;
+        energyPerTick = 30;
     }
 
     private static void dropExperience(World world, Vec3d vec3d, int i, float f) {
@@ -107,19 +107,8 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
         return tag;
     }
 
-//    public void tick() {
-//        this.updateDelegate();
-//        super.tick();
-//    }
-
     @Override
     public void repeatTick() {
-
-        if (world != null && !world.isClient && !isFull()) {
-            double amount = Math.min(this.getMaxTransferRate(), this.getMaxEnergy() - this.getEnergy());
-            requestEnergy(amount);
-        }
-
         boolean bl = this.isBurning();
         boolean bl2 = false;
 
@@ -165,6 +154,11 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
 
     @Override
     public void onceTick() {
+        int tierTimes = getTier() + 1;
+        if (world != null && !world.isClient && !isFull()) {
+            double amount = Math.min(this.getMaxTransferRate() * tierTimes, this.getMaxEnergy() - this.getEnergy());
+            requestEnergy(amount);
+        }
 
     }
 
@@ -287,12 +281,6 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
             this.recipesUsed.addTo(identifier, 1);
         }
 
-    }
-
-    public void dropExperience(PlayerEntity player) {
-        List<Recipe<?>> list = this.method_27354(player.world, player.getPos());
-        player.unlockRecipes(list);
-        this.recipesUsed.clear();
     }
 
     public List<Recipe<?>> method_27354(World world, Vec3d vec3d) {

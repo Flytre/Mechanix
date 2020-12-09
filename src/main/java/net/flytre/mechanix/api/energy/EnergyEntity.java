@@ -196,6 +196,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     public void setMaxEnergy(double maxEnergy) {
         this.maxEnergy = maxEnergy;
         sync = true;
+        fixEnergy();
     }
 
     /**
@@ -243,6 +244,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     public void setEnergy(double charge) {
         this.energy = charge;
         sync = true;
+        fixEnergy();
     }
 
     /**
@@ -263,6 +265,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     public void addEnergy(double charge) {
         energy += charge;
         sync = true;
+        fixEnergy();
+    }
+
+    private void fixEnergy() {
+        if(energy > maxEnergy)
+            energy = maxEnergy;
+        if(energy < 0)
+            energy = 0;
     }
 
     /**
@@ -273,6 +283,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     public void removeEnergy(double charge) {
         energy -= charge;
         sync = true;
+        fixEnergy();
     }
 
 
@@ -302,6 +313,13 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         if (world == null || world.isClient)
             return;
 
+        if(getEnergy() + amt > getMaxEnergy())
+            amt = getMaxEnergy() - getEnergy();
+
+
+        if(amt <= 0)
+            return;
+
         BlockPos start = this.getPos();
 
         Deque<CableResult> to_visit = new LinkedList<>();
@@ -329,13 +347,13 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                             //cable transfer rates:
                             Block cable = world.getBlockState(currentPos.offset(d)).getBlock();
                             if (cable == MachineRegistry.CABLES.getStandard())
-                                maxAmount = Math.min(maxAmount, 25);
+                                maxAmount = Math.min(maxAmount, 50);
                             if (cable == MachineRegistry.CABLES.getGilded())
-                                maxAmount = Math.min(maxAmount, 100);
+                                maxAmount = Math.min(maxAmount, 150);
                             if (cable == MachineRegistry.CABLES.getVysterium())
-                                maxAmount = Math.min(maxAmount, 300);
+                                maxAmount = Math.min(maxAmount, 500);
                             if (cable == MachineRegistry.CABLES.getNeptunium())
-                                maxAmount = Math.min(maxAmount, 1000);
+                                maxAmount = Math.min(maxAmount, 2000);
                         }
                         to_visit.add(new CableResult(currentPos.offset(d), maxAmount));
                     }

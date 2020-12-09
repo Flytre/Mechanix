@@ -29,7 +29,7 @@ public class EnergyCellRenderer extends BlockEntityRenderer<EnergyCellEntity> {
         double percent = (double) Formatter.energy(blockEntity.getProperties()) / Formatter.maxEnergy(blockEntity.getProperties());
 
 
-        for(float k = 0.25f; k <= 0.25f + (percent * 0.50f); k+= 0.01f) {
+        for(float k = 0.25f; k <= 0.249f + (percent * 0.50f); k+= 0.01f) {
             consumer.vertex(matrix4f, 0.75f, k, 0.0f).color(1.0f, 0.0f, 0.0f, 1.0f).light(light).next();
             consumer.vertex(matrix4f, 0.25f, k, 0.0f).color(1.0f, 0.0f, 0.0f, 1.0f).light(light).next();
 

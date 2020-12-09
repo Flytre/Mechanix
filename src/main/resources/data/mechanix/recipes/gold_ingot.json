@@ -1,11 +1,11 @@
 {
   "type": "mechanix:casting",
   "input" : {
-    "fluid" : "mechanix:molten_perlium",
+    "fluid" : "mechanix:molten_gold",
     "amount" : 1000
   },
   "result" : {
-    "item": "mechanix:perlium_ingot",
+    "item": "minecraft:gold_ingot",
     "count": 1
   }
 }

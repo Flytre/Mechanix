@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "GOG",
+    "IGI"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:magma_block"
+    },
+    "G": {
+      "item": "mechanix:hardened_glass"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "I": {
+      "item": "mechanix:reinforced_iron_block"
+    }
+  },
+  "result": {
+    "item": "mechanix:thermal_generator",
+    "count": 1
+  }
+}

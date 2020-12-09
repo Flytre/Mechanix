@@ -2,7 +2,6 @@ package net.flytre.mechanix.api.util;
 
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.flytre.mechanix.util.FluidRegistry;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -34,29 +33,6 @@ public class RenderUtils {
         int c = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidColor(world, pos, fluid.getDefaultState());
         if (fluid.isIn(FluidTags.WATER))
             c += 0xFF000000;
-        return c;
-    }
-
-    /**
-     * Get the meter color of a fluid. (Hardcoded)
-     *
-     * @param world the world
-     * @param pos   the pos
-     * @param fluid the fluid
-     * @return the int
-     */
-    public static int meterColor(World world, BlockPos pos, Fluid fluid) {
-        FluidRenderHandler handler = FluidRenderHandlerRegistry.INSTANCE.get(fluid);
-        int c = handler == null ? -1 : handler.getFluidColor(world, pos, fluid.getDefaultState());
-        if (fluid.isIn(FluidTags.WATER))
-            c += 0xFF000000;
-
-        if (fluid.isIn(FluidTags.LAVA))
-            c += 0xFFbd5902;
-
-        if (fluid == FluidRegistry.STILL_PERLIUM || fluid == FluidRegistry.FLOWING_PERLIUM)
-            c += 0xFFff1fdf;
-
         return c;
     }
 
@@ -225,6 +201,17 @@ public class RenderUtils {
         matrices.pop();
     }
 
+
+    /**
+     * Overlay a texture on the specificed side of a block
+     *
+     * @param id              the texture path
+     * @param matrices        the matrix stack
+     * @param vertexConsumers the vertex consumer
+     * @param light           the light
+     * @param overlay         the overlay
+     * @param dir             the side
+     */
     public static void renderSide(Identifier id, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Direction dir) {
         matrices.push();
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getBlockBreaking(id));

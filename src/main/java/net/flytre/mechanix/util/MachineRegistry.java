@@ -40,6 +40,8 @@ import net.flytre.mechanix.block.pressurizer.PressurizerScreenHandler;
 import net.flytre.mechanix.block.tank.FluidTank;
 import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
 import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
+import net.flytre.mechanix.block.thermal_generator.ThermalGenBlock;
+import net.flytre.mechanix.block.thermal_generator.ThermalGenEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -85,6 +87,8 @@ public class MachineRegistry {
 
     public static MachineType<CrusherBlock,CrusherBlockEntity, CrusherScreenHandler> CRUSHER;
 
+    public static ThermalGenBlock THERMAL_GENERATOR = new ThermalGenBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f));
+    public static BlockEntityType<ThermalGenEntity> THERMAL_ENTITY;
 
     public static void init() {
 
@@ -188,6 +192,9 @@ public class MachineRegistry {
                 CrusherBlockEntity::new,
                 CrusherScreenHandler::new
         );
+
+        registerBlock(THERMAL_GENERATOR,"thermal_generator",IconMaker.STANDARD);
+        THERMAL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:thermal_generator", BlockEntityType.Builder.create(ThermalGenEntity::new, THERMAL_GENERATOR).build(null));
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {

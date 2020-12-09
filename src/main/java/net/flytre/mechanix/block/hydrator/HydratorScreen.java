@@ -77,16 +77,17 @@ public class HydratorScreen extends PanelledScreen<HydratorScreenHandler> {
         //behind
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16,  handler.fluidButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
-        meter = new FluidMeterWidget(x + 73, y + 15, handler.getPos(), 0,
-                () -> handler.getAmount(),
+        meter = new FluidMeterWidget(x + 73, y + 15, 0,
+                handler::getAmount,
                 () -> 8000,
-                (i) -> Fluids.WATER);
+                (i) -> Fluids.WATER, this::renderTooltip);
         this.addButton(meter);
     }
 
 
     @Override
     public void init() {
+        synced = false;
         super.init();
     }
 

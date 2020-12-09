@@ -98,7 +98,7 @@ public abstract class EnergyScreen<T extends EnergyScreenHandler> extends Panell
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16, handler.getPanelMode() == 0 ?  handler.energyButtonState(Direction.SOUTH) : handler.itemButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
         //meter
-        this.meter = new EnergyMeterWidget(this.x + 10, this.y + 13,0,handler.getPropertyDelegate());
+        this.meter = new EnergyMeterWidget(this.x + 10, this.y + 13,0,handler.getPropertyDelegate(), this::renderTooltip);
 
         this.addButton(meter);
     }
@@ -106,6 +106,7 @@ public abstract class EnergyScreen<T extends EnergyScreenHandler> extends Panell
 
     @Override
     public void init() {
+        synced = false;
         super.init();
     }
 

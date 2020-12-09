@@ -26,14 +26,14 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
     protected DefaultedList<ItemStack> inventory;
     private int burnTime;
     private int fuelTime;
-    private static final int genPerTick = 20;
+    private static final int genPerTick = 60;
 
 
     public GeneratorBlockEntity() {
         super(MachineRegistry.GENERATOR.getEntityType());
 
-        setMaxEnergy(25000);
-        setMaxTransferRate(20);
+        setMaxEnergy(100000);
+        setMaxTransferRate(genPerTick);
         panelMode = 1;
         setEnergyMode(true, true, true, true, true, true);
         setIOMode(false, false, false, false, false, false);

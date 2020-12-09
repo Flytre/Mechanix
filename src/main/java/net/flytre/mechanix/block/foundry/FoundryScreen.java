@@ -32,10 +32,10 @@ public class FoundryScreen extends EnergyScreen<FoundryScreenHandler> {
     @Override
     protected void onSynced() {
         super.onSynced();
-        FluidMeterWidget meter = new FluidMeterWidget(x + 56, y + 13, handler.getPos(), 0,
+        FluidMeterWidget meter = new FluidMeterWidget(x + 56, y + 13, 0,
                 () -> handler.getPropertyDelegate().get(9),
                 () ->  8000,
-                this::getFluid);
+                this::getFluid, this::renderTooltip);
         this.addButton(meter);
     }
 

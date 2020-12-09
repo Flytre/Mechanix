@@ -8,34 +8,34 @@ import net.minecraft.item.Item;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 
-public abstract class MoltenPerlium extends AbstractMetallicFluid {
+public abstract class MoltenIron extends AbstractMetallicFluid {
 
 
     @Override
     public Fluid getStill()
     {
-        return FluidRegistry.STILL_MOLTEN_PERLIUM;
+        return FluidRegistry.STILL_MOLTEN_IRON;
     }
 
     @Override
     public Fluid getFlowing()
     {
-        return FluidRegistry.FLOWING_MOLTEN_PERLIUM;
+        return FluidRegistry.FLOWING_MOLTEN_IRON;
     }
 
     @Override
     public Item getBucketItem()
     {
-        return FluidRegistry.MOLTEN_PERLIUM_BUCKET;
+        return FluidRegistry.MOLTEN_IRON_BUCKET;
     }
 
     @Override
     protected BlockState toBlockState(FluidState fluidState)
     {
-        return FluidRegistry.MOLTEN_PERLIUM_BLOCK.getDefaultState().with(Properties.LEVEL_15, method_15741(fluidState));
+        return FluidRegistry.MOLTEN_IRON_BLOCK.getDefaultState().with(Properties.LEVEL_15, method_15741(fluidState));
     }
 
-    public static class Flowing extends MoltenPerlium
+    public static class Flowing extends MoltenIron
     {
         @Override
         protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder)
@@ -57,7 +57,7 @@ public abstract class MoltenPerlium extends AbstractMetallicFluid {
         }
     }
 
-    public static class Still extends MoltenPerlium
+    public static class Still extends MoltenIron
     {
         @Override
         public int getLevel(FluidState fluidState)

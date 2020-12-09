@@ -1,10 +1,10 @@
 {
   "type": "mechanix:liquifying",
   "ingredient": {
-      "item": "mechanix:perlium_ingot"
+      "item": "minecraft:iron_ingot"
     },
   "result": {
-    "fluid" : "mechanix:molten_perlium",
+    "fluid" : "mechanix:molten_iron",
     "amount" : 1000
   }
 }

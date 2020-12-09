@@ -32,10 +32,10 @@ public class LiquifierScreen extends EnergyScreen<LiquifierScreenHandler> {
     @Override
     protected void onSynced() {
         super.onSynced();
-        FluidMeterWidget meter = new FluidMeterWidget(x + 128, y + 13, handler.getPos(), 0,
+        FluidMeterWidget meter = new FluidMeterWidget(x + 128, y + 13, 0,
                 () -> handler.getPropertyDelegate().get(9),
                 () ->  8000,
-                this::getFluid);
+                this::getFluid, this::renderTooltip);
         this.addButton(meter);
     }
 

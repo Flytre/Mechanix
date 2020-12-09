@@ -76,6 +76,11 @@ public class ItemPipeScreen extends HandledScreen<ItemPipeScreenHandler> {
         }
     }
 
+    @Override
+    protected void init() {
+        synced = false;
+        super.init();
+    }
 
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
