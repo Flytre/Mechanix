@@ -14,7 +14,7 @@ For a list of features please check the mods [wiki](https://www.flytre.net/mecha
 ## License
 You may notice the license is All Rights Reserved. Luckily, I have outlined your powers below:
 
-####You may:
+#### You may:
 
 -Download and use this mod.
 
@@ -24,7 +24,7 @@ You may notice the license is All Rights Reserved. Luckily, I have outlined your
 
 -View and learn from the source code of this mod.
 
-####You may not:
+#### You may not:
 
 -Redistribute this in its entirety as source or compiled code unless it is in a release posted on curseforge.com, and only then if it is part of a modpack.
 
