@@ -30,8 +30,12 @@ You may notice the license is All Rights Reserved. Luckily, I have outlined your
 
 -Create or distribute code which contains 50% or more Functionally Equivalent Statements* from this repository.
 
+*A Functionally Equivalent Statement is a code fragment which, regardless of whitespace and object names, achieves the same result within the context of a Minecraft mod or addon. Basically you can't copy the code, rename the variables, add whitespace and say it's different. It's not.
+
+
 ## Devs
 Check out the [recipes](https://github.com/Flytre/Mechanix/tree/master/src/main/resources/data/mechanix/recipes) this mod comes with for examples on how to add recipes to support your other mods.
 
 Check out the [api](https://github.com/Flytre/Mechanix/tree/master/src/main/java/net/flytre/mechanix/api) folder on how to add your own generators and machines easily.
 
+©2020 Flytre
