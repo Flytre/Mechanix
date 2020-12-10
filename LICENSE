@@ -6,7 +6,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 - To download and use this mod, commercially, in published media such as YouTube or Twitch Content
 - To package and publish this mod as a part of a modpack
 - To view and learn from the source code of this mod
-- To utilize all code in the Mechanix API (https://github.com/Flytre/Mechanix/tree/master/src/main/java/net/flytre/mechanix/api) to create and publish compatible mods/content.
 
 The availability of the source code for this mod should not be understood as license to take from this code, especially without attribution. To that end, the licensee shall not:
 
@@ -14,7 +13,8 @@ The availability of the source code for this mod should not be understood as lic
 - Create of distribute code which contains substantial use of code directly from the Mod from this repository.
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Any of the clauses in this document shall not apply to any Mechanix API code (subdirectory src/main/java/net/flytre/mechanix/api). However, if the Mechanix API code is used, it must be included verbatim as it was obtained.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, UT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 IF ANY PART OF THIS LICENSE SHALL BE FOUND TO BE UNENFORCABLE, IT SHALL NOT INVALIDATE THE ENFORCABLE SECTIONS OF THIS LICENSE.
