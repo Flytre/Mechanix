@@ -12,23 +12,7 @@
 For a list of features please check the mods [wiki](https://www.flytre.net/mechanix)!
 
 ## License
-You may notice the license is All Rights Reserved. Luckily, I have outlined your powers below:
-
-#### You may:
-
--Download and use this mod.
-
--Package and publish this mod as part of any modpack with at least 20 other mods.
-
--Publish commercial/non-commercial media featuring this mod.
-
--View and learn from the source code of this mod.
-
-#### You may not:
-
--Redistribute this in its entirety as source or compiled code unless it is in a release posted on curseforge.com, and only then if it is part of a modpack.
-
--Create or distribute code which contains 50% or more Functionally Equivalent Statements* from this repository.
+You may notice the license is All Rights Reserved. Luckily, I have outlined your powers here [license](https://github.com/Flytre/Mechanix/blob/master/LICENSE):
 
 *A Functionally Equivalent Statement is a code fragment which, regardless of whitespace and object names, achieves the same result within the context of a Minecraft mod or addon. Basically you can't copy the code, rename the variables, add whitespace and say it's different. It's not.
 
