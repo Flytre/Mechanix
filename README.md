@@ -12,7 +12,7 @@
 For a list of features please check the mods [wiki](https://www.flytre.net/mechanix)!
 
 ## License
-You may notice the license is All Rights Reserved. Luckily, I have outlined your powers here [license](https://github.com/Flytre/Mechanix/blob/master/LICENSE):
+You may notice the license is All Rights Reserved. Luckily, I have outlined your powers in this license: [license](https://github.com/Flytre/Mechanix/blob/master/LICENSE).
 
 *A Functionally Equivalent Statement is a code fragment which, regardless of whitespace and object names, achieves the same result within the context of a Minecraft mod or addon. Basically you can't copy the code, rename the variables, add whitespace and say it's different. It's not.
 
