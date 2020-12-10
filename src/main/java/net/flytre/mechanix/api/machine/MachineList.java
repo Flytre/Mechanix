@@ -1,4 +1,4 @@
-package net.flytre.mechanix.util;
+package net.flytre.mechanix.api.machine;
 
 import java.util.ArrayList;
 import java.util.Collection;

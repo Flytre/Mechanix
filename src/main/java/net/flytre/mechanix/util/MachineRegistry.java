@@ -4,6 +4,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.flytre.mechanix.api.energy.EnergyItem;
 import net.flytre.mechanix.api.fluid.FluidInventory;
+import net.flytre.mechanix.api.machine.MachineBlock;
+import net.flytre.mechanix.api.machine.MachineList;
+import net.flytre.mechanix.api.machine.MachineType;
 import net.flytre.mechanix.block.alloyer.AlloyerBlock;
 import net.flytre.mechanix.block.alloyer.AlloyerBlockEntity;
 import net.flytre.mechanix.block.alloyer.AlloyerScreenHandler;
@@ -37,11 +40,15 @@ import net.flytre.mechanix.block.liquifier.LiquifierScreenHandler;
 import net.flytre.mechanix.block.pressurizer.PressurizerBlock;
 import net.flytre.mechanix.block.pressurizer.PressurizerBlockEntity;
 import net.flytre.mechanix.block.pressurizer.PressurizerScreenHandler;
+import net.flytre.mechanix.block.solar_panel.SolarPanelBlock;
+import net.flytre.mechanix.block.solar_panel.SolarPanelEntity;
+import net.flytre.mechanix.block.solar_panel.SolarPanelScreenHandler;
 import net.flytre.mechanix.block.tank.FluidTank;
 import net.flytre.mechanix.block.tank.FluidTankBlockEntity;
 import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
 import net.flytre.mechanix.block.thermal_generator.ThermalGenBlock;
 import net.flytre.mechanix.block.thermal_generator.ThermalGenEntity;
+import net.flytre.mechanix.block.thermal_generator.ThermalGenScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -84,11 +91,13 @@ public class MachineRegistry {
     public static MachineType<AlloyerBlock, AlloyerBlockEntity, AlloyerScreenHandler> ALLOYER;
     public static MachineType<LiquifierBlock, LiquifierBlockEntity, LiquifierScreenHandler> LIQUIFIER;
     public static MachineType<PressurizerBlock, PressurizerBlockEntity, PressurizerScreenHandler> PRESSURIZER;
-
     public static MachineType<CrusherBlock,CrusherBlockEntity, CrusherScreenHandler> CRUSHER;
+    public static MachineType<MachineBlock,ThermalGenEntity, ThermalGenScreenHandler> THERMAL_GENERATOR;
 
-    public static ThermalGenBlock THERMAL_GENERATOR = new ThermalGenBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f));
-    public static BlockEntityType<ThermalGenEntity> THERMAL_ENTITY;
+    public static MachineList<SolarPanelBlock> SOLAR_PANELS;
+    public static BlockEntityType<SolarPanelEntity> SOLAR_PANEL_ENTITY;
+    public static ScreenHandlerType<SolarPanelScreenHandler> SOLAR_PANEL_HANDLER;
+
 
     public static void init() {
 
@@ -193,8 +202,20 @@ public class MachineRegistry {
                 CrusherScreenHandler::new
         );
 
-        registerBlock(THERMAL_GENERATOR,"thermal_generator",IconMaker.STANDARD);
-        THERMAL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:thermal_generator", BlockEntityType.Builder.create(ThermalGenEntity::new, THERMAL_GENERATOR).build(null));
+        THERMAL_GENERATOR = new MachineType<>(
+                new ThermalGenBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "thermal_generator",
+                IconMaker.STANDARD,
+                ThermalGenEntity::new,
+                ThermalGenScreenHandler::new
+        );
+
+        SOLAR_PANELS = registerTier(() -> new SolarPanelBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "solar_panel",
+                (panel) -> new BlockItem(panel, new Item.Settings().group(MiscRegistry.TAB)));
+        SOLAR_PANEL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:solar_panel", BlockEntityType.Builder.create(SolarPanelEntity::new, SOLAR_PANELS.toArray(new SolarPanelBlock[4])).build(null));
+        SOLAR_PANEL_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:solar_panel"), SolarPanelScreenHandler::new);
+
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {

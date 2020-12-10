@@ -2,7 +2,6 @@ package net.flytre.mechanix.api.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.flytre.mechanix.api.fluid.FluidStack;
-import net.flytre.mechanix.api.util.Formatter;
 import net.flytre.mechanix.api.util.SimpleFluidRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -10,9 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -52,9 +49,7 @@ public class FluidMeterWidget extends ButtonWidget {
 
     @Override
     public void renderToolTip(MatrixStack matrices, int mouseX, int mouseY) {
-        List<Text> textList = new FluidStack(this.fluid.apply(stackIndex), amount.get()).toTooltip(true);
-        textList.add(Formatter.getModNameToolTip(Registry.FLUID.getId(this.fluid.apply(stackIndex)).getNamespace()));
-        tooltipRenderer.draw(matrices, textList, mouseX, mouseY);
+        tooltipRenderer.draw(matrices, new FluidStack(this.fluid.apply(stackIndex), amount.get()).toTooltip(true), mouseX, mouseY);
     }
 
 

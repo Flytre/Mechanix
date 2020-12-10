@@ -1,6 +1,7 @@
-package net.flytre.mechanix.util;
+package net.flytre.mechanix.api.machine;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.flytre.mechanix.util.IconMaker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,7 +25,7 @@ public class MachineType<T extends BlockWithEntity, E extends BlockEntity, H ext
         Registry.register(Registry.BLOCK, new Identifier("mechanix", id), block);
         Registry.register(Registry.ITEM, new Identifier("mechanix", id), blockItem.create(block));
         entityType = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier("mechanix", id), BlockEntityType.Builder.create(blockEntityCreator, block).build(null));
-        handlerType = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix",id), factory);
+        handlerType = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix", id), factory);
     }
 
     public String getId() {

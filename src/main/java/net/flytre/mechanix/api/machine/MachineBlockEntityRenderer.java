@@ -1,6 +1,7 @@
 package net.flytre.mechanix.api.machine;
 
 import net.flytre.mechanix.api.util.RenderUtils;
+import net.flytre.mechanix.block.thermal_generator.ThermalGenEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
@@ -31,7 +32,7 @@ public class MachineBlockEntityRenderer<T extends BlockEntity, MachineTier> exte
     @Override
     public void render(BlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
-        if(!(entity instanceof TieredMachine))
+        if(!(entity instanceof TieredMachine) || !(entity.getCachedState().getBlock() instanceof MachineBlock))
             return;
 
         int tier = ((TieredMachine) entity).getTier();
@@ -55,6 +56,9 @@ public class MachineBlockEntityRenderer<T extends BlockEntity, MachineTier> exte
         for(Direction direction : Direction.values()) {
             if(direction == facing)
                 continue;
+            if(entity instanceof ThermalGenEntity && direction != Direction.DOWN && direction != Direction.UP)
+                continue;
+
             RenderUtils.renderSide(((TieredMachine) entity).getIO().get(direction) ? OUT : IN, matrices, vertexConsumers, light, overlay, direction);
         }
 

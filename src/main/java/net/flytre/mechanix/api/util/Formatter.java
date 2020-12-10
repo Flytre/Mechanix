@@ -147,8 +147,15 @@ public class Formatter {
         if(suffix.equals("J"))
             suffixIndex++;
 
+        String prefix = PREFIX_VALUES[suffixIndex];
+
+        if(num < 1) {
+            num *= 1000;
+            prefix = suffix.equals("J") ? "" : "m";
+        }
+
         int format = num >= 100 ? 1 : 2;
-        return String.format("%." + format + "f", num) + PREFIX_VALUES[suffixIndex] + suffix;
+        return String.format("%." + format + "f", num) + prefix + suffix;
     }
 
 

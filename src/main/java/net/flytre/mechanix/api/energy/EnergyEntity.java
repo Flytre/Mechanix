@@ -83,8 +83,12 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             return result;
 
         BlockEntity thisEntity = world.getBlockEntity(startingPos);
-
+        BlockState thisState = world.getBlockState(startingPos);
         for (Direction direction : Direction.values()) {
+
+            if(thisState.getBlock() instanceof Cable && (thisState.get(Cable.getProperty(direction)) != CableSide.CONNECTED)) {
+                continue;
+            }
 
             if (thisEntity instanceof EnergyEntity && ((EnergyEntity) thisEntity).energyMode.get(direction)) {
                 continue;
@@ -93,8 +97,9 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             BlockPos pos = startingPos.offset(direction);
             BlockState state = world.getBlockState(pos);
             BlockEntity entity = world.getBlockEntity(pos);
-            if ((entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite())))
+            if ((entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite()))) {
                 result.add(direction);
+            }
 
             if (state.getBlock() instanceof Cable) {
                 if (state.get(Cable.getProperty(direction.getOpposite())) == CableSide.CONNECTED)

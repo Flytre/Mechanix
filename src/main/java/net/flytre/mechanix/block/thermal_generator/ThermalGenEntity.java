@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.thermal_generator;
 
 import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.machine.NotUgradable;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class ThermalGenEntity extends EnergyEntity {
+public class ThermalGenEntity extends EnergyEntity implements NotUgradable {
 
     private static final Random RANDOM;
 
@@ -26,7 +27,7 @@ public class ThermalGenEntity extends EnergyEntity {
 
 
     public ThermalGenEntity() {
-        super(MachineRegistry.THERMAL_ENTITY);
+        super(MachineRegistry.THERMAL_GENERATOR.getEntityType());
         setMaxEnergy(300000);
         setMaxTransferRate(100);
         panelMode = 1;
@@ -71,6 +72,6 @@ public class ThermalGenEntity extends EnergyEntity {
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return null;
+        return new ThermalGenScreenHandler(syncId,inv,this,getProperties());
     }
 }

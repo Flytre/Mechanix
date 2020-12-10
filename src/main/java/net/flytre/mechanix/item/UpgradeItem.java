@@ -1,8 +1,7 @@
 package net.flytre.mechanix.item;
 
+import net.flytre.mechanix.api.machine.NotUgradable;
 import net.flytre.mechanix.api.machine.TieredMachine;
-import net.flytre.mechanix.block.cell.EnergyCellEntity;
-import net.flytre.mechanix.block.thermal_generator.ThermalGenEntity;
 import net.flytre.mechanix.util.ItemRegistery;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -40,10 +39,7 @@ public class UpgradeItem extends Item {
             return super.useOnBlock(context);
         TieredMachine machine = (TieredMachine)entity;
 
-        if(entity instanceof EnergyCellEntity)
-            return ActionResult.PASS;
-
-        if(entity instanceof ThermalGenEntity)
+        if(entity instanceof NotUgradable)
             return ActionResult.PASS;
 
         int destinationTier = 0;

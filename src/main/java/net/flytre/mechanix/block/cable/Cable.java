@@ -109,7 +109,7 @@ public class Cable extends Block implements CableConnectable {
                 world.setBlockState(pos, state.with(getProperty(side), CableSide.WRENCHED));
                 world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()),CableSide.NONE));
             } else {
-                world.setBlockState(pos, state.with(getProperty(side), CableSide.NONE));
+                world.setBlockState(pos, state.with(getProperty(side), isConnectable(state1.getBlock()) ? CableSide.CONNECTED : CableSide.NONE));
             }
 
             return super.onUse(state, world, pos, player, hand, hit);

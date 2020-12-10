@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.cell;
 
 import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.machine.NotUgradable;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,12 +11,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 
-public class EnergyCellEntity extends EnergyEntity implements Tickable {
+public class EnergyCellEntity extends EnergyEntity implements NotUgradable {
 
 
     private boolean corrected = false;

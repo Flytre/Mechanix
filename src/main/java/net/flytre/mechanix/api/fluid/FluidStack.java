@@ -225,6 +225,7 @@ public class FluidStack {
                         line = line.setStyle(Style.EMPTY.withColor(Formatting.DARK_GRAY));
                         tooltip.add(line);
                     }
+                    tooltip.add(Formatter.getModNameToolTip(Registry.FLUID.getId(getFluid()).getNamespace()));
                 } else {
                     MutableText line = new LiteralText(Formatter.formatNumber(getAmount()/1000.0, "B ")).append(new TranslatableText(block.getTranslationKey()));
                     line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
