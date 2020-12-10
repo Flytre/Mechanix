@@ -10,7 +10,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The availability of the source code for this mod should not be understood as license to take from this code, especially without attribution. To that end, the licensee shall not:
 
 - Redistribute, in its entirety, as source or compiled code, the Mod, unless it is in a release posted on Curseforge (https://www.curseforge.com/) and is part of a modpack
-- Create of distribute code which contains substantial use of code directly from the Mod from this repository.
+- Create or distribute code which contains substantial use of code directly from the Mod from this repository.
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 Any of the clauses in this document shall not apply to any Mechanix API code (subdirectory src/main/java/net/flytre/mechanix/api). However, if the Mechanix API code is used, it must be included verbatim as it was obtained.
