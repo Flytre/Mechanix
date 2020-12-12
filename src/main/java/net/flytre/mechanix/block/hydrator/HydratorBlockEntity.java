@@ -93,7 +93,7 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
         }
         if(shouldBeActivated) {
             if(canAdd(new FluidStack(Fluids.WATER,100 * (tier + 1))))
-                add(new FluidStack(Fluids.WATER,100 * (tier + 1)));
+                addInternal(new FluidStack(Fluids.WATER,100 * (tier + 1)));
         }
 
         if(shouldBeActivated != currActivated) {
@@ -139,14 +139,15 @@ public class HydratorBlockEntity extends BlockEntity implements Tickable, FluidI
     }
 
     @Override
-    public boolean isValid(int slot, FluidStack stack) {
+    public boolean isValidInternal(int slot, FluidStack stack) {
         return stack.getFluid() == Fluids.WATER;
     }
 
     @Override
-    public boolean canInsert(int slot, FluidStack stack, @Nullable Direction dir) {
+    public boolean isValidExternal(int slot, FluidStack stack) {
         return false;
     }
+
 
     public FluidStack getStack() {
         return inventory.get(0);

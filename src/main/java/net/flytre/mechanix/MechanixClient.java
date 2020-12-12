@@ -14,6 +14,7 @@ import net.flytre.mechanix.block.alloyer.AlloyerScreen;
 import net.flytre.mechanix.block.cell.EnergyCellRenderer;
 import net.flytre.mechanix.block.cell.EnergyCellScreen;
 import net.flytre.mechanix.block.crusher.CrusherScreen;
+import net.flytre.mechanix.block.distiller.DistillerScreen;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeRenderer;
 import net.flytre.mechanix.block.foundry.FoundryScreen;
 import net.flytre.mechanix.block.furnace.PoweredFurnaceScreen;
@@ -51,7 +52,6 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ENERGY_CELL_ENTITY, EnergyCellRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FLUID_TANK_ENTITY, FluidTankRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FLUID_PIPE_ENTITY, FluidPipeRenderer::new);
-
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.HYDRATOR.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FOUNDRY.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.LIQUIFIER.getEntityType(), MachineBlockEntityRenderer::new);
@@ -61,7 +61,10 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.PRESSURIZER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRUSHER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISTILLER_ENTITY, MachineBlockEntityRenderer::new);
 
+
+        ScreenRegistry.register(MachineRegistry.DISTILLER_HANDLER, DistillerScreen::new);
         ScreenRegistry.register(MachineRegistry.SOLAR_PANEL_HANDLER, SolarPanelScreen::new);
         ScreenRegistry.register(MachineRegistry.THERMAL_GENERATOR.getHandlerType(), ThermalGenScreen::new);
         ScreenRegistry.register(MachineRegistry.CRUSHER.getHandlerType(), CrusherScreen::new);
@@ -90,9 +93,12 @@ public class MechanixClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getVysterium(), RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MachineRegistry.FLUID_PIPES.getNeptunium(), RenderLayer.getCutout());
 
-        setupFluidRendering(FluidRegistry.STILL_MOLTEN_PERLIUM, FluidRegistry.FLOWING_MOLTEN_PERLIUM, new Identifier("mechanix", "molten_perlium"), -1);
-        setupFluidRendering(FluidRegistry.STILL_MOLTEN_GOLD, FluidRegistry.FLOWING_MOLTEN_GOLD, new Identifier("mechanix", "molten_gold"), -1);
-        setupFluidRendering(FluidRegistry.STILL_MOLTEN_IRON, FluidRegistry.FLOWING_MOLTEN_IRON, new Identifier("mechanix", "molten_iron"), -1);
+        setupFluidRendering(FluidRegistry.PERLIUM.getStill(), FluidRegistry.PERLIUM.getFlowing(), new Identifier("mechanix", "molten_perlium"), -1);
+        setupFluidRendering(FluidRegistry.GOLD.getStill(), FluidRegistry.GOLD.getFlowing(), new Identifier("mechanix", "molten_gold"), -1);
+        setupFluidRendering(FluidRegistry.IRON.getStill(), FluidRegistry.IRON.getFlowing(), new Identifier("mechanix", "molten_iron"), -1);
+        setupFluidRendering(FluidRegistry.RAW_GOLD.getStill(), FluidRegistry.RAW_GOLD.getFlowing(), new Identifier("mechanix", "raw_gold"), -1);
+        setupFluidRendering(FluidRegistry.RAW_PERLIUM.getStill(), FluidRegistry.RAW_PERLIUM.getFlowing(), new Identifier("mechanix", "raw_perlium"), -1);
+        setupFluidRendering(FluidRegistry.RAW_IRON.getStill(), FluidRegistry.RAW_IRON.getFlowing(), new Identifier("mechanix", "raw_iron"), -1);
     }
 
 

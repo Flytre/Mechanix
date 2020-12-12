@@ -1,6 +1,6 @@
 package net.flytre.mechanix.fluid;
 
-import net.flytre.mechanix.util.FluidRegistry;
+import net.flytre.mechanix.util.FluidType;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -8,35 +8,46 @@ import net.minecraft.item.Item;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 
-public abstract class MoltenIron extends AbstractMetallicFluid {
+import java.util.function.Supplier;
 
+public abstract class MetallicFluid extends AbstractMetallicFluid {
+
+    private final Supplier<FluidType> fluidType;
+
+    public MetallicFluid(Supplier<FluidType> fluidType) {
+        this.fluidType = fluidType;
+    }
 
     @Override
     public Fluid getStill()
     {
-        return FluidRegistry.STILL_MOLTEN_IRON;
+        return fluidType.get().getStill();
     }
 
     @Override
     public Fluid getFlowing()
     {
-        return FluidRegistry.FLOWING_MOLTEN_IRON;
+        return fluidType.get().getFlowing();
     }
 
     @Override
     public Item getBucketItem()
     {
-        return FluidRegistry.MOLTEN_IRON_BUCKET;
+        return fluidType.get().getBucket();
     }
 
     @Override
     protected BlockState toBlockState(FluidState fluidState)
     {
-        return FluidRegistry.MOLTEN_IRON_BLOCK.getDefaultState().with(Properties.LEVEL_15, method_15741(fluidState));
+        return fluidType.get().getBlock().getDefaultState().with(Properties.LEVEL_15, method_15741(fluidState));
     }
 
-    public static class Flowing extends MoltenIron
+    public static class Flowing extends MetallicFluid
     {
+        public Flowing(Supplier<FluidType> test) {
+            super(test);
+        }
+
         @Override
         protected void appendProperties(StateManager.Builder<Fluid, FluidState> builder)
         {
@@ -57,8 +68,12 @@ public abstract class MoltenIron extends AbstractMetallicFluid {
         }
     }
 
-    public static class Still extends MoltenIron
+    public static class Still extends MetallicFluid
     {
+        public Still(Supplier<FluidType> test) {
+            super(test);
+        }
+
         @Override
         public int getLevel(FluidState fluidState)
         {

@@ -42,7 +42,6 @@ public class FoundryScreenHandler extends EnergyScreenHandler {
 
         this.inventory = entity;
         this.world = playerInventory.player.world;
-
     }
 
 

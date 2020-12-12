@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "iCi",
+    "EPE"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "i": {
+      "item": "mechanix:iron_plating"
+    },
+    "C": {
+      "item": "minecraft:clock"
+    },
+    "E": {
+      "item": "mechanix:endalum_ingot"
+    },
+    "P": {
+      "item": "mechanix:perlium_ingot"
+    }
+  },
+  "result": {
+    "item": "mechanix:panel",
+    "count": 1
+  }
+}

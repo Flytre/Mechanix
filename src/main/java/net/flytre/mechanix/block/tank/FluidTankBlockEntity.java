@@ -164,7 +164,7 @@ public class FluidTankBlockEntity extends BlockEntity implements Tickable, Block
         if(!canAdd(attempt))
             return false;
 
-        FluidStack newStack = add(attempt);
+        FluidStack newStack = addExternal(attempt);
 
         if(newStack.isEmpty()) {
             markDirty();

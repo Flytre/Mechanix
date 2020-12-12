@@ -5,6 +5,7 @@ import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
 import net.flytre.mechanix.api.inventory.EasyInventory;
+import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.recipe.FoundryRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
@@ -105,12 +106,6 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         return false;
     }
 
-    @Override
-    public boolean isValid(int slot, FluidStack stack) {
-        return DoubleInventory.super.isValid(slot,stack);
-    }
-
-
     public void craft(FoundryRecipe recipe) {
         getFluidStack(0).decrement(recipe.getInput().getAmount());
         ItemStack result = recipe.craft(this);
@@ -128,7 +123,7 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         if(this.world == null || this.world.isClient)
             return;
 
-        boolean currActivated = world.getBlockState(getPos()).get(FoundryBlock.ACTIVATED);
+        boolean currActivated = world.getBlockState(getPos()).get(MachineBlock.ACTIVATED);
         boolean shouldBeActivated = false;
         boolean reset = false;
         int tierTimes = getTier() + 1;

@@ -27,6 +27,7 @@ public class ItemRegistery {
     public static final Item NEPTUNIUM_UPGRADE = new UpgradeItem(new FabricItemSettings().group(MiscRegistry.TAB));
     public static final Item IRON_DUST = ITEM_MAKER.get();
     public static final Item GOLD_DUST = ITEM_MAKER.get();
+    public static final Item PANEL = ITEM_MAKER.get();
 
 
     public static void init() {
@@ -45,6 +46,7 @@ public class ItemRegistery {
         Registry.register(Registry.ITEM, new Identifier("mechanix", "neptunium_upgrade"), NEPTUNIUM_UPGRADE);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "iron_dust"), IRON_DUST);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "gold_dust"), GOLD_DUST);
+        Registry.register(Registry.ITEM, new Identifier("mechanix", "panel"), PANEL);
 
     }
 }

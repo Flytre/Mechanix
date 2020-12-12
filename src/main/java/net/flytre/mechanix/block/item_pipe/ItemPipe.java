@@ -227,7 +227,7 @@ public class ItemPipe extends BlockWithEntity implements ItemPipeConnectable {
     }
 
     private boolean isConnectable(Block block, BlockEntity entity) {
-        return block instanceof ItemPipeConnectable || (entity instanceof Inventory);
+        return block instanceof ItemPipeConnectable || (entity instanceof Inventory && ((Inventory) entity).size() > 0);
     }
 
     @Override

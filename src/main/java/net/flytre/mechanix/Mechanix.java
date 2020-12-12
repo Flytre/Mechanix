@@ -7,10 +7,10 @@ public class Mechanix implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		System.out.println("Loading Mechanix...");
+		FluidRegistry.init();
 		MiscRegistry.init();
 		MachineRegistry.init();
 		ItemRegistery.init();
-		FluidRegistry.init();
 		BlockRegistry.init();
 		RecipeRegistry.init();
 		Packets.serverPacketRecieved();

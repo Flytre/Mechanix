@@ -19,6 +19,14 @@ import java.util.stream.IntStream;
 
 /**
  * Like inventory, but for fluids
+ *
+ * Internal Methods are meant to be used only by the inventory - for example, the hydrator gathering water or the
+ * distiller crafting molten fluid. Usually these have much looser criteria: For example, your machine can accept a
+ * recipe output into the recipe output slot internally, but a pipe cannot directly add fluids to that slot externally.
+ *
+ * External Methods are interfaces to be used by other blocks - for example, a fluid pipe figuring out what it can add
+ * or extract from an inventory or a playing clicking with a bucket on a tank. This also includes canInsert()
+ * and canExtract().
  */
 public interface FluidInventory extends Clearable {
 
@@ -55,7 +63,6 @@ public interface FluidInventory extends Clearable {
             FluidStack fluidStack = stacks.get(i);
             if (!fluidStack.isEmpty()) {
                 CompoundTag compoundTag = new CompoundTag();
-                compoundTag.putByte("Slot", (byte) i);
                 fluidStack.toTag(compoundTag);
                 listTag.add(compoundTag);
             } else {
@@ -80,9 +87,9 @@ public interface FluidInventory extends Clearable {
 
         for (int i = 0; i < listTag.size(); ++i) {
             CompoundTag compoundTag = listTag.getCompound(i);
-            int j = compoundTag.getByte("Slot") & 255;
-            if (j < stacks.size()) {
-                stacks.set(j, FluidStack.fromTag(compoundTag));
+
+            if (i < stacks.size()) {
+                stacks.set(i, FluidStack.fromTag(compoundTag));
             }
         }
 
@@ -223,12 +230,36 @@ public interface FluidInventory extends Clearable {
      * @param stack the stack
      * @return the remainder of what's left afterward
      */
-    default FluidStack add(FluidStack stack) {
+    default FluidStack addExternal(FluidStack stack) {
         if(!canAdd(stack))
             return stack;
 
         for(int i = 0; i < slots(); i++) {
-            if(!isValid(i,stack))
+            if(!isValidExternal(i,stack))
+                continue;
+            if(getFluidStack(i) == FluidStack.EMPTY) {
+                setStack(i,stack);
+                return FluidStack.EMPTY;
+            } else if(getFluidStack(i).getFluid() == stack.getFluid()) {
+                getFluidStack(i).increment(stack.getAmount());
+                return FluidStack.EMPTY;
+            }
+        }
+        return stack;
+    }
+
+    /**
+     * Add fluid stack to the inventory internally.
+     *
+     * @param stack the stack
+     * @return the remainder of what's left afterward
+     */
+    default FluidStack addInternal(FluidStack stack) {
+        if(!canAdd(stack))
+            return stack;
+
+        for(int i = 0; i < slots(); i++) {
+            if(!isValidInternal(i,stack))
                 continue;
             if(getFluidStack(i) == FluidStack.EMPTY) {
                 setStack(i,stack);
@@ -291,16 +322,27 @@ public interface FluidInventory extends Clearable {
     }
 
     /**
-     * Checks if a stack can be added to a slot
+     * Checks if a stack can be added to a slot internally - aka by recipes or anything that doesn't interface with the outside world
      *
      * @param slot  the slot
      * @param stack the stack
      * @return the boolean
      */
-    default boolean isValid(int slot, FluidStack stack) {
-        return (getFluidStack(slot) == FluidStack.EMPTY ||
+    default boolean isValidInternal(int slot, FluidStack stack) {
+        return ( (getFluidStack(slot) == FluidStack.EMPTY && stack.getAmount() <= slotCapacity()) ||
                 (getFluidStack(slot).getFluid() == stack.getFluid()  && stack.getAmount() + getFluidStack(slot).getAmount() <= slotCapacity()))
                 && currentCapacity() + stack.getAmount() <= capacity();
+    }
+
+    /**
+     * Checks if a stack can be added to a slot externally - for example, by using buckets, pipes, etc.
+     *
+     * @param slot  the slot
+     * @param stack the stack
+     * @return the boolean
+     */
+    default boolean isValidExternal(int slot, FluidStack stack) {
+        return isValidInternal(slot, stack);
     }
 
     /**
@@ -356,14 +398,14 @@ public interface FluidInventory extends Clearable {
      * @return the boolean
      */
     default boolean canInsert(int slot, FluidStack stack, @Nullable Direction dir) {
-        return this.isValid(slot,stack) && !getFluidIO().get(dir);
+        return this.isValidExternal(slot,stack) && !getFluidIO().get(dir);
     }
 
     /**
      * Same as insert but for extracting
      *
      * @param slot  the slot
-     * @param stack the stack
+     * @param0 stack the stack
      * @param dir   the dir
      * @return the boolean
      */

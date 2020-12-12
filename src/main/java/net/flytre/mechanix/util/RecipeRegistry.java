@@ -18,6 +18,8 @@ public class RecipeRegistry {
     public static RecipeType<PressurizerRecipe> PRESSURIZER_RECIPE;
     public static ItemProcessingRecipeSerializer CRUSHER_SERIALIZER;
     public static RecipeType<CrusherRecipe> CRUSHER_RECIPE;
+    public static DistillerRecipeSerializer DISTILLER_SERIALIZER;
+    public static RecipeType<DistillerRecipe> DISTILLER_RECIPE;
 
     public static void init() {
         ALLOYING_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:alloying"), new RecipeType<AlloyingRecipe>() {
@@ -54,6 +56,13 @@ public class RecipeRegistry {
             }
         });
         CRUSHER_SERIALIZER = RecipeSerializer.register("mechanix:crushing", new ItemProcessingRecipeSerializer(CrusherRecipe::new));
+
+        DISTILLER_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:distilling"), new RecipeType<DistillerRecipe>() {
+            public String toString() {
+                return "mechanix:distilling";
+            }
+        });
+        DISTILLER_SERIALIZER = RecipeSerializer.register("mechanix:distilling", new DistillerRecipeSerializer(DistillerRecipe::new));
 
     }
 }

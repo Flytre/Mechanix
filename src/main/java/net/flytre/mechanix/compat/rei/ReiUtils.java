@@ -16,6 +16,10 @@ public class ReiUtils {
             return new Identifier("mechanix:liquifying");
         if(type == RecipeRegistry.PRESSURIZER_RECIPE)
             return new Identifier("mechanix:compressing");
+        if(type == RecipeRegistry.CRUSHER_RECIPE)
+            return new Identifier("mechanix:crushing");
+        if(type == RecipeRegistry.DISTILLER_RECIPE)
+            return new Identifier("mechanix:distilling");
         return new Identifier("mechanix:null");
     }
 }

@@ -1,20 +1,15 @@
 package net.flytre.mechanix.compat.rei;
 
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.api.BaseBoundsHandler;
-import me.shedaniel.rei.api.DisplayHelper;
-import me.shedaniel.rei.api.RecipeDisplay;
-import me.shedaniel.rei.api.RecipeHelper;
+import me.shedaniel.rei.api.*;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.compat.rei.categories.AlloyerRecipeCategory;
+import net.flytre.mechanix.compat.rei.categories.DistillerRecipeCategory;
 import net.flytre.mechanix.compat.rei.categories.SingleIOCategory;
-import net.flytre.mechanix.compat.rei.displays.AlloyerRecipeDisplay;
-import net.flytre.mechanix.compat.rei.displays.FoundryRecipeDisplay;
-import net.flytre.mechanix.compat.rei.displays.LiquifierRecipeDisplay;
-import net.flytre.mechanix.compat.rei.displays.PressurizerRecipeDisplay;
+import net.flytre.mechanix.compat.rei.displays.*;
 import net.flytre.mechanix.recipe.*;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
@@ -26,10 +21,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
@@ -37,6 +29,8 @@ public class MechanixPlugin implements REIPluginV0 {
 
     public static final Identifier PLUGIN = new Identifier("mechanix", "mechanix_plugin");
     public static final Map<RecipeType<?>, ItemConvertible> iconMap = new HashMap<>();
+    public static final List<RecipeType<?>> types = new ArrayList<>();
+
 
     public MechanixPlugin() {
         iconMap.put(RecipeRegistry.ALLOYING_RECIPE,MachineRegistry.ALLOYER.getBlock());
@@ -44,6 +38,9 @@ public class MechanixPlugin implements REIPluginV0 {
         iconMap.put(RecipeRegistry.LIQUIFIER_RECIPE,MachineRegistry.LIQUIFIER.getBlock());
         iconMap.put(RecipeRegistry.PRESSURIZER_RECIPE,MachineRegistry.PRESSURIZER.getBlock());
         iconMap.put(RecipeRegistry.CRUSHER_RECIPE,MachineRegistry.CRUSHER.getBlock());
+        iconMap.put(RecipeRegistry.DISTILLER_RECIPE,MachineRegistry.DISTILLER_BLOCK);
+        types.addAll(Arrays.asList(RecipeRegistry.ALLOYING_RECIPE, RecipeRegistry.LIQUIFIER_RECIPE,RecipeRegistry.PRESSURIZER_RECIPE,
+                RecipeRegistry.CRUSHER_RECIPE, RecipeRegistry.FOUNDRY_RECIPE, RecipeRegistry.DISTILLER_RECIPE));
     }
 
     @Override
@@ -79,6 +76,7 @@ public class MechanixPlugin implements REIPluginV0 {
                 return  I18n.translate("recipe.mechanix.casting");
             }
         });
+        recipeHelper.registerCategory(new DistillerRecipeCategory(RecipeRegistry.DISTILLER_RECIPE));
     }
 
     @Override
@@ -87,6 +85,7 @@ public class MechanixPlugin implements REIPluginV0 {
         Function<LiquifierRecipe, RecipeDisplay> liquifierDisplay = r -> new LiquifierRecipeDisplay(r) {};
         Function<ItemProcessingRecipe, RecipeDisplay> pressurizerDisplay = r -> new PressurizerRecipeDisplay(r) {};
         Function<FoundryRecipe, RecipeDisplay> foundryDisplay = r -> new FoundryRecipeDisplay(r) {};
+        Function<DistillerRecipe, RecipeDisplay> distillerDisplay = r -> new DistillerRecipeDisplay(r) {};
 
 
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.ALLOYING_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.ALLOYING_RECIPE, alloyDisplay);
@@ -94,7 +93,7 @@ public class MechanixPlugin implements REIPluginV0 {
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.PRESSURIZER_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.PRESSURIZER_RECIPE, pressurizerDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.CRUSHER_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.CRUSHER_RECIPE, pressurizerDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.FOUNDRY_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.FOUNDRY_RECIPE, foundryDisplay);
-
+        recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.DISTILLER_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.DISTILLER_RECIPE, distillerDisplay);
     }
 
     @Override
@@ -113,6 +112,12 @@ public class MechanixPlugin implements REIPluginV0 {
             }
             return result;
         });
+    }
+
+    @Override
+    public void registerOthers(RecipeHelper recipeHelper) {
+        for(RecipeType<?> type : types)
+            recipeHelper.registerWorkingStations(ReiUtils.getId(type), EntryStack.create(iconMap.get(type)));
     }
 
 }

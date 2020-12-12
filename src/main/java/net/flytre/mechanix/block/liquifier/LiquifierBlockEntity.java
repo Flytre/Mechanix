@@ -102,12 +102,6 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
     }
 
 
-    @Override
-    public boolean isValid(int slot, ItemStack stack) {
-        return DoubleInventory.super.isValid(slot, stack);
-    }
-
-
     public void craft(LiquifierRecipe recipe) {
         getStack(0).decrement(1);
         if (!isFluidInventoryEmpty())
@@ -124,7 +118,7 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
     private boolean canAcceptRecipeOutput(@Nullable LiquifierRecipe recipe) {
         if(recipe == null)
             return false;
-        return getFluidStack(0).isEmpty() || isValid(0,recipe.fluidOutput());
+        return getFluidStack(0).isEmpty() || isValidInternal(0,recipe.fluidOutput());
     }
 
     @Override
@@ -160,7 +154,7 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
     }
 
     @Override
-    public boolean canInsert(int slot, FluidStack stack, @Nullable Direction dir) {
+    public boolean isValidExternal(int slot, FluidStack stack) {
         return false;
     }
 }

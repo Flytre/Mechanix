@@ -17,6 +17,9 @@ import net.flytre.mechanix.block.cell.EnergyCellScreenHandler;
 import net.flytre.mechanix.block.crusher.CrusherBlock;
 import net.flytre.mechanix.block.crusher.CrusherBlockEntity;
 import net.flytre.mechanix.block.crusher.CrusherScreenHandler;
+import net.flytre.mechanix.block.distiller.DistillerBlock;
+import net.flytre.mechanix.block.distiller.DistillerEntity;
+import net.flytre.mechanix.block.distiller.DistillerScreenHandler;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipe;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeBlockEntity;
 import net.flytre.mechanix.block.foundry.FoundryBlock;
@@ -98,6 +101,11 @@ public class MachineRegistry {
     public static BlockEntityType<SolarPanelEntity> SOLAR_PANEL_ENTITY;
     public static ScreenHandlerType<SolarPanelScreenHandler> SOLAR_PANEL_HANDLER;
 
+    public static DistillerBlock DISTILLER_BLOCK = new DistillerBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f));
+    public static BlockEntityType<DistillerEntity> DISTILLER_ENTITY;
+    public static ScreenHandlerType<DistillerScreenHandler> DISTILLER_HANDLER;
+
+
 
     public static void init() {
 
@@ -140,6 +148,12 @@ public class MachineRegistry {
         );
         ENERGY_CELL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:energy_cell", BlockEntityType.Builder.create(EnergyCellEntity::new, ENERGY_CELLS.toArray(new EnergyCell[4])).build(null));
         ENERGY_CELL_SCREEN_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:energy_cell"), EnergyCellScreenHandler::new);
+
+        SOLAR_PANELS = registerTier(() -> new SolarPanelBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "solar_panel",
+                (panel) -> new BlockItem(panel, new Item.Settings().group(MiscRegistry.TAB)));
+        SOLAR_PANEL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:solar_panel", BlockEntityType.Builder.create(SolarPanelEntity::new, SOLAR_PANELS.toArray(new SolarPanelBlock[4])).build(null));
+        SOLAR_PANEL_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:solar_panel"), SolarPanelScreenHandler::new);
 
 
         GENERATOR = new MachineType<>(
@@ -209,13 +223,9 @@ public class MachineRegistry {
                 ThermalGenEntity::new,
                 ThermalGenScreenHandler::new
         );
-
-        SOLAR_PANELS = registerTier(() -> new SolarPanelBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
-                "solar_panel",
-                (panel) -> new BlockItem(panel, new Item.Settings().group(MiscRegistry.TAB)));
-        SOLAR_PANEL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:solar_panel", BlockEntityType.Builder.create(SolarPanelEntity::new, SOLAR_PANELS.toArray(new SolarPanelBlock[4])).build(null));
-        SOLAR_PANEL_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:solar_panel"), SolarPanelScreenHandler::new);
-
+        registerBlock(DISTILLER_BLOCK,"distiller",IconMaker.STANDARD);
+        DISTILLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:distiller", BlockEntityType.Builder.create(DistillerEntity::new, DISTILLER_BLOCK).build(null));
+        DISTILLER_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:distiller"), DistillerScreenHandler::new);
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {

@@ -77,14 +77,15 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
                     result.add(direction);
                 continue;
             }
-
+            FluidStack temp = stack.copy();
+            temp.setAmount((1));
             if (entity instanceof FluidInventory) {
                 FluidInventory dInv = (FluidInventory) entity;
 
-                if (dInv.canAdd(stack)) {
+                if (dInv.canAdd(temp)) {
                     int[] slots = getAvailableSlots(dInv, direction.getOpposite()).toArray();
                     for (int i : slots) {
-                        if (canInsert(dInv, stack, i, direction.getOpposite())) {
+                        if (canInsert(dInv, temp, i, direction.getOpposite())) {
                             result.add(direction);
                             break;
                         }
@@ -97,7 +98,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
     }
 
     private static boolean canInsert(FluidInventory inventory, FluidStack stack, int slot, @Nullable Direction side) {
-        if (!inventory.isValid(slot, stack)) {
+        if (!inventory.isValidExternal(slot, stack)) {
             return false;
         }
         return inventory.canInsert(slot, stack, side);
@@ -212,7 +213,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
                         if (result != null) {
                             FluidInventory inv = (FluidInventory) world.getBlockEntity(result.getDestination());
                             assert inv != null;
-                            inv.add(new FluidStack(one.getFluid(), (int) result.getAmount()));
+                            inv.addExternal(new FluidStack(one.getFluid(), (int) result.getAmount()));
                             stack.decrement((int) result.getAmount());
                             markDirty();
 
@@ -282,6 +283,18 @@ public class FluidPipeBlockEntity extends BlockEntity implements Tickable, Block
                         BlockEntity entity1 = world.getBlockEntity(current.offset(d));
                         if(entity1 instanceof FluidPipeBlockEntity) {
                             amount = Math.min(amount,((FluidPipeBlockEntity) entity1).getPerTick());
+                        }
+                        if(entity1 instanceof FluidInventory) {
+                            FluidInventory dInv = (FluidInventory) entity1;
+                            int[] slots = getAvailableSlots(dInv, d.getOpposite()).toArray();
+                            for (int i : slots) {
+                                FluidStack temp = stack.copy();
+                                temp.setAmount((1));
+                                if (canInsert(dInv, temp, i, d.getOpposite())) {
+                                    amount = Math.min(amount, dInv.slotCapacity() - dInv.getFluidStack(i).getAmount());
+                                    break;
+                                }
+                            }
                         }
                         to_visit.add(new FluidPipeResult(current.offset(d), amount, d.getOpposite(), newPath));
                     }

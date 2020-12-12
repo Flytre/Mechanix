@@ -1,55 +1,28 @@
 package net.flytre.mechanix.util;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.flytre.mechanix.fluid.MoltenGold;
-import net.flytre.mechanix.fluid.MoltenIron;
-import net.flytre.mechanix.fluid.MoltenPerlium;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.flytre.mechanix.fluid.MetallicFluid;
 
 public class FluidRegistry {
 
-    public static FlowableFluid STILL_MOLTEN_PERLIUM;
-    public static FlowableFluid FLOWING_MOLTEN_PERLIUM;
-    public static Item MOLTEN_PERLIUM_BUCKET;
-    public static Block MOLTEN_PERLIUM_BLOCK;
-
-    public static FlowableFluid STILL_MOLTEN_GOLD;
-    public static FlowableFluid FLOWING_MOLTEN_GOLD;
-    public static Item MOLTEN_GOLD_BUCKET;
-    public static Block MOLTEN_GOLD_BLOCK;
-
-    public static FlowableFluid STILL_MOLTEN_IRON;
-    public static FlowableFluid FLOWING_MOLTEN_IRON;
-    public static Item MOLTEN_IRON_BUCKET;
-    public static Block MOLTEN_IRON_BLOCK;
-
+    public static FluidType PERLIUM;
+    public static FluidType GOLD;
+    public static FluidType IRON;
+    public static FluidType RAW_PERLIUM;
+    public static FluidType RAW_GOLD;
+    public static FluidType RAW_IRON;
 
     public static void init() {
-        STILL_MOLTEN_PERLIUM = Registry.register(Registry.FLUID, new Identifier("mechanix", "molten_perlium"), new MoltenPerlium.Still());
-        FLOWING_MOLTEN_PERLIUM = Registry.register(Registry.FLUID, new Identifier("mechanix", "flowing_molten_perlium"), new MoltenPerlium.Flowing());
-        MOLTEN_PERLIUM_BUCKET = Registry.register(Registry.ITEM, new Identifier("mechanix", "molten_perlium_bucket"), new BucketItem(STILL_MOLTEN_PERLIUM, new Item.Settings().recipeRemainder(Items.BUCKET).group(MiscRegistry.TAB).maxCount(1)));
-        MOLTEN_PERLIUM_BLOCK = Registry.register(Registry.BLOCK, new Identifier("mechanix", "molten_perlium"), new FluidBlock(STILL_MOLTEN_PERLIUM, FabricBlockSettings.copy(Blocks.LAVA)){});
-
-        STILL_MOLTEN_GOLD = Registry.register(Registry.FLUID, new Identifier("mechanix", "molten_gold"), new MoltenGold.Still());
-        FLOWING_MOLTEN_GOLD = Registry.register(Registry.FLUID, new Identifier("mechanix", "flowing_molten_gold"), new MoltenGold.Flowing());
-        MOLTEN_GOLD_BUCKET = Registry.register(Registry.ITEM, new Identifier("mechanix", "molten_gold_bucket"), new BucketItem(STILL_MOLTEN_GOLD, new Item.Settings().recipeRemainder(Items.BUCKET).group(MiscRegistry.TAB).maxCount(1)));
-        MOLTEN_GOLD_BLOCK = Registry.register(Registry.BLOCK, new Identifier("mechanix", "molten_gold"), new FluidBlock(STILL_MOLTEN_GOLD, FabricBlockSettings.copy(Blocks.LAVA)){});
-
-        STILL_MOLTEN_IRON = Registry.register(Registry.FLUID, new Identifier("mechanix", "molten_iron"), new MoltenIron.Still());
-        FLOWING_MOLTEN_IRON = Registry.register(Registry.FLUID, new Identifier("mechanix", "flowing_molten_iron"), new MoltenIron.Flowing());
-        MOLTEN_IRON_BUCKET = Registry.register(Registry.ITEM, new Identifier("mechanix", "molten_iron_bucket"), new BucketItem(STILL_MOLTEN_IRON, new Item.Settings().recipeRemainder(Items.BUCKET).group(MiscRegistry.TAB).maxCount(1)));
-        MOLTEN_IRON_BLOCK = Registry.register(Registry.BLOCK, new Identifier("mechanix", "molten_iron"), new FluidBlock(STILL_MOLTEN_IRON, FabricBlockSettings.copy(Blocks.LAVA)){});
-    }
-    
-    public static void registerFluid() {
-        
+        PERLIUM = new FluidType("molten_perlium", () -> (new MetallicFluid.Still(() -> PERLIUM)), () -> (new MetallicFluid.Flowing(() -> PERLIUM)));
+        PERLIUM.setBlock();
+        GOLD = new FluidType("molten_gold", () -> (new MetallicFluid.Still(() -> GOLD)), () -> (new MetallicFluid.Flowing(() -> GOLD)));
+        GOLD.setBlock();
+        IRON = new FluidType("molten_iron", () -> (new MetallicFluid.Still(() -> IRON)), () -> (new MetallicFluid.Flowing(() -> IRON)));
+        IRON.setBlock();
+        RAW_PERLIUM = new FluidType("raw_perlium", () -> (new MetallicFluid.Still(() -> RAW_PERLIUM)), () -> (new MetallicFluid.Flowing(() -> RAW_PERLIUM)));
+        RAW_PERLIUM.setBlock();
+        RAW_GOLD = new FluidType("raw_gold", () -> (new MetallicFluid.Still(() -> RAW_GOLD)), () -> (new MetallicFluid.Flowing(() -> RAW_GOLD)));
+        RAW_GOLD.setBlock();
+        RAW_IRON = new FluidType("raw_iron",() -> (new MetallicFluid.Still(() -> RAW_IRON)), () -> (new MetallicFluid.Flowing(() -> RAW_IRON)));
+        RAW_IRON.setBlock();
     }
 }
