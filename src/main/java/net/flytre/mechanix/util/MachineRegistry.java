@@ -45,6 +45,7 @@ import net.flytre.mechanix.block.pressurizer.PressurizerBlockEntity;
 import net.flytre.mechanix.block.pressurizer.PressurizerScreenHandler;
 import net.flytre.mechanix.block.sawmill.SawmillBlock;
 import net.flytre.mechanix.block.sawmill.SawmillEntity;
+import net.flytre.mechanix.block.sawmill.SawmillScreenHandler;
 import net.flytre.mechanix.block.solar_panel.SolarPanelBlock;
 import net.flytre.mechanix.block.solar_panel.SolarPanelEntity;
 import net.flytre.mechanix.block.solar_panel.SolarPanelScreenHandler;
@@ -105,7 +106,7 @@ public class MachineRegistry {
 
     public static MachineType<DistillerBlock,DistillerEntity,DistillerScreenHandler> DISTILLER;
 
-    public static MachineType<SawmillBlock, SawmillEntity,?> SAWMILL;
+    public static MachineType<SawmillBlock, SawmillEntity, SawmillScreenHandler> SAWMILL;
 
 
     public static void init() {
@@ -238,7 +239,7 @@ public class MachineRegistry {
                 "sawmill",
                 IconMaker.STANDARD,
                 SawmillEntity::new,
-                null
+                SawmillScreenHandler::new
         );
     }
 

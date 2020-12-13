@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.pressurizer;
+package net.flytre.mechanix.block.sawmill;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
@@ -9,11 +9,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class PressurizerScreen extends EnergyScreen<PressurizerScreenHandler> {
-    private final Identifier background = new Identifier("mechanix:textures/gui/container/processing.png");
+public class SawmillScreen extends EnergyScreen<SawmillScreenHandler> {
 
+    private final Identifier background = new Identifier("mechanix:textures/gui/container/sawmill.png");
 
-    public PressurizerScreen(PressurizerScreenHandler handler, PlayerInventory inventory, Text title) {
+    public SawmillScreen(SawmillScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }
 

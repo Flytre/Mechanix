@@ -2,8 +2,10 @@ package net.flytre.mechanix.block.sawmill;
 
 import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
+import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.recipe.SawmillRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
+import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -50,17 +52,67 @@ public class SawmillEntity extends EnergyEntity implements EasyInventory {
     }
 
 
-
-    //TODO: CRAFT, DELEGATE, TICK
     @Override
-    public void repeatTick() {
-
+    public void updateDelegate() {
+        super.updateDelegate();
+        getProperties().set(8, craftTime);
     }
+
 
     @Override
     public void onceTick() {
+        if (this.world == null || this.world.isClient)
+            return;
+        boolean currActivated = world.getBlockState(getPos()).get(MachineBlock.ACTIVATED);
+        boolean shouldBeActivated = false;
+        boolean reset = false;
+        int tierTimes = getTier() + 1;
+        if (!isFull())
+            requestEnergy(Math.min(80 * tierTimes, getMaxEnergy() - getEnergy()));
+        SawmillRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.SAWMILL_RECIPE, this, this.world).orElse(null);
+        if (this.hasEnergy(40 * tierTimes) && canAcceptRecipeOutput(recipe)) {
+            this.addEnergy(-40 * tierTimes);
+            shouldBeActivated = true;
+            this.craftTime += tierTimes;
+            if (this.craftTime >= 120) {
+                craft(recipe);
+                reset = true;
+            }
+        } else
+            reset = true;
+
+        if (reset)
+            craftTime = 0;
+
+        if (shouldBeActivated != currActivated) {
+            world.setBlockState(getPos(), world.getBlockState(pos).with(MachineBlock.ACTIVATED, shouldBeActivated));
+        }
+
 
     }
+
+    private void craft(SawmillRecipe recipe) {
+        ItemStack result = recipe.craft(this);
+        ItemStack secondary = recipe.getSecondary().copy();
+        if (this.getStack(1).isEmpty()) {
+            this.setStack(1, result);
+        } else {
+            if (EasyInventory.canMergeItems(getStack(1), result)) {
+                this.getStack(1).increment(result.getCount());
+            }
+        }
+        if(Math.random() < recipe.getSecondaryChance()) {
+            if (this.getStack(2).isEmpty()) {
+                this.setStack(2, secondary);
+            } else if (EasyInventory.canMergeItems(getStack(2), secondary)) {
+                    this.getStack(2).increment(secondary.getCount());
+            }
+        }
+        getStack(0).decrement(1);
+    }
+
+    @Override
+    public void repeatTick() { }
 
 
     @Override
@@ -101,6 +153,6 @@ public class SawmillEntity extends EnergyEntity implements EasyInventory {
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return null;
+        return new SawmillScreenHandler(syncId,inv,this,this.getProperties());
     }
 }

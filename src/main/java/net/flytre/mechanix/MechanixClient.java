@@ -23,6 +23,7 @@ import net.flytre.mechanix.block.hydrator.HydratorScreen;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreen;
 import net.flytre.mechanix.block.liquifier.LiquifierScreen;
 import net.flytre.mechanix.block.pressurizer.PressurizerScreen;
+import net.flytre.mechanix.block.sawmill.SawmillScreen;
 import net.flytre.mechanix.block.solar_panel.SolarPanelScreen;
 import net.flytre.mechanix.block.tank.FluidTankRenderer;
 import net.flytre.mechanix.block.tank.FluidTankScreen;
@@ -49,36 +50,37 @@ import java.util.function.Function;
 public class MechanixClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ALLOYER.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRUSHER.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISTILLER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ENERGY_CELL_ENTITY, EnergyCellRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FLUID_TANK_ENTITY, FluidTankRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FLUID_PIPE_ENTITY, FluidPipeRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.HYDRATOR.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FLUID_TANK_ENTITY, FluidTankRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.FOUNDRY.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.HYDRATOR.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.LIQUIFIER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.POWERED_FURNACE.getEntityType(), MachineBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ALLOYER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.PRESSURIZER.getEntityType(), MachineBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRUSHER.getEntityType(), MachineBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISTILLER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.SAWMILL.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
 
 
+        ScreenRegistry.register(MachineRegistry.ALLOYER.getHandlerType(), AlloyerScreen::new);
+        ScreenRegistry.register(MachineRegistry.CRUSHER.getHandlerType(), CrusherScreen::new);
         ScreenRegistry.register(MachineRegistry.DISTILLER.getHandlerType(), DistillerScreen::new);
+        ScreenRegistry.register(MachineRegistry.ENERGY_CELL_SCREEN_HANDLER, EnergyCellScreen::new);
+        ScreenRegistry.register(MachineRegistry.FLUID_TANK_SCREEN_HANDLER, FluidTankScreen::new);
+        ScreenRegistry.register(MachineRegistry.FOUNDRY.getHandlerType(), FoundryScreen::new);
+        ScreenRegistry.register(MachineRegistry.GENERATOR.getHandlerType(), GeneratorScreen::new);
+        ScreenRegistry.register(MachineRegistry.HYDRATOR.getHandlerType(), HydratorScreen::new);
+        ScreenRegistry.register(MachineRegistry.ITEM_PIPE_SCREEN_HANDLER, ItemPipeScreen::new);
+        ScreenRegistry.register(MachineRegistry.LIQUIFIER.getHandlerType(), LiquifierScreen::new);
+        ScreenRegistry.register(MachineRegistry.POWERED_FURNACE.getHandlerType(), PoweredFurnaceScreen::new);
+        ScreenRegistry.register(MachineRegistry.PRESSURIZER.getHandlerType(), PressurizerScreen::new);
+        ScreenRegistry.register(MachineRegistry.SAWMILL.getHandlerType(), SawmillScreen::new);
         ScreenRegistry.register(MachineRegistry.SOLAR_PANEL_HANDLER, SolarPanelScreen::new);
         ScreenRegistry.register(MachineRegistry.THERMAL_GENERATOR.getHandlerType(), ThermalGenScreen::new);
-        ScreenRegistry.register(MachineRegistry.CRUSHER.getHandlerType(), CrusherScreen::new);
-        ScreenRegistry.register(MachineRegistry.PRESSURIZER.getHandlerType(), PressurizerScreen::new);
-        ScreenRegistry.register(MachineRegistry.ALLOYER.getHandlerType(), AlloyerScreen::new);
-        ScreenRegistry.register(MachineRegistry.ENERGY_CELL_SCREEN_HANDLER, EnergyCellScreen::new);
-        ScreenRegistry.register(MachineRegistry.GENERATOR.getHandlerType(), GeneratorScreen::new);
-        ScreenRegistry.register(MachineRegistry.POWERED_FURNACE.getHandlerType(), PoweredFurnaceScreen::new);
-        ScreenRegistry.register(MachineRegistry.FLUID_TANK_SCREEN_HANDLER, FluidTankScreen::new);
-        ScreenRegistry.register(MachineRegistry.ITEM_PIPE_SCREEN_HANDLER, ItemPipeScreen::new);
-        ScreenRegistry.register(MachineRegistry.HYDRATOR.getHandlerType(), HydratorScreen::new);
-        ScreenRegistry.register(MachineRegistry.FOUNDRY.getHandlerType(), FoundryScreen::new);
-        ScreenRegistry.register(MachineRegistry.LIQUIFIER.getHandlerType(), LiquifierScreen::new);
 
 
 

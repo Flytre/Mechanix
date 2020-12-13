@@ -16,10 +16,7 @@ public class TREnergyStorageImpl implements EnergyStorage {
 
     @Override
     public double getStored(EnergySide face) {
-        Direction dir = fromFace(face);
-        if(dir == null)
-            return Formatter.joulesEU(entity.getEnergy());
-        return entity.canTransferFrom(dir) ? Formatter.joulesEU(entity.getEnergy()) : 0;
+        return Formatter.joulesEU(entity.getEnergy());
     }
 
     @Override
@@ -29,7 +26,7 @@ public class TREnergyStorageImpl implements EnergyStorage {
 
     @Override
     public double getMaxStoredPower() {
-        return entity.getMaxEnergy();
+        return Formatter.joulesEU(entity.getMaxEnergy());
     }
 
     @Override

@@ -127,8 +127,8 @@ public class FoundryBlockEntity extends EnergyEntity implements DoubleInventory 
         boolean shouldBeActivated = false;
         boolean reset = false;
         int tierTimes = getTier() + 1;
-        if(getEnergy() + 100*tierTimes < getMaxEnergy())
-            requestEnergy(100*tierTimes);
+        if (!isFull())
+            requestEnergy(Math.min(100 * tierTimes, getMaxEnergy() - getEnergy()));
         FoundryRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.FOUNDRY_RECIPE, this, this.world).orElse(null);
         if(this.hasEnergy(50*tierTimes) && canAcceptRecipeOutput(recipe)) {
                 this.addEnergy(-50*tierTimes);

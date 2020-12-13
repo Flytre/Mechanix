@@ -74,13 +74,13 @@ public class CrusherBlockEntity extends EnergyEntity implements EasyInventory {
         boolean shouldBeActivated = false;
         boolean reset = false;
         int tierTimes = getTier() + 1;
-        if (getEnergy() + 80 * tierTimes < getMaxEnergy())
-            requestEnergy(80 * tierTimes);
+        if (!isFull())
+            requestEnergy(Math.min(80 * tierTimes, getMaxEnergy() - getEnergy()));
         recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.CRUSHER_RECIPE, this, this.world).orElse(null);
         if (this.hasEnergy(40 * tierTimes) && canAcceptRecipeOutput(recipe)) {
             this.addEnergy(-40 * tierTimes);
             shouldBeActivated = true;
-            this.craftTime += 1;
+            this.craftTime += tierTimes;
             if (this.craftTime >= recipe.getCraftTime()) {
                 craft(recipe);
                 reset = true;

@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -23,6 +24,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import team.reborn.energy.Energy;
 
 public class Cable extends Block implements CableConnectable {
 
@@ -109,7 +111,7 @@ public class Cable extends Block implements CableConnectable {
                 world.setBlockState(pos, state.with(getProperty(side), CableSide.WRENCHED));
                 world.setBlockState(pos.offset(side),state1.with(getProperty(side.getOpposite()),CableSide.NONE));
             } else {
-                world.setBlockState(pos, state.with(getProperty(side), isConnectable(state1.getBlock()) ? CableSide.CONNECTED : CableSide.NONE));
+                world.setBlockState(pos, state.with(getProperty(side), isConnectable(state1.getBlock(), world.getBlockEntity(pos.offset(side))) ? CableSide.CONNECTED : CableSide.NONE));
             }
 
             return super.onUse(state, world, pos, player, hand, hit);
@@ -133,7 +135,7 @@ public class Cable extends Block implements CableConnectable {
             return state;
         }
 
-        return state.with(getProperty(direction), isConnectable(neighbor) ? CableSide.CONNECTED : CableSide.NONE);
+        return state.with(getProperty(direction), isConnectable(neighbor, world.getBlockEntity(posFrom)) ? CableSide.CONNECTED : CableSide.NONE);
     }
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -146,14 +148,16 @@ public class Cable extends Block implements CableConnectable {
             if (neighbor instanceof Cable && neighborState.get(getProperty(direction.getOpposite())) == CableSide.WRENCHED)
                 state = state.with(getProperty(direction), CableSide.NONE);
             else
-                state = state.with(getProperty(direction), isConnectable(neighbor) ? CableSide.CONNECTED : CableSide.NONE);
+                state = state.with(getProperty(direction), isConnectable(neighbor,ctx.getWorld().getBlockEntity(blockPos.offset(direction))) ? CableSide.CONNECTED : CableSide.NONE);
 
         }
         return state;
     }
 
-    private boolean isConnectable(Block block) {
-        return block instanceof CableConnectable;
+    private boolean isConnectable(Block block, BlockEntity entity) {
+        if(block instanceof CableConnectable)
+            return true;
+        return entity != null && Energy.valid(entity);
     }
 
     public static EnumProperty<CableSide> getProperty(Direction facing) {

@@ -78,6 +78,46 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
     }
 
+
+    private static ArrayList<Direction> pushableDirections(BlockPos startingPos, World world) {
+        ArrayList<Direction> result = new ArrayList<>();
+
+        if (world == null)
+            return result;
+
+        BlockEntity thisEntity = world.getBlockEntity(startingPos);
+        BlockState thisState = world.getBlockState(startingPos);
+        for (Direction direction : Direction.values()) {
+
+            if (thisState.getBlock() instanceof Cable && (thisState.get(Cable.getProperty(direction)) != CableSide.CONNECTED)) {
+                continue;
+            }
+
+            if (thisEntity instanceof EnergyEntity && !((EnergyEntity) thisEntity).energyMode.get(direction)) {
+                continue;
+            }
+
+            BlockPos pos = startingPos.offset(direction);
+            BlockState state = world.getBlockState(pos);
+            BlockEntity entity = world.getBlockEntity(pos);
+
+            if (entity != null && !(entity instanceof EnergyEntity) && Energy.valid(entity)) {
+                EnergyHandler handler = Energy.of(entity);
+                EnergyHandler sideHandler = handler.side(direction.getOpposite());
+                if (sideHandler.getEnergy() < sideHandler.getMaxStored()) {
+                    result.add(direction);
+                }
+            }
+
+            if (state.getBlock() instanceof Cable) {
+                if (state.get(Cable.getProperty(direction.getOpposite())) == CableSide.CONNECTED)
+                    result.add(direction);
+            }
+        }
+
+        return result;
+    }
+
     private static ArrayList<Direction> transferrableDirections(BlockPos startingPos, World world) {
         ArrayList<Direction> result = new ArrayList<>();
 
@@ -88,7 +128,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         BlockState thisState = world.getBlockState(startingPos);
         for (Direction direction : Direction.values()) {
 
-            if(thisState.getBlock() instanceof Cable && (thisState.get(Cable.getProperty(direction)) != CableSide.CONNECTED)) {
+            if (thisState.getBlock() instanceof Cable && (thisState.get(Cable.getProperty(direction)) != CableSide.CONNECTED)) {
                 continue;
             }
 
@@ -103,10 +143,10 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                 result.add(direction);
             }
 
-            if(entity != null && !(entity instanceof EnergyEntity) && Energy.valid(entity)) {
+            if (entity != null && !(entity instanceof EnergyEntity) && Energy.valid(entity)) {
                 EnergyHandler handler = Energy.of(entity);
                 EnergyHandler sideHandler = handler.side(direction.getOpposite());
-                if(sideHandler.getEnergy() > 0) {
+                if (sideHandler.getEnergy() > 0) {
                     result.add(direction);
                 }
             }
@@ -284,9 +324,9 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     }
 
     private void fixEnergy() {
-        if(energy > maxEnergy)
+        if (energy > maxEnergy)
             energy = maxEnergy;
-        if(energy < 0)
+        if (energy < 0)
             energy = 0;
     }
 
@@ -328,11 +368,11 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         if (world == null || world.isClient)
             return;
 
-        if(getEnergy() + amt > getMaxEnergy())
+        if (getEnergy() + amt > getMaxEnergy())
             amt = getMaxEnergy() - getEnergy();
 
 
-        if(amt <= 0)
+        if (amt <= 0)
             return;
 
         BlockPos start = this.getPos();
@@ -350,7 +390,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                 if (amt == 0)
                     return;
             }
-            if(!(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
+            if (!(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
                 EnergyHandler handler = Energy.of(entity);
                 double energy = handler.extract(Math.min(amt, cableResult.getMax()));
                 addEnergy(Formatter.EUjoules(energy));
@@ -388,28 +428,59 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
 
     }
 
-    //Push energy to surrounding TR machines
-    public void techRebornPush() {
 
-        if(world == null || world.isClient)
+    public void techRebornPush() {
+        double amt = getMaxTransferRate();
+        if (world == null || world.isClient)
             return;
 
-        for(Direction dir : Direction.values()) {
+        if (getEnergy() < amt)
+            amt = getEnergy();
+        if (amt <= 0)
+            return;
 
-            if(!canTransferFrom(dir))
-                continue;
-            BlockEntity offset = world.getBlockEntity(pos.offset(dir));
-            if(offset == null || offset instanceof EnergyEntity)
-                continue;
-            if(Energy.valid(offset)) {
-                Energy.of(this)
-                        .side(dir)
-                        .into(
-                                Energy.of(offset).side(dir.getOpposite())
-                        )
-                        .move();
+        BlockPos start = this.getPos();
+
+        Deque<CableResult> to_visit = new LinkedList<>();
+        Set<BlockPos> visited = new HashSet<>();
+        to_visit.add(new CableResult(this.getPos(), this.maxTransferRate));
+
+        while (to_visit.size() > 0) {
+            CableResult cableResult = to_visit.pop();
+            BlockPos currentPos = cableResult.getPos();
+            BlockEntity entity = world.getBlockEntity(currentPos);
+
+            if (!(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
+                EnergyHandler handler = Energy.of(entity);
+                double temp = Math.min(amt, cableResult.getMax());
+                amt -= handler.insert(Math.min(temp, handler.getMaxStored() - handler.getEnergy()));
+                removeEnergy(Math.min(temp, handler.getMaxStored() - handler.getEnergy()));
+                if (amt <= 0)
+                    return;
             }
+
+            if (entity == null || currentPos.equals(start)) {
+                ArrayList<Direction> neighbors = EnergyEntity.pushableDirections(currentPos, world);
+                for (Direction d : neighbors) {
+                    if (!visited.contains(currentPos.offset(d))) {
+                        double maxAmount = cableResult.getMax();
+                        //cable transfer rates: (they can transfer more to TR machines)
+                        Block cable = world.getBlockState(currentPos.offset(d)).getBlock();
+                        if (cable == MachineRegistry.CABLES.getStandard())
+                            maxAmount = Math.min(maxAmount, 150);
+                        if (cable == MachineRegistry.CABLES.getGilded())
+                            maxAmount = Math.min(maxAmount, 500);
+                        if (cable == MachineRegistry.CABLES.getVysterium())
+                            maxAmount = Math.min(maxAmount, 2500);
+                        if (cable == MachineRegistry.CABLES.getNeptunium())
+                            maxAmount = Math.min(maxAmount, 10000);
+                        to_visit.add(new CableResult(currentPos.offset(d), maxAmount));
+                    }
+                }
+            }
+            visited.add(currentPos);
         }
+
     }
 
     /**
@@ -503,14 +574,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     @Override
     public void setTier(int tier) {
         this.tier = tier;
-        if(world != null && !world.isClient)
+        if (world != null && !world.isClient)
             sync();
         markDirty();
     }
 
     @Override
     public void markDirty() {
-        if(world != null && !world.isClient)
+        if (world != null && !world.isClient)
             sync();
     }
 }
