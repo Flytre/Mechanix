@@ -29,7 +29,7 @@ public class DistillerEntity extends EnergyEntity implements DoubleInventory {
 
 
     public DistillerEntity() {
-        super(MachineRegistry.DISTILLER_ENTITY);
+        super(MachineRegistry.DISTILLER.getEntityType());
         fluidInventory = DefaultedList.ofSize(3, FluidStack.EMPTY);
         setEnergyMode(false, false, false, false, false, false);
         setIOMode(false, true, false, false, false, false);
@@ -98,8 +98,8 @@ public class DistillerEntity extends EnergyEntity implements DoubleInventory {
         if(getEnergy() + 100*tierTimes < getMaxEnergy())
             requestEnergy(100*tierTimes);
         DistillerRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.DISTILLER_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(60 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-60 * tierTimes);
+        if (this.hasEnergy(100 * tierTimes) && canAcceptRecipeOutput(recipe)) {
+            this.addEnergy(-100 * tierTimes);
             shouldBeActivated = true;
             this.craftTime -= tierTimes;
             if (this.craftTime <= 0) {

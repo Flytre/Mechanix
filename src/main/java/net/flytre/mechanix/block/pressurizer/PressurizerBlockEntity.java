@@ -77,8 +77,8 @@ public class PressurizerBlockEntity extends EnergyEntity implements EasyInventor
         if (getEnergy() + 80 * tierTimes < getMaxEnergy())
             requestEnergy(80 * tierTimes);
         recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.PRESSURIZER_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(30 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-30 * tierTimes);
+        if (this.hasEnergy(60 * tierTimes) && canAcceptRecipeOutput(recipe)) {
+            this.addEnergy(-60 * tierTimes);
             shouldBeActivated = true;
             this.craftTime += 1;
             if (this.craftTime >= recipe.getCraftTime()) {

@@ -28,7 +28,7 @@ public class ItemRegistery {
     public static final Item IRON_DUST = ITEM_MAKER.get();
     public static final Item GOLD_DUST = ITEM_MAKER.get();
     public static final Item PANEL = ITEM_MAKER.get();
-
+    public static final Item SAWDUST = ITEM_MAKER.get();
 
     public static void init() {
         Registry.register(Registry.ITEM, new Identifier("mechanix", "servo"), SERVO);
@@ -47,6 +47,6 @@ public class ItemRegistery {
         Registry.register(Registry.ITEM, new Identifier("mechanix", "iron_dust"), IRON_DUST);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "gold_dust"), GOLD_DUST);
         Registry.register(Registry.ITEM, new Identifier("mechanix", "panel"), PANEL);
-
+        Registry.register(Registry.ITEM, new Identifier("mechanix", "sawdust"), SAWDUST);
     }
 }

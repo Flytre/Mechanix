@@ -13,6 +13,8 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
+import team.reborn.energy.Energy;
+import team.reborn.energy.EnergyHandler;
 
 
 public class EnergyCellEntity extends EnergyEntity implements NotUgradable {
@@ -88,6 +90,10 @@ public class EnergyCellEntity extends EnergyEntity implements NotUgradable {
             }
             corrected = true;
         }
+
+        //test
+        EnergyHandler handler = Energy.of(this);
+        int x = 1;
     }
 
     @Override

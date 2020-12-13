@@ -32,7 +32,7 @@ public class DistillerRecipe implements Recipe<DistillerEntity> {
 
     @Environment(EnvType.CLIENT)
     public ItemStack getRecipeKindIcon() {
-        return new ItemStack(MachineRegistry.DISTILLER_BLOCK);
+        return new ItemStack(MachineRegistry.DISTILLER.getBlock());
     }
 
     @Override

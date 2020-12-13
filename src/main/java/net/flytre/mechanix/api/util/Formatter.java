@@ -175,4 +175,13 @@ public class Formatter {
         name.setStyle(Style.EMPTY.withColor(Formatting.BLUE).withItalic(true));
         return name;
     }
+
+
+    public static double joulesEU(double joules) {
+        return joules/10;
+    }
+
+    public static double EUjoules(double EU) {
+        return EU * 10;
+    }
 }

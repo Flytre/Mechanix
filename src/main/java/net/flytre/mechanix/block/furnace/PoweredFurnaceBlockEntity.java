@@ -52,7 +52,7 @@ public class PoweredFurnaceBlockEntity extends EnergyEntity implements SidedInve
         this.recipesUsed = new Object2IntOpenHashMap<>();
         this.recipeType = RecipeType.SMELTING;
 
-        energyPerTick = 30;
+        energyPerTick = 20;
     }
 
     private static void dropExperience(World world, Vec3d vec3d, int i, float f) {

@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.compat.rei.categories.AlloyerRecipeCategory;
 import net.flytre.mechanix.compat.rei.categories.DistillerRecipeCategory;
+import net.flytre.mechanix.compat.rei.categories.SawmillRecipeCategory;
 import net.flytre.mechanix.compat.rei.categories.SingleIOCategory;
 import net.flytre.mechanix.compat.rei.displays.*;
 import net.flytre.mechanix.recipe.*;
@@ -38,9 +39,10 @@ public class MechanixPlugin implements REIPluginV0 {
         iconMap.put(RecipeRegistry.LIQUIFIER_RECIPE,MachineRegistry.LIQUIFIER.getBlock());
         iconMap.put(RecipeRegistry.PRESSURIZER_RECIPE,MachineRegistry.PRESSURIZER.getBlock());
         iconMap.put(RecipeRegistry.CRUSHER_RECIPE,MachineRegistry.CRUSHER.getBlock());
-        iconMap.put(RecipeRegistry.DISTILLER_RECIPE,MachineRegistry.DISTILLER_BLOCK);
+        iconMap.put(RecipeRegistry.DISTILLER_RECIPE,MachineRegistry.DISTILLER.getBlock());
+        iconMap.put(RecipeRegistry.SAWMILL_RECIPE,MachineRegistry.SAWMILL.getBlock());
         types.addAll(Arrays.asList(RecipeRegistry.ALLOYING_RECIPE, RecipeRegistry.LIQUIFIER_RECIPE,RecipeRegistry.PRESSURIZER_RECIPE,
-                RecipeRegistry.CRUSHER_RECIPE, RecipeRegistry.FOUNDRY_RECIPE, RecipeRegistry.DISTILLER_RECIPE));
+                RecipeRegistry.CRUSHER_RECIPE, RecipeRegistry.FOUNDRY_RECIPE, RecipeRegistry.DISTILLER_RECIPE, RecipeRegistry.SAWMILL_RECIPE));
     }
 
     @Override
@@ -77,6 +79,7 @@ public class MechanixPlugin implements REIPluginV0 {
             }
         });
         recipeHelper.registerCategory(new DistillerRecipeCategory(RecipeRegistry.DISTILLER_RECIPE));
+        recipeHelper.registerCategory(new SawmillRecipeCategory(RecipeRegistry.SAWMILL_RECIPE));
     }
 
     @Override
@@ -86,6 +89,7 @@ public class MechanixPlugin implements REIPluginV0 {
         Function<ItemProcessingRecipe, RecipeDisplay> pressurizerDisplay = r -> new PressurizerRecipeDisplay(r) {};
         Function<FoundryRecipe, RecipeDisplay> foundryDisplay = r -> new FoundryRecipeDisplay(r) {};
         Function<DistillerRecipe, RecipeDisplay> distillerDisplay = r -> new DistillerRecipeDisplay(r) {};
+        Function<SawmillRecipe, RecipeDisplay> sawmillDisplay = r -> new SawmillRecipeDisplay(r) {};
 
 
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.ALLOYING_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.ALLOYING_RECIPE, alloyDisplay);
@@ -94,6 +98,8 @@ public class MechanixPlugin implements REIPluginV0 {
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.CRUSHER_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.CRUSHER_RECIPE, pressurizerDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.FOUNDRY_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.FOUNDRY_RECIPE, foundryDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.DISTILLER_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.DISTILLER_RECIPE, distillerDisplay);
+        recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.SAWMILL_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.SAWMILL_RECIPE, sawmillDisplay);
+
     }
 
     @Override

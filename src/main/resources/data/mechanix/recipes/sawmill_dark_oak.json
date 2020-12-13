@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:sawing",
+  "ingredient": {
+    "tag": "minecraft:dark_oak_logs"
+  },
+  "result": {
+    "item": "minecraft:dark_oak_planks",
+    "count" : 6
+  },
+  "secondary": {
+    "item": "mechanix:sawdust",
+    "count" : 1
+  },
+  "secondary_chance" : 1.0
+}

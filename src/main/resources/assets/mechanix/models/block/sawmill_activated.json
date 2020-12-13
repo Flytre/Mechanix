@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/sawmill_activated",
+    "particle": "mechanix:block/sawmill_activated"
+  },
+  "parent" : "mechanix:block/machine"
+}

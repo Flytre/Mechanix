@@ -61,10 +61,11 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.PRESSURIZER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRUSHER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISTILLER_ENTITY, MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISTILLER.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.SAWMILL.getEntityType(), MachineBlockEntityRenderer::new);
 
 
-        ScreenRegistry.register(MachineRegistry.DISTILLER_HANDLER, DistillerScreen::new);
+        ScreenRegistry.register(MachineRegistry.DISTILLER.getHandlerType(), DistillerScreen::new);
         ScreenRegistry.register(MachineRegistry.SOLAR_PANEL_HANDLER, SolarPanelScreen::new);
         ScreenRegistry.register(MachineRegistry.THERMAL_GENERATOR.getHandlerType(), ThermalGenScreen::new);
         ScreenRegistry.register(MachineRegistry.CRUSHER.getHandlerType(), CrusherScreen::new);

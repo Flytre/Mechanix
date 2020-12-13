@@ -43,6 +43,8 @@ import net.flytre.mechanix.block.liquifier.LiquifierScreenHandler;
 import net.flytre.mechanix.block.pressurizer.PressurizerBlock;
 import net.flytre.mechanix.block.pressurizer.PressurizerBlockEntity;
 import net.flytre.mechanix.block.pressurizer.PressurizerScreenHandler;
+import net.flytre.mechanix.block.sawmill.SawmillBlock;
+import net.flytre.mechanix.block.sawmill.SawmillEntity;
 import net.flytre.mechanix.block.solar_panel.SolarPanelBlock;
 import net.flytre.mechanix.block.solar_panel.SolarPanelEntity;
 import net.flytre.mechanix.block.solar_panel.SolarPanelScreenHandler;
@@ -101,10 +103,9 @@ public class MachineRegistry {
     public static BlockEntityType<SolarPanelEntity> SOLAR_PANEL_ENTITY;
     public static ScreenHandlerType<SolarPanelScreenHandler> SOLAR_PANEL_HANDLER;
 
-    public static DistillerBlock DISTILLER_BLOCK = new DistillerBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f));
-    public static BlockEntityType<DistillerEntity> DISTILLER_ENTITY;
-    public static ScreenHandlerType<DistillerScreenHandler> DISTILLER_HANDLER;
+    public static MachineType<DistillerBlock,DistillerEntity,DistillerScreenHandler> DISTILLER;
 
+    public static MachineType<SawmillBlock, SawmillEntity,?> SAWMILL;
 
 
     public static void init() {
@@ -223,9 +224,22 @@ public class MachineRegistry {
                 ThermalGenEntity::new,
                 ThermalGenScreenHandler::new
         );
-        registerBlock(DISTILLER_BLOCK,"distiller",IconMaker.STANDARD);
-        DISTILLER_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "mechanix:distiller", BlockEntityType.Builder.create(DistillerEntity::new, DISTILLER_BLOCK).build(null));
-        DISTILLER_HANDLER = ScreenHandlerRegistry.registerExtended(new Identifier("mechanix:distiller"), DistillerScreenHandler::new);
+
+        DISTILLER = new MachineType<>(
+                new DistillerBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "distiller",
+                IconMaker.STANDARD,
+                DistillerEntity::new,
+                DistillerScreenHandler::new
+        );
+
+        SAWMILL = new MachineType<>(
+                new SawmillBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "sawmill",
+                IconMaker.STANDARD,
+                SawmillEntity::new,
+                null
+        );
     }
 
     private static <T extends Block> MachineList<T> registerTier(BlockMaker<T> maker, String id, IconMaker<T> creator) {

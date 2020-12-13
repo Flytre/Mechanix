@@ -1,9 +1,12 @@
 package net.flytre.mechanix.util;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.energy.TREnergyStorageImpl;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import team.reborn.energy.Energy;
 
 public class MiscRegistry {
 
@@ -12,5 +15,6 @@ public class MiscRegistry {
             () -> new ItemStack(MachineRegistry.CABLES.getStandard()));
 
     public static void init() {
+        Energy.registerHolder(i -> i instanceof EnergyEntity, t -> new TREnergyStorageImpl((EnergyEntity) t));
     }
 }

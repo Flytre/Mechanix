@@ -133,8 +133,8 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
         if (getEnergy() + 100 * tierTimes < getMaxEnergy())
             requestEnergy(100 * tierTimes);
         LiquifierRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.LIQUIFIER_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(60 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-60 * tierTimes);
+        if (this.hasEnergy(50 * tierTimes) && canAcceptRecipeOutput(recipe)) {
+            this.addEnergy(-50 * tierTimes);
             shouldBeActivated = true;
             this.craftTime -= tierTimes;
             if (this.craftTime <= 0) {

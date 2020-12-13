@@ -20,6 +20,8 @@ public class ReiUtils {
             return new Identifier("mechanix:crushing");
         if(type == RecipeRegistry.DISTILLER_RECIPE)
             return new Identifier("mechanix:distilling");
-        return new Identifier("mechanix:null");
+        if(type == RecipeRegistry.SAWMILL_RECIPE)
+            return new Identifier("mechanix:sawing");
+        throw new RuntimeException(new Exception("Unknown identifier for recipe type: " + type + ". Declare in ReiUtils.java"));
     }
 }

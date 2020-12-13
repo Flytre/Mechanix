@@ -23,7 +23,7 @@ public class DistillerScreenHandler extends EnergyScreenHandler {
     }
 
     public DistillerScreenHandler(int syncId, PlayerInventory playerInventory, EnergyEntity entity, PropertyDelegate propertyDelegate) {
-        super(MachineRegistry.DISTILLER_HANDLER, syncId, playerInventory, entity, propertyDelegate);
+        super(MachineRegistry.DISTILLER.getHandlerType(), syncId, playerInventory, entity, propertyDelegate);
 
         pos = BlockPos.ORIGIN;
 

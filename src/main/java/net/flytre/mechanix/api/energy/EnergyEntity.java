@@ -21,6 +21,8 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import team.reborn.energy.Energy;
+import team.reborn.energy.EnergyHandler;
 
 import java.util.*;
 
@@ -99,6 +101,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             BlockEntity entity = world.getBlockEntity(pos);
             if ((entity instanceof EnergyEntity && ((EnergyEntity) entity).canTransferFrom(direction.getOpposite()))) {
                 result.add(direction);
+            }
+
+            if(entity != null && !(entity instanceof EnergyEntity) && Energy.valid(entity)) {
+                EnergyHandler handler = Energy.of(entity);
+                EnergyHandler sideHandler = handler.side(direction.getOpposite());
+                if(sideHandler.getEnergy() > 0) {
+                    result.add(direction);
+                }
             }
 
             if (state.getBlock() instanceof Cable) {
@@ -180,7 +190,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         return super.toTag(tag);
     }
 
-    private boolean canTransferFrom(Direction d) {
+    public boolean canTransferFrom(Direction d) {
         return energyMode.get(d);
     }
 
@@ -340,6 +350,14 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                 if (amt == 0)
                     return;
             }
+            if(!(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
+                EnergyHandler handler = Energy.of(entity);
+                double energy = handler.extract(Math.min(amt, cableResult.getMax()));
+                addEnergy(Formatter.EUjoules(energy));
+                if (amt == 0)
+                    return;
+            }
+
             if (entity == null || currentPos.equals(start)) {
                 ArrayList<Direction> neighbors = EnergyEntity.transferrableDirections(currentPos, world);
                 for (Direction d : neighbors) {
@@ -368,6 +386,30 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         }
 
 
+    }
+
+    //Push energy to surrounding TR machines
+    public void techRebornPush() {
+
+        if(world == null || world.isClient)
+            return;
+
+        for(Direction dir : Direction.values()) {
+
+            if(!canTransferFrom(dir))
+                continue;
+            BlockEntity offset = world.getBlockEntity(pos.offset(dir));
+            if(offset == null || offset instanceof EnergyEntity)
+                continue;
+            if(Energy.valid(offset)) {
+                Energy.of(this)
+                        .side(dir)
+                        .into(
+                                Energy.of(offset).side(dir.getOpposite())
+                        )
+                        .move();
+            }
+        }
     }
 
     /**
@@ -417,7 +459,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             repeatTick();
         }
         onceTick();
-
+        techRebornPush();
         updateDelegate();
         if (sync) {
             if (world != null && !world.isClient) {

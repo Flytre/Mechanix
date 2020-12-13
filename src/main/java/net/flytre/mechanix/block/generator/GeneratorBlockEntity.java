@@ -26,7 +26,7 @@ public class GeneratorBlockEntity extends EnergyEntity implements SidedInventory
     protected DefaultedList<ItemStack> inventory;
     private int burnTime;
     private int fuelTime;
-    private static final int genPerTick = 60;
+    private static final int genPerTick = 80;
 
 
     public GeneratorBlockEntity() {

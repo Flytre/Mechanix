@@ -98,8 +98,8 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
         if (getEnergy() + 100 * tierTimes < getMaxEnergy())
             requestEnergy(100 * tierTimes);
         AlloyingRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.ALLOYING_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(60 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-60 * tierTimes);
+        if (this.hasEnergy(50 * tierTimes) && canAcceptRecipeOutput(recipe)) {
+            this.addEnergy(-50 * tierTimes);
             shouldBeActivated = true;
             this.craftTime -= tierTimes;
             if (this.craftTime <= 0) {

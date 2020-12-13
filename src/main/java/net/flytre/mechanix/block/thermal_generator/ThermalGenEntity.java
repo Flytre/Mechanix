@@ -61,7 +61,7 @@ public class ThermalGenEntity extends EnergyEntity implements NotUgradable {
         }
 
         if(counter >= 4) {
-            this.addEnergy(20); //20 energy/tick is pretty generous
+            this.addEnergy(30);
         }
     }
 
