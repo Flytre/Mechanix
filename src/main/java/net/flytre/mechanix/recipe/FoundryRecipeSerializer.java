@@ -2,7 +2,7 @@ package net.flytre.mechanix.recipe;
 
 import com.google.gson.JsonObject;
 import net.flytre.mechanix.api.fluid.FluidStack;
-import net.minecraft.item.ItemStack;
+import net.flytre.mechanix.api.recipe.OutputProvider;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
@@ -19,24 +19,24 @@ public class FoundryRecipeSerializer implements RecipeSerializer<FoundryRecipe> 
     @Override
     public FoundryRecipe read(Identifier id, JsonObject json) {
         FluidStack stack = FluidStack.fromJson(json.getAsJsonObject("input"));
-        ItemStack itemStack = AlloyerRecipeSerializer.getItemStack(json,"result");
-        return recipeFactory.create(id,stack,itemStack);
+        OutputProvider result = OutputProvider.fromJson(json.get("result"));
+        return recipeFactory.create(id,stack,result);
     }
 
     @Override
     public FoundryRecipe read(Identifier id, PacketByteBuf buf) {
         FluidStack fluidStack = FluidStack.fromPacket(buf);
-        ItemStack itemStack = buf.readItemStack();
-        return this.recipeFactory.create(id,fluidStack,itemStack);
+        OutputProvider result = OutputProvider.fromPacket(buf);
+        return this.recipeFactory.create(id,fluidStack,result);
     }
 
     @Override
     public void write(PacketByteBuf buf, FoundryRecipe recipe) {
         recipe.getInput().toPacket(buf);
-        buf.writeItemStack(recipe.getOutput());
+        recipe.getOutputProvider().toPacket(buf);
     }
 
     public interface RecipeFactory {
-        FoundryRecipe create(Identifier id, FluidStack input, ItemStack output);
+        FoundryRecipe create(Identifier id, FluidStack input, OutputProvider output);
     }
 }

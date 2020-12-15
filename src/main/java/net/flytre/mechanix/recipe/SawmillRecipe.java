@@ -2,27 +2,27 @@ package net.flytre.mechanix.recipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.flytre.mechanix.api.recipe.OutputProvider;
 import net.flytre.mechanix.block.sawmill.SawmillEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public class SawmillRecipe implements Recipe<SawmillEntity> {
+public class SawmillRecipe implements MechanixRecipe<SawmillEntity> {
 
     private final Identifier id;
     private final Ingredient input;
-    private final ItemStack output;
-    private final ItemStack secondary;
+    private final OutputProvider output;
+    private final OutputProvider secondary;
     private final double secondaryChance;
 
-    public SawmillRecipe(Identifier id, Ingredient input, ItemStack output, ItemStack secondary, double secondaryChance) {
+    public SawmillRecipe(Identifier id, Ingredient input, OutputProvider output, OutputProvider secondary, double secondaryChance) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -51,11 +51,15 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
 
     @Override
     public ItemStack getOutput() {
-        return output;
+        return output.getStack();
+    }
+
+    public OutputProvider[] getOutputs() {
+        return new OutputProvider[]{output,secondary};
     }
 
     public ItemStack getSecondary() {
-        return secondary;
+        return secondary.getStack();
     }
 
     public double getSecondaryChance() {
@@ -69,6 +73,10 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
 
     @Override
     public boolean matches(SawmillEntity inv, World world) {
+
+        if(cancelLoad())
+            return false;
+
         return input.test(inv.getStack(0));
     }
 
@@ -86,4 +94,8 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
         return this.getOutput().copy();
     }
 
+    @Override
+    public boolean cancelLoad() {
+        return getOutput().isEmpty() || getInput().isEmpty();
+    }
 }

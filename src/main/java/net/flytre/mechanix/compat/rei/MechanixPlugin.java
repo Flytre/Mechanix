@@ -124,6 +124,8 @@ public class MechanixPlugin implements REIPluginV0 {
     public void registerOthers(RecipeHelper recipeHelper) {
         for(RecipeType<?> type : types)
             recipeHelper.registerWorkingStations(ReiUtils.getId(type), EntryStack.create(iconMap.get(type)));
+        recipeHelper.registerWorkingStations(new Identifier("minecraft:plugins/smelting"),EntryStack.create(MachineRegistry.POWERED_FURNACE.getBlock()));
+        recipeHelper.registerRecipeVisibilityHandler(new ShouldRender());
     }
 
 }

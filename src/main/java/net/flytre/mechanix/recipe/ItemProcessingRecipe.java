@@ -2,22 +2,22 @@ package net.flytre.mechanix.recipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.flytre.mechanix.api.recipe.OutputProvider;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public abstract class ItemProcessingRecipe implements Recipe<Inventory> {
+public abstract class ItemProcessingRecipe implements MechanixRecipe<Inventory> {
     private final Identifier id;
     private final Ingredient input;
-    private final ItemStack output;
+    private final OutputProvider output;
     private final int craftTime;
 
-    public ItemProcessingRecipe(Identifier id, Ingredient input, ItemStack output, int craftTime) {
+    public ItemProcessingRecipe(Identifier id, Ingredient input, OutputProvider output, int craftTime) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -39,6 +39,10 @@ public abstract class ItemProcessingRecipe implements Recipe<Inventory> {
 
     @Override
     public ItemStack getOutput() {
+        return output.getStack();
+    }
+
+    public OutputProvider getOutputProvider() {
         return output;
     }
 
@@ -49,6 +53,10 @@ public abstract class ItemProcessingRecipe implements Recipe<Inventory> {
 
     @Override
     public boolean matches(Inventory inv, World world) {
+
+        if(cancelLoad())
+            return false;
+
         return input.test(inv.getStack(0));
     }
 
@@ -66,4 +74,8 @@ public abstract class ItemProcessingRecipe implements Recipe<Inventory> {
         return this.getOutput().copy();
     }
 
+    @Override
+    public boolean cancelLoad() {
+        return getOutput().isEmpty() || getInput().isEmpty();
+    }
 }

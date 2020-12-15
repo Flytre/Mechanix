@@ -2,12 +2,12 @@ package net.flytre.mechanix.recipe;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.flytre.mechanix.api.recipe.OutputProvider;
 import net.flytre.mechanix.block.alloyer.AlloyerBlockEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -17,14 +17,15 @@ import net.minecraft.world.World;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AlloyingRecipe implements Recipe<AlloyerBlockEntity> {
+public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
 
     private final Set<Ingredient> inputs;
-    private final ItemStack output;
+    private final OutputProvider output;
     private final Identifier id;
 
 
-    public AlloyingRecipe(Identifier id, Set<Ingredient> ingredients, ItemStack output) {
+
+    public AlloyingRecipe(Identifier id, Set<Ingredient> ingredients, OutputProvider output) {
         this.id = id;
         this.inputs = ingredients;
         this.output = output;
@@ -43,6 +44,10 @@ public class AlloyingRecipe implements Recipe<AlloyerBlockEntity> {
 
     @Override
     public boolean matches(AlloyerBlockEntity inv, World world) {
+
+        if(cancelLoad())
+            return false;
+
         HashSet<Integer> checked = new HashSet<>();
         for(Ingredient ingredient : inputs) {
             boolean matched = false;
@@ -88,9 +93,13 @@ public class AlloyingRecipe implements Recipe<AlloyerBlockEntity> {
         return true;
     }
 
+    public OutputProvider getOutputProvider() {
+        return output;
+    }
+
     @Override
     public ItemStack getOutput() {
-        return output;
+        return output.getStack();
     }
 
     @Override
@@ -106,5 +115,10 @@ public class AlloyingRecipe implements Recipe<AlloyerBlockEntity> {
     @Override
     public RecipeType<?> getType() {
         return RecipeRegistry.ALLOYING_RECIPE;
+    }
+
+    @Override
+    public boolean cancelLoad() {
+        return getOutput().isEmpty() || inputs.stream().anyMatch(Ingredient::isEmpty);
     }
 }

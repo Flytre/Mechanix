@@ -8,13 +8,12 @@ import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-public class LiquifierRecipe implements Recipe<LiquifierBlockEntity> {
+public class LiquifierRecipe implements MechanixRecipe<LiquifierBlockEntity> {
 
     private final Ingredient input;
     private final FluidStack output;
@@ -40,7 +39,7 @@ public class LiquifierRecipe implements Recipe<LiquifierBlockEntity> {
 
     @Override
     public boolean matches(LiquifierBlockEntity inv, World world) {
-        return input.test(inv.getStack(0));
+        return !cancelLoad() && input.test(inv.getStack(0));
     }
 
     @Override
@@ -75,5 +74,10 @@ public class LiquifierRecipe implements Recipe<LiquifierBlockEntity> {
     @Override
     public RecipeType<?> getType() {
         return RecipeRegistry.LIQUIFIER_RECIPE;
+    }
+
+    @Override
+    public boolean cancelLoad() {
+        return getInput().isEmpty();
     }
 }

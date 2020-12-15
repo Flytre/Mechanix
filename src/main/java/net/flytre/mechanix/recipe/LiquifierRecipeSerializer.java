@@ -3,6 +3,7 @@ package net.flytre.mechanix.recipe;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.api.recipe.RecipeUtils;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -21,7 +22,7 @@ public class LiquifierRecipeSerializer implements RecipeSerializer<LiquifierReci
     @Override
     public LiquifierRecipe read(Identifier id, JsonObject jsonObject) {
         JsonElement jsonElement = JsonHelper.hasArray(jsonObject, "ingredient") ? JsonHelper.getArray(jsonObject, "ingredient") : JsonHelper.getObject(jsonObject, "ingredient");
-        Ingredient ingredient = Ingredient.fromJson(jsonElement);
+        Ingredient ingredient = RecipeUtils.fromJson(jsonElement);
         FluidStack stack = FluidStack.fromJson(jsonObject.getAsJsonObject("result"));
         return this.recipeFactory.create(id,ingredient,stack);
     }

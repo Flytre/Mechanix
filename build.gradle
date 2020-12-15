@@ -24,8 +24,8 @@ dependencies {
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:5.8.7"
-	modRuntime "me.shedaniel:RoughlyEnoughItems:5.8.7"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:5.8.9"
+	modRuntime "me.shedaniel:RoughlyEnoughItems:5.8.9"
 
 	modApi 'teamreborn:energy:0.1.1'
 	include 'teamreborn:energy:0.1.1'

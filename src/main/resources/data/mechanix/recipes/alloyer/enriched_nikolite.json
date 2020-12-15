@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "indrev:nikolite_dust"
+    },
+    {
+      "tag": "c:diamond_dusts"
+    }
+  ],
+  "result": {
+    "item": "indrev:enriched_nikolite_dust",
+    "count": 2
+  }
+}

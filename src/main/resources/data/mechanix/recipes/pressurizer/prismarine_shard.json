@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 180,
+  "ingredient": {
+    "item": "minecraft:prismarine_crystals"
+  },
+  "result": {
+      "item": "minecraft:prismarine_shard"
+    }
+
+}

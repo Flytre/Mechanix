@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:tungsten_ingots"
+  },
+  "result": {
+      "tag": "c:tungsten_plates"
+    }
+
+}

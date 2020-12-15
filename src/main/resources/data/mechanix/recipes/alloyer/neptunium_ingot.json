@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "tag": "c:endalum_ingots"
+    },
+    {
+      "tag" : "c:compressed_diamonds"
+    }
+  ],
+  "result": "mechanix:neptunium_ingot"
+}

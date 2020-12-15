@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:nickel_ingots"
+  },
+  "result": {
+    "tag": "c:nickel_plates"
+  }
+}

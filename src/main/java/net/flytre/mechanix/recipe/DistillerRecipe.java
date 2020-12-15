@@ -8,13 +8,12 @@ import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-public class DistillerRecipe implements Recipe<DistillerEntity> {
+public class DistillerRecipe implements MechanixRecipe<DistillerEntity> {
 
     private final Identifier id;
     private final FluidStack input;
@@ -37,6 +36,10 @@ public class DistillerRecipe implements Recipe<DistillerEntity> {
 
     @Override
     public boolean matches(DistillerEntity inv, World world) {
+
+        if(cancelLoad())
+            return false;
+
         FluidStack toTest = inv.getFluidStack(0);
         FluidStack water = inv.getFluidStack(1);
         boolean bl = toTest.getFluid() == input.getFluid() && toTest.getAmount() >= input.getAmount();
@@ -77,5 +80,10 @@ public class DistillerRecipe implements Recipe<DistillerEntity> {
     @Override
     public RecipeType<?> getType() {
         return RecipeRegistry.DISTILLER_RECIPE;
+    }
+
+    @Override
+    public boolean cancelLoad() {
+        return false;
     }
 }

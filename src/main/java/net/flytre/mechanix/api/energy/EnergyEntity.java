@@ -450,11 +450,12 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             BlockPos currentPos = cableResult.getPos();
             BlockEntity entity = world.getBlockEntity(currentPos);
 
-            if (!(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
+            if (entity != null && !(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
                 EnergyHandler handler = Energy.of(entity);
                 double temp = Math.min(amt, cableResult.getMax());
-                amt -= handler.insert(Math.min(temp, handler.getMaxStored() - handler.getEnergy()));
-                removeEnergy(Math.min(temp, handler.getMaxStored() - handler.getEnergy()));
+                double l = handler.insert(Math.min(temp, handler.getMaxStored() - handler.getEnergy()));
+                amt -= l;
+                removeEnergy(l);
                 if (amt <= 0)
                     return;
             }

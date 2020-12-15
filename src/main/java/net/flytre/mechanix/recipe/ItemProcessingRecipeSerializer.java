@@ -2,7 +2,8 @@ package net.flytre.mechanix.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
+import net.flytre.mechanix.api.recipe.OutputProvider;
+import net.flytre.mechanix.api.recipe.RecipeUtils;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -20,32 +21,32 @@ public class ItemProcessingRecipeSerializer implements RecipeSerializer<ItemProc
     @Override
     public ItemProcessingRecipe read(Identifier id, JsonObject jsonObject) {
         JsonElement jsonElement = JsonHelper.hasArray(jsonObject, "ingredient") ? JsonHelper.getArray(jsonObject, "ingredient") : JsonHelper.getObject(jsonObject, "ingredient");
-        Ingredient ingredient = Ingredient.fromJson(jsonElement);
+        Ingredient ingredient = RecipeUtils.fromJson(jsonElement);
         int pressurizeTime = 200;
         if(JsonHelper.hasPrimitive(jsonObject,"time"))
             pressurizeTime = JsonHelper.getInt(jsonObject,"time");
-        ItemStack itemStack = AlloyerRecipeSerializer.getItemStack(jsonObject,"result");
-        return this.recipeFactory.create(id, ingredient, itemStack,pressurizeTime);
+       OutputProvider outputProvider = OutputProvider.fromJson(jsonObject.get("result"));
+        return this.recipeFactory.create(id, ingredient, outputProvider,pressurizeTime);
     }
 
 
     @Override
     public ItemProcessingRecipe read(Identifier id, PacketByteBuf buf) {
         Ingredient ingredient = Ingredient.fromPacket(buf);
-        ItemStack itemStack = buf.readItemStack();
+        OutputProvider outputProvider = OutputProvider.fromPacket(buf);
         int pressurizeTime = buf.readInt();
-        return this.recipeFactory.create(id, ingredient, itemStack,pressurizeTime);
+        return this.recipeFactory.create(id, ingredient, outputProvider,pressurizeTime);
     }
 
     @Override
     public void write(PacketByteBuf buf, ItemProcessingRecipe recipe) {
         recipe.getInput().write(buf);
-        buf.writeItemStack(recipe.getOutput());
+        recipe.getOutputProvider().toPacket(buf);
         buf.writeInt(recipe.getCraftTime());
     }
 
 
     public interface RecipeFactory {
-        ItemProcessingRecipe create(Identifier id, Ingredient input, ItemStack output, int craftTime);
+        ItemProcessingRecipe create(Identifier id, Ingredient input, OutputProvider output, int craftTime);
     }
 }

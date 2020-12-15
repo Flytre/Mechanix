@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:chrome_blocks"
+  },
+  "result": {
+      "tag": "c:chrome_plates",
+      "count": 9
+    }
+}

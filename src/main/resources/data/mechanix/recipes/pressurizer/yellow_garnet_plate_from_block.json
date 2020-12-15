@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:yellow_garnet_blocks"
+  },
+  "result": {
+      "tag": "c:yellow_garnet_plates",
+      "count": 9
+    }
+}

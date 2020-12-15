@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "minecraft:ender_pearl"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:ender_dusts"
+  }
+}

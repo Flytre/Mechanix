@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:silver_ingots"
+  },
+  "result": {
+      "tag": "c:silver_plates"
+    }
+
+}

@@ -53,6 +53,10 @@ public abstract class AbstractRecipeDisplay<R extends Recipe<?>> implements Reci
         return ReiUtils.getId(recipe.getType());
     }
 
+    public R getRecipe() {
+        return recipe;
+    }
+
     public abstract List<EntryStack> createOutputs();
     public abstract List<List<EntryStack>> createInputs();
     public abstract int createTime();

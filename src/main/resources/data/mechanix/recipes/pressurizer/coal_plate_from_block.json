@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "item": "minecraft:coal_block"
+  },
+  "result": {
+      "tag": "c:coal_plates",
+      "count": 9
+    }
+}

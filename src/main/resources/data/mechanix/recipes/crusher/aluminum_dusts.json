@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "c:aluminum_ingots"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:aluminum_dusts"
+  }
+}

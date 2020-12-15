@@ -2,7 +2,8 @@ package net.flytre.mechanix.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
+import net.flytre.mechanix.api.recipe.OutputProvider;
+import net.flytre.mechanix.api.recipe.RecipeUtils;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -21,9 +22,9 @@ public class SawmillRecipeSerializer implements RecipeSerializer<SawmillRecipe> 
     @Override
     public SawmillRecipe read(Identifier id, JsonObject json) {
         JsonElement jsonElement = JsonHelper.hasArray(json, "ingredient") ? JsonHelper.getArray(json, "ingredient") : JsonHelper.getObject(json, "ingredient");
-        Ingredient ingredient = Ingredient.fromJson(jsonElement);
-        ItemStack result = AlloyerRecipeSerializer.getItemStack(json,"result");
-        ItemStack secondary = AlloyerRecipeSerializer.getItemStack(json,"secondary");
+        Ingredient ingredient = RecipeUtils.fromJson(jsonElement);
+        OutputProvider result = OutputProvider.fromJson(json.get("result"));
+        OutputProvider secondary = OutputProvider.fromJson(json.get("secondary"));
         double chance = JsonHelper.hasPrimitive(json,"secondary_chance") ? JsonHelper.getFloat(json,"secondary_chance") : 0;
         return recipeFactory.create(id,ingredient,result,secondary,chance);
     }
@@ -31,8 +32,8 @@ public class SawmillRecipeSerializer implements RecipeSerializer<SawmillRecipe> 
     @Override
     public SawmillRecipe read(Identifier id, PacketByteBuf buf) {
         Ingredient ingredient = Ingredient.fromPacket(buf);
-        ItemStack result = buf.readItemStack();
-        ItemStack secondary = buf.readItemStack();
+        OutputProvider result = OutputProvider.fromPacket(buf);
+        OutputProvider secondary = OutputProvider.fromPacket(buf);
         double chance = buf.readDouble();
         return recipeFactory.create(id,ingredient,result,secondary,chance);
     }
@@ -40,12 +41,13 @@ public class SawmillRecipeSerializer implements RecipeSerializer<SawmillRecipe> 
     @Override
     public void write(PacketByteBuf buf, SawmillRecipe recipe) {
         recipe.getInput().write(buf);
-        buf.writeItemStack(recipe.getOutput());
-        buf.writeItemStack(recipe.getSecondary());
+        for(OutputProvider outputProvider : recipe.getOutputs()) {
+            outputProvider.toPacket(buf);
+        }
         buf.writeDouble(recipe.getSecondaryChance());
     }
 
     public interface RecipeFactory {
-        SawmillRecipe create(Identifier id, Ingredient input, ItemStack output, ItemStack secondary, double secondaryChance);
+        SawmillRecipe create(Identifier id, Ingredient input, OutputProvider output, OutputProvider secondary, double secondaryChance);
     }
 }

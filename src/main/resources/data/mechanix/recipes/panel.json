@@ -10,16 +10,16 @@
       "item": "minecraft:glass"
     },
     "i": {
-      "item": "mechanix:iron_plating"
+      "tag": "c:iron_plates"
     },
     "C": {
       "item": "minecraft:clock"
     },
     "E": {
-      "item": "mechanix:endalum_ingot"
+      "tag": "c:endalum_ingots"
     },
     "P": {
-      "item": "mechanix:perlium_ingot"
+      "tag": "c:perlium_ingots"
     }
   },
   "result": {

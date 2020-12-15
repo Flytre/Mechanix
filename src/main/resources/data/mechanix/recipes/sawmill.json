@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iIi",
+    "BOB",
+    "RRR"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_axe"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "R": {
+      "item": "minecraft:rail"
+    },
+    "B" : {
+      "item" : "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "mechanix:sawmill",
+    "count": 1
+  }
+}

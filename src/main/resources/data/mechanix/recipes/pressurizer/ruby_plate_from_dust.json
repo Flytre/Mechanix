@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 250,
+  "ingredient": {
+    "tag": "c:ruby_dusts"
+  },
+  "result": {
+      "tag": "c:ruby_plates"
+    }
+
+}

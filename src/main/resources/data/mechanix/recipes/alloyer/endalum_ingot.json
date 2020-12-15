@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "tag": "c:vysterium_ingots"
+    },
+    {
+      "item" : "minecraft:ender_pearl"
+    }
+  ],
+  "result": "mechanix:endalum_ingot"
+}

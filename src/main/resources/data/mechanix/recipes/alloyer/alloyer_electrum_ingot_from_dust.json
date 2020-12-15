@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "tag": "c:gold_dusts"
+    },
+    {
+      "tag": "c:silver_dusts"
+    }
+  ],
+  "result" : {
+    "tag": "c:electrum_ingots",
+    "count" : 2
+  }
+}

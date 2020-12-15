@@ -1,7 +1,7 @@
 {
   "type": "mechanix:liquifying",
   "ingredient": {
-      "item": "mechanix:perlium_ingot"
+      "tag": "c:perlium_ingots"
     },
   "result": {
     "fluid" : "mechanix:molten_perlium",

@@ -5,8 +5,11 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BucketItemMixin",
+    "ComposterBlockMixin",
     "DefaultBiomeFeaturesMixin",
-    "FluidBlockMixin"
+    "FluidBlockMixin",
+    "IngredientMixin",
+    "RecipeManagerMixin"
   ],
   "client": [
     "SpriteMixin"

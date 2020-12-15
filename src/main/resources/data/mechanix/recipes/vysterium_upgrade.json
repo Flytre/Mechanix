@@ -7,7 +7,7 @@
   ],
   "key": {
     "g": {
-      "item": "mechanix:vysterium_ingot"
+      "tag": "c:vysterium_ingots"
     },
     "I": {
       "item": "mechanix:gilded_upgrade"

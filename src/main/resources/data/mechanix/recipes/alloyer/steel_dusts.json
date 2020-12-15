@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "tag": "c:coal_dusts"
+    },
+    {
+      "tag": "c:iron_dusts"
+    }
+  ],
+  "result": {
+    "tag": "c:steel_dusts",
+    "count" : 2
+  }
+}
