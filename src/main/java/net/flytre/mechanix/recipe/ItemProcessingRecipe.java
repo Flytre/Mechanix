@@ -3,6 +3,7 @@ package net.flytre.mechanix.recipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.recipe.OutputProvider;
+import net.flytre.mechanix.api.recipe.QuantifiedIngredient;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -13,11 +14,11 @@ import net.minecraft.world.World;
 
 public abstract class ItemProcessingRecipe implements MechanixRecipe<Inventory> {
     private final Identifier id;
-    private final Ingredient input;
+    private final QuantifiedIngredient input;
     private final OutputProvider output;
     private final int craftTime;
 
-    public ItemProcessingRecipe(Identifier id, Ingredient input, OutputProvider output, int craftTime) {
+    public ItemProcessingRecipe(Identifier id, QuantifiedIngredient input, OutputProvider output, int craftTime) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -33,7 +34,7 @@ public abstract class ItemProcessingRecipe implements MechanixRecipe<Inventory> 
         return id;
     }
 
-    public Ingredient getInput() {
+    public QuantifiedIngredient getInput() {
         return input;
     }
 
@@ -62,7 +63,7 @@ public abstract class ItemProcessingRecipe implements MechanixRecipe<Inventory> 
 
     @Override
     public DefaultedList<Ingredient> getPreviewInputs() {
-        return DefaultedList.ofSize(1,input);
+        return DefaultedList.ofSize(1,input.getIngredient());
     }
     @Override
     public boolean fits(int width, int height) {

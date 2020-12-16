@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PressurizerRecipeDisplay extends AbstractRecipeDisplay<ItemProcessingRecipe> {
-    public PressurizerRecipeDisplay(ItemProcessingRecipe recipe) {
+public class SingleIODisplay extends AbstractRecipeDisplay<ItemProcessingRecipe> {
+    public SingleIODisplay(ItemProcessingRecipe recipe) {
         super(recipe);
     }
 

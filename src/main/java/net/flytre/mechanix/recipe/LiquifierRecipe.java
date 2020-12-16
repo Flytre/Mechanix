@@ -3,11 +3,11 @@ package net.flytre.mechanix.recipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.fluid.FluidStack;
+import net.flytre.mechanix.api.recipe.QuantifiedIngredient;
 import net.flytre.mechanix.block.liquifier.LiquifierBlockEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -15,18 +15,18 @@ import net.minecraft.world.World;
 
 public class LiquifierRecipe implements MechanixRecipe<LiquifierBlockEntity> {
 
-    private final Ingredient input;
+    private final QuantifiedIngredient input;
     private final FluidStack output;
     private final Identifier id;
 
 
-    public LiquifierRecipe(Identifier id, Ingredient input, FluidStack output) {
+    public LiquifierRecipe(Identifier id, QuantifiedIngredient input, FluidStack output) {
         this.input = input;
         this.output = output;
         this.id = id;
     }
 
-    public Ingredient getInput() {
+    public QuantifiedIngredient getInput() {
         return input;
     }
 

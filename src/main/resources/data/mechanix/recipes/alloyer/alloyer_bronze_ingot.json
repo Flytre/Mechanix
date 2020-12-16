@@ -2,17 +2,15 @@
   "type": "mechanix:alloying",
   "ingredients": [
     {
-      "tag": "c:copper_ingots"
-    },
-    {
-      "tag": "c:copper_ingots"
+      "tag": "c:copper_ingots",
+      "count": 3
     },
     {
       "tag": "c:tin_ingots"
     }
   ],
-  "result" : {
+  "result": {
     "tag": "c:bronze_ingots",
-    "count" : 3
+    "count": 4
   }
 }

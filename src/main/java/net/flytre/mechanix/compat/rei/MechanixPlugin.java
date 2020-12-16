@@ -6,10 +6,7 @@ import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.gui.PanelledScreen;
-import net.flytre.mechanix.compat.rei.categories.AlloyerRecipeCategory;
-import net.flytre.mechanix.compat.rei.categories.DistillerRecipeCategory;
-import net.flytre.mechanix.compat.rei.categories.SawmillRecipeCategory;
-import net.flytre.mechanix.compat.rei.categories.SingleIOCategory;
+import net.flytre.mechanix.compat.rei.categories.*;
 import net.flytre.mechanix.compat.rei.displays.*;
 import net.flytre.mechanix.recipe.*;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -41,8 +38,10 @@ public class MechanixPlugin implements REIPluginV0 {
         iconMap.put(RecipeRegistry.CRUSHER_RECIPE,MachineRegistry.CRUSHER.getBlock());
         iconMap.put(RecipeRegistry.DISTILLER_RECIPE,MachineRegistry.DISTILLER.getBlock());
         iconMap.put(RecipeRegistry.SAWMILL_RECIPE,MachineRegistry.SAWMILL.getBlock());
+        iconMap.put(RecipeRegistry.CENTRIFUGE_RECIPE,MachineRegistry.CENTRIFUGE.getBlock());
         types.addAll(Arrays.asList(RecipeRegistry.ALLOYING_RECIPE, RecipeRegistry.LIQUIFIER_RECIPE,RecipeRegistry.PRESSURIZER_RECIPE,
-                RecipeRegistry.CRUSHER_RECIPE, RecipeRegistry.FOUNDRY_RECIPE, RecipeRegistry.DISTILLER_RECIPE, RecipeRegistry.SAWMILL_RECIPE));
+                RecipeRegistry.CRUSHER_RECIPE, RecipeRegistry.FOUNDRY_RECIPE, RecipeRegistry.DISTILLER_RECIPE, RecipeRegistry.SAWMILL_RECIPE,
+                RecipeRegistry.CENTRIFUGE_RECIPE));
     }
 
     @Override
@@ -80,16 +79,19 @@ public class MechanixPlugin implements REIPluginV0 {
         });
         recipeHelper.registerCategory(new DistillerRecipeCategory(RecipeRegistry.DISTILLER_RECIPE));
         recipeHelper.registerCategory(new SawmillRecipeCategory(RecipeRegistry.SAWMILL_RECIPE));
+        recipeHelper.registerCategory(new CentrifugeRecipeCategory(RecipeRegistry.CENTRIFUGE_RECIPE));
+
     }
 
     @Override
     public void registerRecipeDisplays(RecipeHelper recipeHelper) {
         Function<AlloyingRecipe, RecipeDisplay> alloyDisplay = r -> new AlloyerRecipeDisplay(r) {};
         Function<LiquifierRecipe, RecipeDisplay> liquifierDisplay = r -> new LiquifierRecipeDisplay(r) {};
-        Function<ItemProcessingRecipe, RecipeDisplay> pressurizerDisplay = r -> new PressurizerRecipeDisplay(r) {};
+        Function<ItemProcessingRecipe, RecipeDisplay> pressurizerDisplay = r -> new SingleIODisplay(r) {};
         Function<FoundryRecipe, RecipeDisplay> foundryDisplay = r -> new FoundryRecipeDisplay(r) {};
         Function<DistillerRecipe, RecipeDisplay> distillerDisplay = r -> new DistillerRecipeDisplay(r) {};
-        Function<SawmillRecipe, RecipeDisplay> sawmillDisplay = r -> new SawmillRecipeDisplay(r) {};
+        Function<SawmillRecipe, RecipeDisplay> sawmillDisplay = r -> new MultipleOutputDisplay(r) {};
+        Function<CentrifugeRecipe, RecipeDisplay> centrifugeDisplay = r -> new MultipleOutputDisplay(r) {};
 
 
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.ALLOYING_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.ALLOYING_RECIPE, alloyDisplay);
@@ -99,7 +101,7 @@ public class MechanixPlugin implements REIPluginV0 {
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.FOUNDRY_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.FOUNDRY_RECIPE, foundryDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.DISTILLER_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.DISTILLER_RECIPE, distillerDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.SAWMILL_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.SAWMILL_RECIPE, sawmillDisplay);
-
+        recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.CENTRIFUGE_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.CENTRIFUGE_RECIPE, centrifugeDisplay);
     }
 
     @Override

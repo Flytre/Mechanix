@@ -20,7 +20,6 @@ import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
     private final DefaultedList<ItemStack> items;
@@ -67,9 +66,10 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
         }
 
         if (crafted) {
-            HashSet<Integer> used = recipe.getUsedStacks(this);
-            for (int i : used)
-                this.getStack(i).decrement(1);
+            HashMap<Integer,Integer> used = recipe.getUsedStacks(this);
+            for (int i : used.keySet()) {
+                this.getStack(i).decrement(used.get(i));
+            }
         }
     }
 

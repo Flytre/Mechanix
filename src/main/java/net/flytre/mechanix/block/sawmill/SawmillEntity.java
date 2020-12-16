@@ -27,7 +27,7 @@ public class SawmillEntity extends EnergyEntity implements EasyInventory {
 
     public SawmillEntity() {
         super(MachineRegistry.SAWMILL.getEntityType());
-        items = DefaultedList.ofSize(4, ItemStack.EMPTY);
+        items = DefaultedList.ofSize(3, ItemStack.EMPTY);
         setEnergyMode(false, false, false, false, false, false);
         setIOMode(false, true, false, false, false, false);
         setMaxEnergy(300000);
@@ -93,7 +93,7 @@ public class SawmillEntity extends EnergyEntity implements EasyInventory {
 
     private void craft(SawmillRecipe recipe) {
         ItemStack result = recipe.craft(this);
-        ItemStack secondary = recipe.getSecondary().copy();
+        ItemStack secondary = recipe.getOutputProviders()[1].getStack().copy();
         if (this.getStack(1).isEmpty()) {
             this.setStack(1, result);
         } else {
@@ -101,14 +101,14 @@ public class SawmillEntity extends EnergyEntity implements EasyInventory {
                 this.getStack(1).increment(result.getCount());
             }
         }
-        if(Math.random() < recipe.getSecondaryChance()) {
+        if(Math.random() < recipe.getOutputProviders()[1].getChance()) {
             if (this.getStack(2).isEmpty()) {
                 this.setStack(2, secondary);
             } else if (EasyInventory.canMergeItems(getStack(2), secondary)) {
                     this.getStack(2).increment(secondary.getCount());
             }
         }
-        getStack(0).decrement(1);
+        getStack(0).decrement(recipe.getInput().getQuantity());
     }
 
     @Override

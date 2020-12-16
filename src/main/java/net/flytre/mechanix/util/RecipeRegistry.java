@@ -20,8 +20,10 @@ public class RecipeRegistry {
     public static RecipeType<CrusherRecipe> CRUSHER_RECIPE;
     public static DistillerRecipeSerializer DISTILLER_SERIALIZER;
     public static RecipeType<DistillerRecipe> DISTILLER_RECIPE;
-    public static SawmillRecipeSerializer SAWMILL_SERIALIZER;
+    public static ItemSeperationRecipeSerializer SAWMILL_SERIALIZER;
     public static RecipeType<SawmillRecipe> SAWMILL_RECIPE;
+    public static ItemSeperationRecipeSerializer CENTRIFUGE_SERIALIZER;
+    public static RecipeType<CentrifugeRecipe> CENTRIFUGE_RECIPE;
     public static void init() {
         ALLOYING_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:alloying"), new RecipeType<AlloyingRecipe>() {
             public String toString() {
@@ -70,7 +72,13 @@ public class RecipeRegistry {
                 return "mechanix:sawing";
             }
         });
-        SAWMILL_SERIALIZER = RecipeSerializer.register("mechanix:sawing", new SawmillRecipeSerializer(SawmillRecipe::new));
+        SAWMILL_SERIALIZER = RecipeSerializer.register("mechanix:sawing", new ItemSeperationRecipeSerializer(SawmillRecipe::new));
+        CENTRIFUGE_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:centrifuging"), new RecipeType<CentrifugeRecipe>() {
+            public String toString() {
+                return "mechanix:centrifuging";
+            }
+        });
+        CENTRIFUGE_SERIALIZER = RecipeSerializer.register("mechanix:centrifuging", new ItemSeperationRecipeSerializer(CentrifugeRecipe::new));
 
     }
 }

@@ -2,10 +2,8 @@
   "type": "mechanix:alloying",
   "ingredients": [
     {
-      "tag": "c:copper_ingots"
-    },
-    {
-      "tag": "c:copper_ingots"
+      "tag": "c:copper_ingots",
+      "count" : 3
     },
     {
       "tag": "c:zinc_ingots"
@@ -13,6 +11,6 @@
   ],
   "result" : {
     "tag": "c:brass_ingots",
-    "count" : 3
+    "count" : 4
   }
 }

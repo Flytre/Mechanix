@@ -103,7 +103,7 @@ public class LiquifierBlockEntity extends EnergyEntity implements DoubleInventor
 
 
     public void craft(LiquifierRecipe recipe) {
-        getStack(0).decrement(1);
+        getStack(0).decrement(recipe.getInput().getQuantity());
         if (!isFluidInventoryEmpty())
             getFluidStack(0).increment(recipe.fluidOutput().getAmount());
         else

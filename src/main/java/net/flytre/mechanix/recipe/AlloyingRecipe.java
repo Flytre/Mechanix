@@ -3,6 +3,7 @@ package net.flytre.mechanix.recipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.recipe.OutputProvider;
+import net.flytre.mechanix.api.recipe.QuantifiedIngredient;
 import net.flytre.mechanix.block.alloyer.AlloyerBlockEntity;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
@@ -14,24 +15,25 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
 
-    private final Set<Ingredient> inputs;
+    private final Set<QuantifiedIngredient> inputs;
     private final OutputProvider output;
     private final Identifier id;
 
 
 
-    public AlloyingRecipe(Identifier id, Set<Ingredient> ingredients, OutputProvider output) {
+    public AlloyingRecipe(Identifier id, Set<QuantifiedIngredient> ingredients, OutputProvider output) {
         this.id = id;
         this.inputs = ingredients;
         this.output = output;
     }
 
-    public Set<Ingredient> getInputs() {
+    public Set<QuantifiedIngredient> getInputs() {
         return inputs;
     }
 
@@ -49,7 +51,7 @@ public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
             return false;
 
         HashSet<Integer> checked = new HashSet<>();
-        for(Ingredient ingredient : inputs) {
+        for(QuantifiedIngredient ingredient : inputs) {
             boolean matched = false;
             for(int i = 0; i < 3; i++)
                 if(!checked.contains(i) && ingredient.test(inv.getStack(i))) {
@@ -63,12 +65,12 @@ public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
         return true;
     }
 
-    public HashSet<Integer> getUsedStacks(AlloyerBlockEntity inv) {
-        HashSet<Integer> checked = new HashSet<>();
-        for(Ingredient ingredient : inputs) {
+    public HashMap<Integer, Integer> getUsedStacks(AlloyerBlockEntity inv) {
+        HashMap<Integer, Integer> checked = new HashMap<>();
+        for(QuantifiedIngredient ingredient : inputs) {
             for(int i = 0; i < 3; i++)
-                if(!checked.contains(i) && ingredient.test(inv.getStack(i)))
-                    checked.add(i);
+                if(!checked.containsKey(i) && ingredient.test(inv.getStack(i)))
+                    checked.put(i,ingredient.getQuantity());
         }
         return checked;
     }
@@ -76,8 +78,8 @@ public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
     public DefaultedList<Ingredient> getPreviewInputs() {
         DefaultedList<Ingredient> list = DefaultedList.ofSize(3,Ingredient.EMPTY);
         int index = 0;
-        for(Ingredient i : inputs) {
-            list.set(index++,i);
+        for(QuantifiedIngredient i : inputs) {
+            list.set(index++,i.getIngredient());
         }
         return list;
     }
@@ -119,6 +121,6 @@ public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
 
     @Override
     public boolean cancelLoad() {
-        return getOutput().isEmpty() || inputs.stream().anyMatch(Ingredient::isEmpty);
+        return getOutput().isEmpty() || inputs.stream().anyMatch(QuantifiedIngredient::isEmpty);
     }
 }

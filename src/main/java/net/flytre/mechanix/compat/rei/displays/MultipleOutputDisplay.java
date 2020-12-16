@@ -2,21 +2,22 @@ package net.flytre.mechanix.compat.rei.displays;
 
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.utils.CollectionUtils;
-import net.flytre.mechanix.recipe.SawmillRecipe;
+import net.flytre.mechanix.recipe.ItemSeparationRecipe;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class SawmillRecipeDisplay extends AbstractRecipeDisplay<SawmillRecipe> {
+public class MultipleOutputDisplay extends AbstractRecipeDisplay<ItemSeparationRecipe> {
 
-    public SawmillRecipeDisplay(SawmillRecipe recipe) {
+    public MultipleOutputDisplay(ItemSeparationRecipe recipe) {
         super(recipe);
     }
 
     @Override
     public List<EntryStack> createOutputs() {
-        return Arrays.asList(EntryStack.create(recipe.getOutput()), EntryStack.create(recipe.getSecondary()));
+        return Arrays.stream(recipe.getOutputProviders()).map(i -> EntryStack.create(i.getStack())).collect(Collectors.toList());
     }
 
     @Override
@@ -25,11 +26,11 @@ public class SawmillRecipeDisplay extends AbstractRecipeDisplay<SawmillRecipe> {
     }
 
     public double getChance() {
-        return recipe.getSecondaryChance();
+        return recipe.getOutputProviders()[1].getChance();
     }
 
     @Override
     public int createTime() {
-        return 120;
+        return recipe.getCraftTime();
     }
 }

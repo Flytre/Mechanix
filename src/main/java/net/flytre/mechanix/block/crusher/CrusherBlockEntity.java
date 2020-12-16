@@ -105,7 +105,7 @@ public class CrusherBlockEntity extends EnergyEntity implements EasyInventory {
                 this.getStack(1).increment(result.getCount());
             }
         }
-        getStack(0).decrement(1);
+        getStack(0).decrement(recipe.getInput().getQuantity());
     }
 
     private boolean canAcceptRecipeOutput(ItemProcessingRecipe recipe) {

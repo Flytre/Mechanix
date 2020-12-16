@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "tag": "c:bronze_dusts",
+    "count" : 4
+  },
+  "results": [
+    {
+      "tag": "c:copper_dusts",
+      "count": 3
+    },
+    {
+      "tag": "c:tin_dusts",
+      "count": 1
+    }
+  ]
+}

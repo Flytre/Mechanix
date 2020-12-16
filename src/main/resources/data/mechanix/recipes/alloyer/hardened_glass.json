@@ -5,14 +5,12 @@
       "item": "minecraft:obsidian"
     },
     {
-      "item": "minecraft:glass"
-    },
-    {
-      "item": "minecraft:glass"
+      "item": "minecraft:glass",
+      "count" : 3
     }
   ],
   "result": {
     "item": "mechanix:hardened_glass",
-    "count": 2
+    "count": 4
   }
 }

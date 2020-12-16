@@ -429,7 +429,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     }
 
 
-    public void techRebornPush() {
+    private void techRebornPush() {
         double amt = getMaxTransferRate();
         if (world == null || world.isClient)
             return;

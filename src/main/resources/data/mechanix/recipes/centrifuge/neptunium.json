@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "tag": "c:neptunium_dusts"
+  },
+  "results": [
+    {
+      "item": "mechanix:endalum_dust"
+    },
+    {
+      "item": "mechanix:compressed_diamond"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ]
+}

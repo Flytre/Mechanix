@@ -14,6 +14,9 @@ import net.flytre.mechanix.block.cable.Cable;
 import net.flytre.mechanix.block.cell.EnergyCell;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
 import net.flytre.mechanix.block.cell.EnergyCellScreenHandler;
+import net.flytre.mechanix.block.centrifuge.CentrifugeBlock;
+import net.flytre.mechanix.block.centrifuge.CentrifugeBlockEntity;
+import net.flytre.mechanix.block.centrifuge.CentrifugeScreenHandler;
 import net.flytre.mechanix.block.crusher.CrusherBlock;
 import net.flytre.mechanix.block.crusher.CrusherBlockEntity;
 import net.flytre.mechanix.block.crusher.CrusherScreenHandler;
@@ -97,16 +100,16 @@ public class MachineRegistry {
     public static MachineType<AlloyerBlock, AlloyerBlockEntity, AlloyerScreenHandler> ALLOYER;
     public static MachineType<LiquifierBlock, LiquifierBlockEntity, LiquifierScreenHandler> LIQUIFIER;
     public static MachineType<PressurizerBlock, PressurizerBlockEntity, PressurizerScreenHandler> PRESSURIZER;
-    public static MachineType<CrusherBlock,CrusherBlockEntity, CrusherScreenHandler> CRUSHER;
-    public static MachineType<MachineBlock,ThermalGenEntity, ThermalGenScreenHandler> THERMAL_GENERATOR;
+    public static MachineType<CrusherBlock, CrusherBlockEntity, CrusherScreenHandler> CRUSHER;
+    public static MachineType<MachineBlock, ThermalGenEntity, ThermalGenScreenHandler> THERMAL_GENERATOR;
 
     public static MachineList<SolarPanelBlock> SOLAR_PANELS;
     public static BlockEntityType<SolarPanelEntity> SOLAR_PANEL_ENTITY;
     public static ScreenHandlerType<SolarPanelScreenHandler> SOLAR_PANEL_HANDLER;
 
-    public static MachineType<DistillerBlock,DistillerEntity,DistillerScreenHandler> DISTILLER;
-
+    public static MachineType<DistillerBlock, DistillerEntity, DistillerScreenHandler> DISTILLER;
     public static MachineType<SawmillBlock, SawmillEntity, SawmillScreenHandler> SAWMILL;
+    public static MachineType<CentrifugeBlock, CentrifugeBlockEntity, CentrifugeScreenHandler> CENTRIFUGE;
 
 
     public static void init() {
@@ -240,6 +243,14 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 SawmillEntity::new,
                 SawmillScreenHandler::new
+        );
+
+        CENTRIFUGE = new MachineType<>(
+                new CentrifugeBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "centrifuge",
+                IconMaker.STANDARD,
+                CentrifugeBlockEntity::new,
+                CentrifugeScreenHandler::new
         );
     }
 

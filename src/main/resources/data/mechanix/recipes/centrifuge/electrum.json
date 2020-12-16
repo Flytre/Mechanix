@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "tag": "c:electrum_dusts",
+    "count" : 2
+  },
+  "results": [
+    {
+      "tag": "c:gold_dusts",
+      "count": 1
+    },
+    {
+      "tag": "c:silver_dusts",
+      "count": 1
+    }
+  ]
+}

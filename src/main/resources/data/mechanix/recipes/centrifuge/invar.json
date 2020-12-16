@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "tag": "c:invar_dusts",
+    "count" : 3
+  },
+  "results": [
+    {
+      "tag": "c:iron_dusts",
+      "count": 2
+    },
+    {
+      "tag": "c:nickel_dusts",
+      "count": 1
+    }
+  ]
+}

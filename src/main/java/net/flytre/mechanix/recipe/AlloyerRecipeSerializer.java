@@ -3,9 +3,8 @@ package net.flytre.mechanix.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.flytre.mechanix.api.recipe.OutputProvider;
-import net.flytre.mechanix.api.recipe.RecipeUtils;
+import net.flytre.mechanix.api.recipe.QuantifiedIngredient;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -23,13 +22,13 @@ public class AlloyerRecipeSerializer implements RecipeSerializer<AlloyingRecipe>
 
     @Override
     public AlloyingRecipe read(Identifier id, JsonObject jsonObject) {
-        HashSet<Ingredient> ingredients = new HashSet<>();
+        HashSet<QuantifiedIngredient> ingredients = new HashSet<>();
         JsonArray array = JsonHelper.getArray(jsonObject,"ingredients");
         if(array.size() > 3) {
             throw new RuntimeException("Alloyer: " + id + " has too many ingredients. May only have 3.");
         }
         for(int i = 0; i < array.size(); i++) {
-            ingredients.add(RecipeUtils.fromJson(array.get(i)));
+            ingredients.add(QuantifiedIngredient.fromJson(array.get(i)));
         }
 
         OutputProvider result = OutputProvider.fromJson(jsonObject.get("result"));
@@ -38,10 +37,10 @@ public class AlloyerRecipeSerializer implements RecipeSerializer<AlloyingRecipe>
 
     @Override
     public AlloyingRecipe read(Identifier id, PacketByteBuf buf) {
-        HashSet<Ingredient> ingredients = new HashSet<>();
+        HashSet<QuantifiedIngredient> ingredients = new HashSet<>();
         int size = buf.readInt();
         for(int i = 0; i < size; i++) {
-            Ingredient ingredient = Ingredient.fromPacket(buf);
+            QuantifiedIngredient ingredient = QuantifiedIngredient.fromPacket(buf);
             if(!ingredient.isEmpty())
                 ingredients.add(ingredient);
         }
@@ -52,13 +51,13 @@ public class AlloyerRecipeSerializer implements RecipeSerializer<AlloyingRecipe>
     @Override
     public void write(PacketByteBuf buf, AlloyingRecipe recipe) {
         buf.writeInt(recipe.getInputs().size());
-        for(Ingredient ingredient : recipe.getInputs()) {
-            ingredient.write(buf);
+        for(QuantifiedIngredient ingredient : recipe.getInputs()) {
+            ingredient.toPacket(buf);
         }
         recipe.getOutputProvider().toPacket(buf);
     }
 
     public interface RecipeFactory {
-        AlloyingRecipe create(Identifier id, Set<Ingredient> ingredients, OutputProvider output);
+        AlloyingRecipe create(Identifier id, Set<QuantifiedIngredient> ingredients, OutputProvider output);
     }
 }
