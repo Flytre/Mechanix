@@ -62,6 +62,7 @@ public interface EasyInventory extends SidedInventory, IOMode {
         if (stack.getCount() > getMaxCountPerStack()) {
             stack.setCount(getMaxCountPerStack());
         }
+        markDirty();
     }
 
     @Override

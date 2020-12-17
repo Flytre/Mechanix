@@ -33,19 +33,19 @@ public class DistillerScreen extends EnergyScreen<DistillerScreenHandler> {
     protected void onSynced() {
         super.onSynced();
         FluidMeterWidget meter = new FluidMeterWidget(x + 42, y + 13, 0,
-                () -> handler.getPropertyDelegate().get(9),
+                () -> handler.getPropertyDelegate().get(10),
                 () ->  8000,
                 this::getFluid, this::renderTooltip);
         this.addButton(meter);
 
         FluidMeterWidget meter2 = new FluidMeterWidget(x + 75, y + 13, 1,
-                () -> handler.getPropertyDelegate().get(10),
+                () -> handler.getPropertyDelegate().get(11),
                 () ->  8000,
                 this::getFluid, this::renderTooltip);
         this.addButton(meter2);
 
         FluidMeterWidget meter3 = new FluidMeterWidget(x + 141, y + 13, 2,
-                () -> handler.getPropertyDelegate().get(11),
+                () -> handler.getPropertyDelegate().get(12),
                 () ->  8000,
                 this::getFluid, this::renderTooltip);
         this.addButton(meter3);
@@ -67,7 +67,7 @@ public class DistillerScreen extends EnergyScreen<DistillerScreenHandler> {
         this.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
 
         double x = this.handler.operationProgress();
-        this.drawTexture(matrices, this.x + 112, y + 35, 176, 0, (int) (23 - (x * 23) + 1), 16);
+        this.drawTexture(matrices, this.x + 112, y + 35, 176, 0, (int) (x * 23), 16);
 
         super.drawBackground(matrices,delta,mouseX,mouseY);
     }

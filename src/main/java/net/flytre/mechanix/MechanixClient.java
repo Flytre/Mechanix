@@ -14,6 +14,7 @@ import net.flytre.mechanix.block.alloyer.AlloyerScreen;
 import net.flytre.mechanix.block.cell.EnergyCellRenderer;
 import net.flytre.mechanix.block.cell.EnergyCellScreen;
 import net.flytre.mechanix.block.centrifuge.CentrifugeScreen;
+import net.flytre.mechanix.block.crafter.CrafterScreen;
 import net.flytre.mechanix.block.crusher.CrusherScreen;
 import net.flytre.mechanix.block.distiller.DistillerScreen;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeRenderer;
@@ -53,6 +54,7 @@ public class MechanixClient implements ClientModInitializer {
     public void onInitializeClient() {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ALLOYER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CENTRIFUGE.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRAFTER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.CRUSHER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISTILLER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ENERGY_CELL_ENTITY, EnergyCellRenderer::new);
@@ -70,6 +72,7 @@ public class MechanixClient implements ClientModInitializer {
 
         ScreenRegistry.register(MachineRegistry.ALLOYER.getHandlerType(), AlloyerScreen::new);
         ScreenRegistry.register(MachineRegistry.CENTRIFUGE.getHandlerType(), CentrifugeScreen::new);
+        ScreenRegistry.register(MachineRegistry.CRAFTER.getHandlerType(), CrafterScreen::new);
         ScreenRegistry.register(MachineRegistry.CRUSHER.getHandlerType(), CrusherScreen::new);
         ScreenRegistry.register(MachineRegistry.DISTILLER.getHandlerType(), DistillerScreen::new);
         ScreenRegistry.register(MachineRegistry.ENERGY_CELL_SCREEN_HANDLER, EnergyCellScreen::new);

@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class GeneratorScreenHandler extends EnergyScreenHandler {
 
     public GeneratorScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId,playerInventory,new GeneratorBlockEntity(), new ArrayPropertyDelegate(12));
+        this(syncId,playerInventory,new GeneratorBlockEntity(), new ArrayPropertyDelegate(24));
         pos = buf.readBlockPos();
     }
 

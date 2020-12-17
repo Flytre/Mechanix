@@ -11,11 +11,9 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class AlloyerScreenHandler extends EnergyScreenHandler {
     private final Inventory inventory;
-    private final World world;
 
     public AlloyerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, new AlloyerBlockEntity(), new ArrayPropertyDelegate(24));
@@ -44,12 +42,11 @@ public class AlloyerScreenHandler extends EnergyScreenHandler {
         }
 
         this.inventory = entity;
-        this.world = playerInventory.player.world;
     }
 
 
     public double operationProgress() {
-        return getPropertyDelegate().get(8) / 120.0;
+        return getPropertyDelegate().get(9) == 0 ? 0 : getPropertyDelegate().get(8) / (double) getPropertyDelegate().get(9);
     }
 
     @Override
@@ -58,11 +55,11 @@ public class AlloyerScreenHandler extends EnergyScreenHandler {
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasStack()) {
             stack = slot.getStack();
-            if(index <= 3) {
-                if(!this.insertItem(stack,4,40,false))
+            if (index <= 3) {
+                if (!this.insertItem(stack, 4, 40, false))
                     return ItemStack.EMPTY;
             } else {
-                if(!this.insertItem(stack,0,3,false))
+                if (!this.insertItem(stack, 0, 3, false))
                     return ItemStack.EMPTY;
             }
         }

@@ -1,57 +1,39 @@
 package net.flytre.mechanix.block.alloyer;
 
-import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.energy.MachineEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
-import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.recipe.AlloyingRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
-public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
-    private final DefaultedList<ItemStack> items;
-    private int craftTime;
+public class AlloyerBlockEntity extends MachineEntity<AlloyerBlockEntity, AlloyingRecipe> {
 
     public AlloyerBlockEntity() {
-        super(MachineRegistry.ALLOYER.getEntityType());
-        items = DefaultedList.ofSize(4, ItemStack.EMPTY);
-        setEnergyMode(false, false, false, false, false, false);
-        setIOMode(false, true, false, false, false, false);
-        setMaxEnergy(300000);
-        setMaxTransferRate(200);
-        panelMode = 1;
+        super(MachineRegistry.ALLOYER.getEntityType(), DefaultedList.ofSize(4, ItemStack.EMPTY),
+                (World world, AlloyerBlockEntity inventory) -> world.getRecipeManager().getFirstMatch(RecipeRegistry.ALLOYING_RECIPE, inventory, world).orElse(null)
+                , 50);
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
-        return items;
-    }
-
-    @Override
-    public HashMap<Direction, Boolean> getItemIO() {
-        return ioMode;
-    }
-
-
-    private boolean canAcceptRecipeOutput(@Nullable AlloyingRecipe recipe) {
-        if(recipe == null)
+    protected boolean canAcceptRecipeOutput(@Nullable AlloyingRecipe recipe) {
+        if (recipe == null)
             return false;
-        return getStack(3).isEmpty() || EasyInventory.canMergeItems(getStack(3),recipe.craft(this));
+        return getStack(3).isEmpty() || EasyInventory.canMergeItems(getStack(3), recipe.craft(this));
     }
 
+    @Override
     public void craft(AlloyingRecipe recipe) {
         ItemStack result = recipe.craft(this);
         boolean crafted = false;
@@ -66,70 +48,11 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
         }
 
         if (crafted) {
-            HashMap<Integer,Integer> used = recipe.getUsedStacks(this);
+            HashMap<Integer, Integer> used = recipe.getUsedStacks(this);
             for (int i : used.keySet()) {
                 this.getStack(i).decrement(used.get(i));
             }
         }
-    }
-
-    @Override
-    public void updateDelegate() {
-        super.updateDelegate();
-        getProperties().set(8, craftTime);
-    }
-
-
-    @Override
-    public void repeatTick() {
-
-    }
-
-    @Override
-    public void onceTick() {
-
-        if (this.world == null || this.world.isClient)
-            return;
-
-        boolean currActivated = world.getBlockState(getPos()).get(MachineBlock.ACTIVATED);
-        boolean shouldBeActivated = false;
-        boolean reset = false;
-        int tierTimes = getTier() + 1;
-        if (!isFull())
-            requestEnergy(Math.min(100 * tierTimes, getMaxEnergy() - getEnergy()));
-        AlloyingRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.ALLOYING_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(50 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-50 * tierTimes);
-            shouldBeActivated = true;
-            this.craftTime -= tierTimes;
-            if (this.craftTime <= 0) {
-                craft(recipe);
-                reset = true;
-            }
-        } else
-
-            reset = true;
-
-        if (reset)
-            craftTime = 120;
-
-        if (shouldBeActivated != currActivated) {
-            world.setBlockState(getPos(), world.getBlockState(pos).with(MachineBlock.ACTIVATED, shouldBeActivated));
-        }
-    }
-
-    @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        Inventories.fromTag(tag, items);
-        this.craftTime = tag.getInt("craftTime");
-        super.fromTag(state, tag);
-    }
-
-    @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        Inventories.toTag(tag, items);
-        tag.putInt("craftTime", craftTime);
-        return super.toTag(tag);
     }
 
     @Override
@@ -139,12 +62,12 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
 
     @Override
     public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return slot <= 2 && EasyInventory.super.canInsert(slot, stack, dir);
+        return slot <= 2 && super.canInsert(slot, stack, dir);
     }
 
     @Override
     public boolean canExtract(int slot, ItemStack stack, Direction dir) {
-        return slot == 3 && EasyInventory.super.canExtract(slot, stack, dir);
+        return slot == 3 && super.canExtract(slot, stack, dir);
 
     }
 
@@ -155,6 +78,6 @@ public class AlloyerBlockEntity extends EnergyEntity implements EasyInventory {
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new AlloyerScreenHandler(syncId,inv,this,this.getProperties());
+        return new AlloyerScreenHandler(syncId, inv, this, this.getProperties());
     }
 }

@@ -42,8 +42,6 @@ public class AlloyingRecipe implements MechanixRecipe<AlloyerBlockEntity> {
         return new ItemStack(MachineRegistry.ALLOYER.getBlock());
     }
 
-
-
     @Override
     public boolean matches(AlloyerBlockEntity inv, World world) {
 

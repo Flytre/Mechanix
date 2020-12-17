@@ -11,11 +11,9 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class DistillerScreenHandler extends EnergyScreenHandler {
-    private final EnergyEntity entity;
-    private final World world;
+
 
     public DistillerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, new DistillerEntity(), new ArrayPropertyDelegate(24));
@@ -38,13 +36,11 @@ public class DistillerScreenHandler extends EnergyScreenHandler {
         for(o = 0; o < 9; ++o) {
             this.addSlot(new Slot(playerInventory, o, 8 + o * 18, 142));
         }
-        this.entity = entity;
-        this.world = playerInventory.player.world;
     }
 
 
     public double operationProgress() {
-        return getPropertyDelegate().get(8) / 120.0;
+        return getPropertyDelegate().get(9) == 0 ? 0 : getPropertyDelegate().get(8) / (double)getPropertyDelegate().get(9);
     }
 
     @Override

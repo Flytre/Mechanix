@@ -30,7 +30,7 @@ import java.util.*;
 /**
  * The Energy entity class is for BlockEntities with energy.
  * <p>
- * properties: The property delegate for screen handlers. You can use indices 8-11 for your custom subclasses,
+ * properties: The property delegate for screen handlers. You can use indices 8-23 for your custom subclasses,
  * 0 - 7 are reserved by the energy entity class
  */
 public abstract class EnergyEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable, TieredMachine {
@@ -67,7 +67,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
         super(type);
         energyMode = new HashMap<>();
         ioMode = new HashMap<>();
-        properties = new ArrayPropertyDelegate(12); //4 unused for subclasses
+        properties = new ArrayPropertyDelegate(24); //the rest unused for subclasses
 
         //defaults - PLEASE OVERRIDE
         maxEnergy = 300000;

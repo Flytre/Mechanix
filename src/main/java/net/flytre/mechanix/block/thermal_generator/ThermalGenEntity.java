@@ -30,7 +30,7 @@ public class ThermalGenEntity extends EnergyEntity implements NotUgradable {
         super(MachineRegistry.THERMAL_GENERATOR.getEntityType());
         setMaxEnergy(300000);
         setMaxTransferRate(100);
-        panelMode = 1;
+        panelMode = 0;
         setEnergyMode(true, true, true, true, true, true);
         setIOMode(false, false, false, false, false, false);
     }

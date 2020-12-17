@@ -33,7 +33,7 @@ public class LiquifierScreen extends EnergyScreen<LiquifierScreenHandler> {
     protected void onSynced() {
         super.onSynced();
         FluidMeterWidget meter = new FluidMeterWidget(x + 128, y + 13, 0,
-                () -> handler.getPropertyDelegate().get(9),
+                () -> handler.getPropertyDelegate().get(10),
                 () ->  8000,
                 this::getFluid, this::renderTooltip);
         this.addButton(meter);
@@ -55,7 +55,7 @@ public class LiquifierScreen extends EnergyScreen<LiquifierScreenHandler> {
         this.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
 
         double x = this.handler.operationProgress();
-        this.drawTexture(matrices, this.x + 95, y + 35, 176, 0, (int) (23 - (x * 23) + 1), 16);
+        this.drawTexture(matrices, this.x + 95, y + 35, 176, 0, (int) (x * 23) , 16);
 
         super.drawBackground(matrices,delta,mouseX,mouseY);
     }

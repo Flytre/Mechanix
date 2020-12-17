@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 public class EnergyCellScreenHandler extends EnergyScreenHandler {
 
     public EnergyCellScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId,playerInventory,new EnergyCellEntity(), new ArrayPropertyDelegate(12));
+        this(syncId,playerInventory,new EnergyCellEntity(), new ArrayPropertyDelegate(24));
         pos = buf.readBlockPos();
     }
 

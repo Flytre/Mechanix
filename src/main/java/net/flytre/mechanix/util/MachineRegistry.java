@@ -17,6 +17,9 @@ import net.flytre.mechanix.block.cell.EnergyCellScreenHandler;
 import net.flytre.mechanix.block.centrifuge.CentrifugeBlock;
 import net.flytre.mechanix.block.centrifuge.CentrifugeBlockEntity;
 import net.flytre.mechanix.block.centrifuge.CentrifugeScreenHandler;
+import net.flytre.mechanix.block.crafter.CrafterBlock;
+import net.flytre.mechanix.block.crafter.CrafterBlockEntity;
+import net.flytre.mechanix.block.crafter.CrafterScreenHandler;
 import net.flytre.mechanix.block.crusher.CrusherBlock;
 import net.flytre.mechanix.block.crusher.CrusherBlockEntity;
 import net.flytre.mechanix.block.crusher.CrusherScreenHandler;
@@ -110,6 +113,7 @@ public class MachineRegistry {
     public static MachineType<DistillerBlock, DistillerEntity, DistillerScreenHandler> DISTILLER;
     public static MachineType<SawmillBlock, SawmillEntity, SawmillScreenHandler> SAWMILL;
     public static MachineType<CentrifugeBlock, CentrifugeBlockEntity, CentrifugeScreenHandler> CENTRIFUGE;
+    public static MachineType<CrafterBlock, CrafterBlockEntity, CrafterScreenHandler> CRAFTER;
 
 
     public static void init() {
@@ -251,6 +255,13 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 CentrifugeBlockEntity::new,
                 CentrifugeScreenHandler::new
+        );
+        CRAFTER = new MachineType<>(
+                new CrafterBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "crafter",
+                IconMaker.STANDARD,
+                CrafterBlockEntity::new,
+                CrafterScreenHandler::new
         );
     }
 

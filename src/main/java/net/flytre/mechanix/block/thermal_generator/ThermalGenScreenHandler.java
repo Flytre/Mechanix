@@ -15,7 +15,7 @@ public class ThermalGenScreenHandler extends EnergyScreenHandler {
 
 
     public ThermalGenScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId,playerInventory,new ThermalGenEntity(), new ArrayPropertyDelegate(12));
+        this(syncId,playerInventory,new ThermalGenEntity(), new ArrayPropertyDelegate(24));
         pos = buf.readBlockPos();
     }
 

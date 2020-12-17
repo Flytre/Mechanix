@@ -1,10 +1,9 @@
 package net.flytre.mechanix.block.distiller;
 
-import net.flytre.mechanix.api.energy.EnergyEntity;
+import net.flytre.mechanix.api.energy.MachineEntity;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
-import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.recipe.DistillerRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
@@ -19,62 +18,54 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
-public class DistillerEntity extends EnergyEntity implements DoubleInventory {
+public class DistillerEntity extends MachineEntity<DistillerEntity,DistillerRecipe> implements DoubleInventory {
     private final DefaultedList<FluidStack> fluidInventory;
-    private int craftTime;
 
 
     public DistillerEntity() {
-        super(MachineRegistry.DISTILLER.getEntityType());
+        super(MachineRegistry.DISTILLER.getEntityType(),DefaultedList.ofSize(0, ItemStack.EMPTY),
+                (World world, DistillerEntity inventory) -> world.getRecipeManager().getFirstMatch(RecipeRegistry.DISTILLER_RECIPE, inventory, world).orElse(null)
+                ,40);
         fluidInventory = DefaultedList.ofSize(3, FluidStack.EMPTY);
-        setEnergyMode(false, false, false, false, false, false);
-        setIOMode(false, true, false, false, false, false);
         setMaxEnergy(500000);
         setMaxTransferRate(250);
-        panelMode = 1;
     }
 
     @Override
     public void updateDelegate() {
         super.updateDelegate();
-        getProperties().set(8,craftTime);
-        getProperties().set(9,getFluidStack(0).getAmount());
-        getProperties().set(10,getFluidStack(1).getAmount());
-        getProperties().set(11,getFluidStack(2).getAmount());
+        getProperties().set(10,getFluidStack(0).getAmount());
+        getProperties().set(11,getFluidStack(1).getAmount());
+        getProperties().set(12,getFluidStack(2).getAmount());
     }
 
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {
         FluidInventory.fromTag(tag,fluidInventory);
-        craftTime = tag.getInt("craftTime");
         super.fromTag(state, tag);
     }
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
-        tag.putInt("craftTime",craftTime);
         FluidInventory.toTag(tag,fluidInventory);
         return super.toTag(tag);
     }
 
     @Override
-    public void repeatTick() {
-
-    }
-
-
-    private boolean canAcceptRecipeOutput(@Nullable DistillerRecipe recipe) {
+    protected boolean canAcceptRecipeOutput(@Nullable DistillerRecipe recipe) {
         if(recipe == null)
             return false;
         return getFluidStack(2).isEmpty() || isValidInternal(2,recipe.fluidOutput());
     }
 
-    public void craft(DistillerRecipe recipe) {
+    @Override
+    protected void craft(DistillerRecipe recipe) {
 
         getFluidStack(0).decrement(recipe.getInput().getAmount());
         getFluidStack(1).decrement(500);
@@ -85,36 +76,6 @@ public class DistillerEntity extends EnergyEntity implements DoubleInventory {
             setStack(2, recipe.fluidOutput());
     }
 
-
-    @Override
-    public void onceTick() {
-        if(this.world == null || this.world.isClient)
-            return;
-
-        boolean currActivated = world.getBlockState(getPos()).get(MachineBlock.ACTIVATED);
-        boolean shouldBeActivated = false;
-        boolean reset = false;
-        int tierTimes = getTier() + 1;
-        if (!isFull())
-            requestEnergy(Math.min(100 * tierTimes, getMaxEnergy() - getEnergy()));
-        DistillerRecipe recipe = world.getRecipeManager().getFirstMatch(RecipeRegistry.DISTILLER_RECIPE, this, this.world).orElse(null);
-        if (this.hasEnergy(100 * tierTimes) && canAcceptRecipeOutput(recipe)) {
-            this.addEnergy(-100 * tierTimes);
-            shouldBeActivated = true;
-            this.craftTime -= tierTimes;
-            if (this.craftTime <= 0) {
-                craft(recipe);
-                reset = true;
-            }
-        } else
-            reset = true;
-        if (reset)
-            craftTime = 120;
-
-        if (shouldBeActivated != currActivated) {
-            world.setBlockState(getPos(), world.getBlockState(pos).with(MachineBlock.ACTIVATED, shouldBeActivated));
-        }
-    }
 
     @Override
     public HashMap<Direction, Boolean> getFluidIO() {
@@ -173,11 +134,6 @@ public class DistillerEntity extends EnergyEntity implements DoubleInventory {
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
         return new DistillerScreenHandler(syncId,inv,this,getProperties());
-    }
-
-    @Override
-    public DefaultedList<ItemStack> getItems() {
-        return DefaultedList.ofSize(0,ItemStack.EMPTY);
     }
 
     @Override

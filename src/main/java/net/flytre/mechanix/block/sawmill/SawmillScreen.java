@@ -32,7 +32,6 @@ public class SawmillScreen extends EnergyScreen<SawmillScreenHandler> {
         this.client.getTextureManager().bindTexture(this.background);
         this.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
         this.drawTexture(matrices, this.x + 100, y + 35, 176, 0, (int) (23 * handler.operationProgress()), 17);
-
         super.drawBackground(matrices,delta,mouseX,mouseY);
     }
 }

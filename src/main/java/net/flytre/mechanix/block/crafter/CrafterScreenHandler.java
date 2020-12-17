@@ -1,4 +1,4 @@
-package net.flytre.mechanix.block.sawmill;
+package net.flytre.mechanix.block.crafter;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -12,21 +12,26 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 
-public class SawmillScreenHandler extends EnergyScreenHandler {
+public class CrafterScreenHandler extends EnergyScreenHandler {
+
     private final Inventory inventory;
 
-    public SawmillScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId, playerInventory, new SawmillEntity(), new ArrayPropertyDelegate(24));
+    public CrafterScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+        this(syncId, playerInventory, new CrafterBlockEntity(), new ArrayPropertyDelegate(24));
         this.pos = buf.readBlockPos();
     }
 
-    public SawmillScreenHandler(int syncId, PlayerInventory playerInventory, SawmillEntity entity, PropertyDelegate propertyDelegate) {
-        super(MachineRegistry.SAWMILL.getHandlerType(), syncId, playerInventory, entity, propertyDelegate);
+    public CrafterScreenHandler(int syncId, PlayerInventory playerInventory, CrafterBlockEntity entity, PropertyDelegate propertyDelegate) {
+        super(MachineRegistry.CRAFTER.getHandlerType(), syncId, playerInventory, entity, propertyDelegate);
 
         this.pos = BlockPos.ORIGIN;
-        this.addSlot(new Slot(entity, 0, 66, 35));
-        this.addSlot(new Slot(entity, 1, 135, 35));
-        this.addSlot(new Slot(entity, 2, 135, 62));
+        for (int o = 0; o < 3; ++o) {
+            for (int n = 0; n < 3; ++n) {
+                this.addSlot(new Slot(entity, n + o * 3, 46 + n * 18, 17 + o * 18));
+            }
+        }
+        this.addSlot(new Slot(entity,9,140,49));
+        this.addSlot(new Slot(entity,10,140,20));
 
         int o;
         int n;
@@ -44,19 +49,20 @@ public class SawmillScreenHandler extends EnergyScreenHandler {
     }
 
     public double operationProgress() {
-        return getPropertyDelegate().get(9) == 0 ? 0 : getPropertyDelegate().get(8) / (double)getPropertyDelegate().get(9);
+        return getPropertyDelegate().get(8) / (double)120;
     }
+
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasStack()) {
             stack = slot.getStack();
-            if(index < 3) {
-                if (!this.insertItem(stack, 3, 38, false))
+            if(index < 5) {
+                if (!this.insertItem(stack, 11, 46, false))
                     return ItemStack.EMPTY;
             } else {
-                if(!this.insertItem(stack,0,1,false))
+                if(!this.insertItem(stack,0,9,false))
                     return ItemStack.EMPTY;
             }
         }

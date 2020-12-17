@@ -15,7 +15,7 @@ public class SolarPanelScreenHandler extends EnergyScreenHandler {
 
 
     public SolarPanelScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId,playerInventory,new SolarPanelEntity(), new ArrayPropertyDelegate(12));
+        this(syncId,playerInventory,new SolarPanelEntity(), new ArrayPropertyDelegate(24));
         pos = buf.readBlockPos();
     }
 

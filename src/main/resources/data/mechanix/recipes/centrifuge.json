@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#I#",
+    "iOi",
+    "iVi"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "i": {
+      "tag": "c:iron_plates"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "V": {
+      "item": "mechanix:vysterium_ingot"
+    }
+  },
+  "result": {
+    "item": "mechanix:centrifuge",
+    "count": 1
+  }
+}
