@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:silver_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_silver",
+    "amount" : 1000
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:tin_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_tin",
+    "amount" : 1000
+  }
+}

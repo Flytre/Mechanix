@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:casting",
+  "input" : {
+    "fluid" : "mechanix:molten_electrum",
+    "amount" : 1000
+  },
+  "result" : {
+    "tag": "c:electrum_ingots",
+    "count": 1
+  }
+}

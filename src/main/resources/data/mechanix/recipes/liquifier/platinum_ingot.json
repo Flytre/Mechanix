@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:platinum_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_platinum",
+    "amount" : 1000
+  }
+}

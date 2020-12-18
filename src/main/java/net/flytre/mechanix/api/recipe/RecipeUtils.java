@@ -21,15 +21,22 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class RecipeUtils {
 
+    private static HashMap<Item, List<CraftingRecipe>> cache;
+
+    static {
+        cache = new HashMap<>();
+    }
+
+    public static void clearCache() {
+        if (cache != null)
+            cache.clear();
+    }
 
     public static Ingredient fromJson(@Nullable JsonElement json) {
         return json == null || isIngredientInvalid(json) ? Ingredient.EMPTY : Ingredient.fromJson(json);
@@ -166,7 +173,13 @@ public class RecipeUtils {
 
 
     public static List<CraftingRecipe> craftingRecipesWithOutput(Item item, World world) {
-        return world.getRecipeManager().listAllOfType(RecipeType.CRAFTING).stream().filter(i -> i.getOutput().getItem() == item).collect(Collectors.toList());
+
+        if (cache.containsKey(item))
+            return cache.get(item);
+
+        List<CraftingRecipe> recipes = world.getRecipeManager().listAllOfType(RecipeType.CRAFTING).stream().filter(i -> i.getOutput().getItem() == item).collect(Collectors.toList());
+        cache.put(item, recipes);
+        return recipes;
     }
 
     public static @Nullable CraftingRecipe getFirstCraftingMatch(Item item, Inventory inv, World world, int lower, int upper) {

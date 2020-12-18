@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:distilling",
+  "input": {
+    "fluid" : "mechanix:raw_lead",
+    "amount" : 200
+  },
+  "result": {
+    "fluid" : "mechanix:molten_lead",
+    "amount" : 1000
+  }
+}

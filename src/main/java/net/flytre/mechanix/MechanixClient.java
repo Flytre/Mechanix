@@ -105,9 +105,24 @@ public class MechanixClient implements ClientModInitializer {
         setupFluidRendering(FluidRegistry.PERLIUM.getStill(), FluidRegistry.PERLIUM.getFlowing(), new Identifier("mechanix", "molten_perlium"), -1);
         setupFluidRendering(FluidRegistry.GOLD.getStill(), FluidRegistry.GOLD.getFlowing(), new Identifier("mechanix", "molten_gold"), -1);
         setupFluidRendering(FluidRegistry.IRON.getStill(), FluidRegistry.IRON.getFlowing(), new Identifier("mechanix", "molten_iron"), -1);
+        setupFluidRendering(FluidRegistry.BRONZE.getStill(), FluidRegistry.BRONZE.getFlowing(), new Identifier("mechanix", "molten_bronze"), -1);
+        setupFluidRendering(FluidRegistry.COPPER.getStill(), FluidRegistry.COPPER.getFlowing(), new Identifier("mechanix", "molten_copper"), -1);
+        setupFluidRendering(FluidRegistry.ELECTRUM.getStill(), FluidRegistry.ELECTRUM.getFlowing(), new Identifier("mechanix", "molten_electrum"), -1);
+        setupFluidRendering(FluidRegistry.INVAR.getStill(), FluidRegistry.INVAR.getFlowing(), new Identifier("mechanix", "molten_invar"), -1);
+        setupFluidRendering(FluidRegistry.LEAD.getStill(), FluidRegistry.LEAD.getFlowing(), new Identifier("mechanix", "molten_lead"), -1);
+        setupFluidRendering(FluidRegistry.NICKEL.getStill(), FluidRegistry.NICKEL.getFlowing(), new Identifier("mechanix", "molten_nickel"), -1);
+        setupFluidRendering(FluidRegistry.PLATINUM.getStill(), FluidRegistry.PLATINUM.getFlowing(), new Identifier("mechanix", "molten_platinum"), -1);
+        setupFluidRendering(FluidRegistry.SILVER.getStill(), FluidRegistry.SILVER.getFlowing(), new Identifier("mechanix", "molten_silver"), -1);
+        setupFluidRendering(FluidRegistry.TIN.getStill(), FluidRegistry.TIN.getFlowing(), new Identifier("mechanix", "molten_tin"), -1);
         setupFluidRendering(FluidRegistry.RAW_GOLD.getStill(), FluidRegistry.RAW_GOLD.getFlowing(), new Identifier("mechanix", "raw_gold"), -1);
         setupFluidRendering(FluidRegistry.RAW_PERLIUM.getStill(), FluidRegistry.RAW_PERLIUM.getFlowing(), new Identifier("mechanix", "raw_perlium"), -1);
         setupFluidRendering(FluidRegistry.RAW_IRON.getStill(), FluidRegistry.RAW_IRON.getFlowing(), new Identifier("mechanix", "raw_iron"), -1);
+        setupFluidRendering(FluidRegistry.RAW_COPPER.getStill(), FluidRegistry.RAW_COPPER.getFlowing(), new Identifier("mechanix", "raw_copper"), -1);
+        setupFluidRendering(FluidRegistry.RAW_LEAD.getStill(), FluidRegistry.RAW_LEAD.getFlowing(), new Identifier("mechanix", "raw_lead"), -1);
+        setupFluidRendering(FluidRegistry.RAW_NICKEL.getStill(), FluidRegistry.RAW_NICKEL.getFlowing(), new Identifier("mechanix", "raw_nickel"), -1);
+        setupFluidRendering(FluidRegistry.RAW_PLATINUM.getStill(), FluidRegistry.RAW_PLATINUM.getFlowing(), new Identifier("mechanix", "raw_platinum"), -1);
+        setupFluidRendering(FluidRegistry.RAW_SILVER.getStill(), FluidRegistry.RAW_SILVER.getFlowing(), new Identifier("mechanix", "raw_silver"), -1);
+        setupFluidRendering(FluidRegistry.RAW_TIN.getStill(), FluidRegistry.RAW_TIN.getFlowing(), new Identifier("mechanix", "raw_tin"), -1);
     }
 
 

@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:copper_ores"
+    },
+  "result": {
+    "fluid" : "mechanix:raw_copper",
+    "amount" : 600
+  }
+}
