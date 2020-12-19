@@ -1,6 +1,5 @@
 {
   "block.mechanix.alloyer": "Alloyer",
-  "block.mechanix.hydroponator": "Hydroponator",
   "block.mechanix.cable": "Cable",
   "block.mechanix.centrifuge": "Centrifuge",
   "block.mechanix.crafter": "Crafter",
@@ -19,6 +18,7 @@
   "block.mechanix.gilded_tank": "Gilded Fluid Tank",
   "block.mechanix.hardened_glass": "Hardened Glass",
   "block.mechanix.hydrator": "Hydrator",
+  "block.mechanix.hydroponator": "Hydroponator",
   "block.mechanix.item_pipe": "Item Pipe",
   "block.mechanix.item_pipe.blacklist": "Blacklist",
   "block.mechanix.item_pipe.closest": "Closest",
@@ -46,6 +46,7 @@
   "block.mechanix.perlium_block": "Perlium Block",
   "block.mechanix.perlium_ore": "Perlium Ore",
   "block.mechanix.pressurizer": "Pressurizer",
+  "block.mechanix.quarry": "Quarry",
   "block.mechanix.raw_copper": "Raw Copper",
   "block.mechanix.raw_gold": "Raw Gold",
   "block.mechanix.raw_iron": "Raw Iron",
@@ -120,9 +121,9 @@
   "recipe.mechanix.compressing": "Compressing",
   "recipe.mechanix.crushing": "Crushing",
   "recipe.mechanix.distilling": "Distilling",
+  "recipe.mechanix.hydroponics": "Hydroponics",
   "recipe.mechanix.liquifying": "Liquifying",
   "recipe.mechanix.sawing": "Sawing",
-  "recipe.mechanix.hydroponics" : "Hydroponics",
   "tooltip.mechanix.energy": "Energy",
   "tooltip.mechanix.max_energy": "Max Energy",
   "tooltip.mechanix.transfer_rate": "Transfer Rate"
