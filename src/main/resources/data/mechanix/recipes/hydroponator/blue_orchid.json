@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:blue_orchid",
+    "count": 1
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 1
+  },
+  "results": [
+    {
+      "item": "minecraft:blue_orchid",
+      "count": 2
+    }
+  ]
+}

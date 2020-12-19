@@ -3,15 +3,16 @@ package net.flytre.mechanix.compat.rei.displays;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.utils.CollectionUtils;
 import net.flytre.mechanix.recipe.ItemSeparationRecipe;
+import net.minecraft.inventory.Inventory;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MultipleOutputDisplay extends AbstractRecipeDisplay<ItemSeparationRecipe> {
+public class MultipleOutputDisplay extends AbstractRecipeDisplay<ItemSeparationRecipe<Inventory>> {
 
-    public MultipleOutputDisplay(ItemSeparationRecipe recipe) {
+    public MultipleOutputDisplay(ItemSeparationRecipe<Inventory> recipe) {
         super(recipe);
     }
 
@@ -26,7 +27,7 @@ public class MultipleOutputDisplay extends AbstractRecipeDisplay<ItemSeparationR
     }
 
     public double getChance() {
-        return recipe.getOutputProviders()[1].getChance();
+        return recipe.getOutputProvider(1).getChance();
     }
 
     @Override

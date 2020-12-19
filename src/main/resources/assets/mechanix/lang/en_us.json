@@ -1,5 +1,6 @@
 {
   "block.mechanix.alloyer": "Alloyer",
+  "block.mechanix.hydroponator": "Hydroponator",
   "block.mechanix.cable": "Cable",
   "block.mechanix.centrifuge": "Centrifuge",
   "block.mechanix.crafter": "Crafter",
@@ -121,6 +122,7 @@
   "recipe.mechanix.distilling": "Distilling",
   "recipe.mechanix.liquifying": "Liquifying",
   "recipe.mechanix.sawing": "Sawing",
+  "recipe.mechanix.hydroponics" : "Hydroponics",
   "tooltip.mechanix.energy": "Energy",
   "tooltip.mechanix.max_energy": "Max Energy",
   "tooltip.mechanix.transfer_rate": "Transfer Rate"

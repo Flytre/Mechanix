@@ -6,12 +6,13 @@ import net.flytre.mechanix.api.recipe.OutputProvider;
 import net.flytre.mechanix.api.recipe.QuantifiedIngredient;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 
-public class CentrifugeRecipe extends ItemSeparationRecipe {
+public class CentrifugeRecipe extends ItemSeparationRecipe<Inventory> {
 
     public CentrifugeRecipe(Identifier id, QuantifiedIngredient input, OutputProvider[] outputs, int craftTime) {
         super(id, input, outputs, craftTime);

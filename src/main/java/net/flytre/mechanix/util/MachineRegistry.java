@@ -40,6 +40,9 @@ import net.flytre.mechanix.block.generator.GeneratorScreenHandler;
 import net.flytre.mechanix.block.hydrator.HydratorBlock;
 import net.flytre.mechanix.block.hydrator.HydratorBlockEntity;
 import net.flytre.mechanix.block.hydrator.HydratorScreenHandler;
+import net.flytre.mechanix.block.hydroponator.HydroponatorBlock;
+import net.flytre.mechanix.block.hydroponator.HydroponatorEntity;
+import net.flytre.mechanix.block.hydroponator.HydroponatorScreenHandler;
 import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreenHandler;
@@ -114,6 +117,7 @@ public class MachineRegistry {
     public static MachineType<SawmillBlock, SawmillEntity, SawmillScreenHandler> SAWMILL;
     public static MachineType<CentrifugeBlock, CentrifugeBlockEntity, CentrifugeScreenHandler> CENTRIFUGE;
     public static MachineType<CrafterBlock, CrafterBlockEntity, CrafterScreenHandler> CRAFTER;
+    public static MachineType<HydroponatorBlock, HydroponatorEntity, HydroponatorScreenHandler> HYDROPONATOR;
 
 
     public static void init() {
@@ -262,6 +266,13 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 CrafterBlockEntity::new,
                 CrafterScreenHandler::new
+        );
+        HYDROPONATOR = new MachineType<>(
+                new HydroponatorBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "hydroponator",
+                IconMaker.STANDARD,
+                HydroponatorEntity::new,
+                HydroponatorScreenHandler::new
         );
     }
 

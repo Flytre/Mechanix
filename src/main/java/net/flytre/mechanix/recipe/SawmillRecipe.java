@@ -6,12 +6,13 @@ import net.flytre.mechanix.api.recipe.OutputProvider;
 import net.flytre.mechanix.api.recipe.QuantifiedIngredient;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 
-public class SawmillRecipe extends ItemSeparationRecipe {
+public class SawmillRecipe extends ItemSeparationRecipe<Inventory> {
 
     public SawmillRecipe(Identifier id, QuantifiedIngredient input, OutputProvider[] outputs, int craftTime) {
         super(id, input, outputs, craftTime);

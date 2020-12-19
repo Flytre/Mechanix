@@ -27,7 +27,6 @@ public class CrafterBlockEntity extends EnergyEntity implements EasyInventory {
     private CraftingRecipe recipe;
 
 
-
     public CrafterBlockEntity() {
         super(MachineRegistry.CRAFTER.getEntityType());
         items = DefaultedList.ofSize(11, ItemStack.EMPTY);

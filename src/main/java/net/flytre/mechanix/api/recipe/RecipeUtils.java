@@ -5,10 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.flytre.mechanix.api.inventory.EasyInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeType;
@@ -163,10 +161,11 @@ public class RecipeUtils {
         for (Ingredient ingredient : actual)
             for (int i = lower; i < upper; i++)
                 if (ingredient.test(inv.getStack(i))) {
-                    if (inv.getStack(i).getCount() == 1 && inv.getStack(i).getItem() instanceof BucketItem) {
-                        inv.setStack(i, new ItemStack(Items.BUCKET, 1));
+                    ItemStack stack = inv.getStack(i);
+                    if(stack.getCount() == 1 && stack.getItem().hasRecipeRemainder()) {
+                        inv.setStack(i, new ItemStack(stack.getItem().getRecipeRemainder(), 1));
                     } else
-                        inv.getStack(i).decrement(1);
+                        stack.decrement(1);
                     break;
                 }
     }
@@ -186,6 +185,22 @@ public class RecipeUtils {
         List<CraftingRecipe> outputs = craftingRecipesWithOutput(item, world);
         Optional<CraftingRecipe> result = outputs.stream().filter(i -> craftingInputMatch(i, inv, lower, upper)).findFirst();
         return result.orElse(null);
+    }
+
+
+
+    public static OutputProvider[] getOutputProviders(JsonObject json, String key) {
+        OutputProvider[] result;
+        if(JsonHelper.hasArray(json, key)) {
+            JsonArray array = JsonHelper.getArray(json, key);
+            result = new OutputProvider[array.size()];
+            for(int i = 0; i < array.size(); i++)
+                result[i] = OutputProvider.fromJson(array.get(i));
+        } else {
+            result = new OutputProvider[]{OutputProvider.fromJson(json.get(key))};
+        }
+
+        return result;
     }
 
 }

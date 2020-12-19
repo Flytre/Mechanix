@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:cocoa_beans",
+    "count": 1
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 4
+  },
+  "results": [
+    {
+      "item": "minecraft:cocoa_beans",
+      "count": 3
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/hydroponator",
+    "particle": "mechanix:block/alloyer"
+  },
+  "parent" : "mechanix:block/machine"
+}

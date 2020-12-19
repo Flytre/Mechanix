@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:pumpkin_seeds",
+    "count": 1
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 3
+  },
+  "results": [
+    {
+      "item": "minecraft:pumpkin",
+      "count": 1
+    }
+  ]
+}

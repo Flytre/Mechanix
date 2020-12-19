@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:sweet_berries",
+    "count": 1
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 3
+  },
+  "results": [
+    {
+      "item": "minecraft:sweet_berries",
+      "count": 2
+    }
+  ]
+}

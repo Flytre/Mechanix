@@ -35,7 +35,7 @@ public class SawmillEntity extends MachineEntity<Inventory, SawmillRecipe> {
     @Override
     protected void craft(SawmillRecipe recipe) {
         ItemStack result = recipe.craft(this);
-        ItemStack secondary = recipe.getOutputProviders()[1].getStack().copy();
+        ItemStack secondary = recipe.getOutputProvider(1).getStack().copy();
         if (this.getStack(1).isEmpty()) {
             this.setStack(1, result);
         } else {
@@ -43,7 +43,7 @@ public class SawmillEntity extends MachineEntity<Inventory, SawmillRecipe> {
                 this.getStack(1).increment(result.getCount());
             }
         }
-        if (Math.random() < recipe.getOutputProviders()[1].getChance()) {
+        if (Math.random() < recipe.getOutputProvider(1).getChance()) {
             if (this.getStack(2).isEmpty()) {
                 this.setStack(2, secondary);
             } else if (EasyInventory.canMergeItems(getStack(2), secondary)) {

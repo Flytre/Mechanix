@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 import java.util.Arrays;
 
-public abstract class ItemSeparationRecipe implements MechanixRecipe<Inventory> {
+public abstract class ItemSeparationRecipe<T extends Inventory> implements MechanixRecipe<T> {
 
     private final Identifier id;
     private final QuantifiedIngredient input;
@@ -44,6 +44,11 @@ public abstract class ItemSeparationRecipe implements MechanixRecipe<Inventory> 
         return outputs[0].getStack();
     }
 
+
+    public OutputProvider getOutputProvider(int i) {
+        return outputs.length > i ? outputs[i] : OutputProvider.EMPTY;
+    }
+
     public OutputProvider[] getOutputProviders() {
         return outputs;
     }
@@ -51,7 +56,7 @@ public abstract class ItemSeparationRecipe implements MechanixRecipe<Inventory> 
 
 
     @Override
-    public boolean matches(Inventory inv, World world) {
+    public boolean matches(T inv, World world) {
 
         if(cancelLoad())
             return false;
@@ -70,7 +75,7 @@ public abstract class ItemSeparationRecipe implements MechanixRecipe<Inventory> 
     }
 
 
-    public ItemStack craft(Inventory inv) {
+    public ItemStack craft(T inv) {
         return this.getOutput().copy();
     }
 

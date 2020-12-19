@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:bamboo",
+    "count": 1
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 2
+  },
+  "results": [
+    {
+      "item": "minecraft:bamboo",
+      "count": 3
+    }
+  ]
+}

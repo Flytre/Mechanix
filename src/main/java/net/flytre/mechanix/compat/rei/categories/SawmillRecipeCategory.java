@@ -37,7 +37,9 @@ public class SawmillRecipeCategory extends AbstractCustomCategory<SawmillRecipe>
         widgets.add(Widgets.createSlot(new Point(x + 3 * w / 4 - 9, y + h / 2 - 12)).entries(getOutput(recipeDisplay, 0)).markOutput());
         widgets.add(Widgets.createSlot(new Point(x + 3 * w / 4 - 9, y + 3 * h / 4 - 9)).entries(getOutput(recipeDisplay, 1)).markOutput());
         widgets.add(ArrowWidget.create(new Point(x + w / 2 - 12, y + h / 2 - 9), true, recipeDisplay.getTime()));
-        widgets.add(Widgets.createLabel(new Point(x + w / 2 + 13, y + 3 * h / 4 - 5), Text.of(String.format("%.0f",recipeDisplay.getRecipe().getOutputProviders()[1].getChance()*100) + "%")));
+
+        if(!recipeDisplay.getRecipe().getOutputProvider(1).getStack().isEmpty())
+            widgets.add(Widgets.createLabel(new Point(x + w / 2 + 13, y + 3 * h / 4 - 5), Text.of(String.format("%.0f",recipeDisplay.getRecipe().getOutputProvider(1).getChance()*100) + "%")));
         return widgets;
     }
 

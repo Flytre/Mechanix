@@ -12,6 +12,13 @@ import net.minecraft.util.registry.Registry;
 
 public class OutputProvider {
 
+
+    public static final OutputProvider EMPTY;
+
+    static {
+        EMPTY = new OutputProvider(ItemStack.EMPTY,1.0);
+    }
+
     private final boolean isTag;
     private final ItemStack stack;
     private final TaggedItem taggedItem;
