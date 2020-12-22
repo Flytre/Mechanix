@@ -26,6 +26,7 @@ import net.flytre.mechanix.block.hydroponator.HydroponatorScreen;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreen;
 import net.flytre.mechanix.block.liquifier.LiquifierScreen;
 import net.flytre.mechanix.block.pressurizer.PressurizerScreen;
+import net.flytre.mechanix.block.quarry.QuarryScreen;
 import net.flytre.mechanix.block.sawmill.SawmillScreen;
 import net.flytre.mechanix.block.solar_panel.SolarPanelScreen;
 import net.flytre.mechanix.block.tank.FluidTankRenderer;
@@ -68,6 +69,7 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.LIQUIFIER.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.POWERED_FURNACE.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.PRESSURIZER.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.QUARRY.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.SAWMILL.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
 
@@ -87,6 +89,7 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.LIQUIFIER.getHandlerType(), LiquifierScreen::new);
         ScreenRegistry.register(MachineRegistry.POWERED_FURNACE.getHandlerType(), PoweredFurnaceScreen::new);
         ScreenRegistry.register(MachineRegistry.PRESSURIZER.getHandlerType(), PressurizerScreen::new);
+        ScreenRegistry.register(MachineRegistry.QUARRY.getHandlerType(), QuarryScreen::new);
         ScreenRegistry.register(MachineRegistry.SAWMILL.getHandlerType(), SawmillScreen::new);
         ScreenRegistry.register(MachineRegistry.SOLAR_PANEL_HANDLER, SolarPanelScreen::new);
         ScreenRegistry.register(MachineRegistry.THERMAL_GENERATOR.getHandlerType(), ThermalGenScreen::new);

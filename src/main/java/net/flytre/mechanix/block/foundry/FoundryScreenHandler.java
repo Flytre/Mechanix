@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.foundry;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,7 +25,7 @@ public class FoundryScreenHandler extends EnergyScreenHandler {
         super(MachineRegistry.FOUNDRY.getHandlerType(), syncId, playerInventory, entity, propertyDelegate);
 
         this.pos = BlockPos.ORIGIN;
-        this.addSlot(new Slot(entity, 0, 135, 35));
+        this.addSlot(new OutputSlot(entity, 0, 135, 35));
 
         int o;
         int n;

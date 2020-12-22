@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.hydroponator;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,8 +27,8 @@ public class HydroponatorScreenHandler extends EnergyScreenHandler {
         this.pos = BlockPos.ORIGIN;
         this.addSlot(new Slot(entity, 0, 79, 23));
         this.addSlot(new Slot(entity, 1, 79, 46));
-        this.addSlot(new Slot(entity, 2, 135, 23));
-        this.addSlot(new Slot(entity, 3, 135, 46));
+        this.addSlot(new OutputSlot(entity, 2, 135, 23));
+        this.addSlot(new OutputSlot(entity, 3, 135, 46));
 
 
         int o;

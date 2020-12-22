@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.centrifuge;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,10 +26,10 @@ public class CentrifugeScreenHandler extends EnergyScreenHandler {
 
         this.pos = BlockPos.ORIGIN;
         this.addSlot(new Slot(entity, 0, 66, 35));
-        this.addSlot(new Slot(entity, 1, 129, 26));
-        this.addSlot(new Slot(entity, 2, 147, 26));
-        this.addSlot(new Slot(entity, 3, 129, 44));
-        this.addSlot(new Slot(entity, 4, 147, 44));
+        this.addSlot(new OutputSlot(entity, 1, 129, 26));
+        this.addSlot(new OutputSlot(entity, 2, 147, 26));
+        this.addSlot(new OutputSlot(entity, 3, 129, 44));
+        this.addSlot(new OutputSlot(entity, 4, 147, 44));
 
         int o;
         int n;

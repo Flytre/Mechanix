@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.sawmill;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,8 +26,8 @@ public class SawmillScreenHandler extends EnergyScreenHandler {
 
         this.pos = BlockPos.ORIGIN;
         this.addSlot(new Slot(entity, 0, 66, 35));
-        this.addSlot(new Slot(entity, 1, 135, 35));
-        this.addSlot(new Slot(entity, 2, 135, 62));
+        this.addSlot(new OutputSlot(entity, 1, 135, 35));
+        this.addSlot(new OutputSlot(entity, 2, 135, 62));
 
         int o;
         int n;

@@ -52,6 +52,9 @@ import net.flytre.mechanix.block.liquifier.LiquifierScreenHandler;
 import net.flytre.mechanix.block.pressurizer.PressurizerBlock;
 import net.flytre.mechanix.block.pressurizer.PressurizerBlockEntity;
 import net.flytre.mechanix.block.pressurizer.PressurizerScreenHandler;
+import net.flytre.mechanix.block.quarry.QuarryBlock;
+import net.flytre.mechanix.block.quarry.QuarryEntity;
+import net.flytre.mechanix.block.quarry.QuarryScreenHandler;
 import net.flytre.mechanix.block.sawmill.SawmillBlock;
 import net.flytre.mechanix.block.sawmill.SawmillEntity;
 import net.flytre.mechanix.block.sawmill.SawmillScreenHandler;
@@ -118,7 +121,7 @@ public class MachineRegistry {
     public static MachineType<CentrifugeBlock, CentrifugeBlockEntity, CentrifugeScreenHandler> CENTRIFUGE;
     public static MachineType<CrafterBlock, CrafterBlockEntity, CrafterScreenHandler> CRAFTER;
     public static MachineType<HydroponatorBlock, HydroponatorEntity, HydroponatorScreenHandler> HYDROPONATOR;
-
+    public static MachineType<QuarryBlock, QuarryEntity,QuarryScreenHandler> QUARRY;
 
     public static void init() {
 
@@ -273,6 +276,13 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 HydroponatorEntity::new,
                 HydroponatorScreenHandler::new
+        );
+        QUARRY = new MachineType<>(
+                new QuarryBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "quarry",
+                IconMaker.STANDARD,
+                QuarryEntity::new,
+                QuarryScreenHandler::new
         );
     }
 

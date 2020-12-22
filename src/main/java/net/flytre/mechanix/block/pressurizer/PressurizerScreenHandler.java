@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.pressurizer;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -11,11 +12,9 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class PressurizerScreenHandler extends EnergyScreenHandler {
     private final Inventory inventory;
-    private final World world;
 
     public PressurizerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, new PressurizerBlockEntity(), new ArrayPropertyDelegate(24));
@@ -27,7 +26,7 @@ public class PressurizerScreenHandler extends EnergyScreenHandler {
 
         this.pos = BlockPos.ORIGIN;
         this.addSlot(new Slot(entity, 0, 66, 35));
-        this.addSlot(new Slot(entity, 1, 135, 35));
+        this.addSlot(new OutputSlot(entity, 1, 135, 35));
         int o;
         int n;
         for (o = 0; o < 3; ++o) {
@@ -41,7 +40,6 @@ public class PressurizerScreenHandler extends EnergyScreenHandler {
         }
 
         this.inventory = entity;
-        this.world = playerInventory.player.world;
     }
 
 

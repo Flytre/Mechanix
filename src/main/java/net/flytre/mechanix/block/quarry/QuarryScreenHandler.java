@@ -1,7 +1,6 @@
-package net.flytre.mechanix.block.crafter;
+package net.flytre.mechanix.block.quarry;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
-import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,26 +12,27 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 
-public class CrafterScreenHandler extends EnergyScreenHandler {
+public class QuarryScreenHandler extends EnergyScreenHandler {
 
     private final Inventory inventory;
 
-    public CrafterScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-        this(syncId, playerInventory, new CrafterBlockEntity(), new ArrayPropertyDelegate(24));
+    public QuarryScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+        this(syncId, playerInventory, new QuarryEntity(), new ArrayPropertyDelegate(24));
         this.pos = buf.readBlockPos();
     }
 
-    public CrafterScreenHandler(int syncId, PlayerInventory playerInventory, CrafterBlockEntity entity, PropertyDelegate propertyDelegate) {
-        super(MachineRegistry.CRAFTER.getHandlerType(), syncId, playerInventory, entity, propertyDelegate);
+    public QuarryScreenHandler(int syncId, PlayerInventory playerInventory, QuarryEntity entity, PropertyDelegate propertyDelegate) {
+        super(MachineRegistry.QUARRY.getHandlerType(), syncId, playerInventory, entity, propertyDelegate);
 
         this.pos = BlockPos.ORIGIN;
-        for (int o = 0; o < 3; ++o) {
-            for (int n = 0; n < 3; ++n) {
-                this.addSlot(new Slot(entity, n + o * 3, 46 + n * 18, 17 + o * 18));
+        this.addSlot(new Slot(entity, 0, 51, 36));
+
+
+        for (int o = 0; o < 4; o++) {
+            for (int n = 0; n < 5; n++) {
+                this.addSlot(new Slot(entity, 1 + n + o * 5, 80 + n * 18, 9 + o * 18));
             }
         }
-        this.addSlot(new Slot(entity,9,140,49));
-        this.addSlot(new OutputSlot(entity,10,140,20));
 
         int o;
         int n;
@@ -49,9 +49,6 @@ public class CrafterScreenHandler extends EnergyScreenHandler {
         this.inventory = entity;
     }
 
-    public double operationProgress() {
-        return getPropertyDelegate().get(8) / (double)120;
-    }
 
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
@@ -59,16 +56,17 @@ public class CrafterScreenHandler extends EnergyScreenHandler {
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasStack()) {
             stack = slot.getStack();
-            if(index < 5) {
-                if (!this.insertItem(stack, 11, 46, false))
+            if (index <= 20) {
+                if (!this.insertItem(stack, 21, 57, false))
                     return ItemStack.EMPTY;
             } else {
-                if(!this.insertItem(stack,0,9,false))
+                if (!this.insertItem(stack, 1, 21, false))
                     return ItemStack.EMPTY;
             }
         }
         return stack;
     }
+
 
     @Override
     public boolean canUse(PlayerEntity player) {
