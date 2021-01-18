@@ -1,6 +1,7 @@
 package net.flytre.mechanix.block.alloyer;
 
 import net.flytre.mechanix.api.energy.EnergyScreenHandler;
+import net.flytre.mechanix.api.inventory.OutputSlot;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -27,7 +28,7 @@ public class AlloyerScreenHandler extends EnergyScreenHandler {
         this.addSlot(new Slot(entity, 0, 61, 21));
         this.addSlot(new Slot(entity, 1, 98, 21));
         this.addSlot(new Slot(entity, 2, 136, 21));
-        this.addSlot(new Slot(entity, 3, 98, 58));
+        this.addSlot(new OutputSlot(entity, 3, 98, 58));
 
         int o;
         int n;

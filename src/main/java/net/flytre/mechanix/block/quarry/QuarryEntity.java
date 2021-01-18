@@ -108,7 +108,7 @@ public class QuarryEntity extends EnergyEntity implements EasyInventory {
         int aY = pos.getY() + y;
         int aZ = pos.getZ() + z;
         delta += getTier() + 1;
-        if (delta >= 10) {
+        if (delta >= 100) {
             ItemStack toolStack = getStack(0);
             if (toolStack.isEmpty())
                 return;

@@ -1,39 +1,37 @@
-package net.flytre.mechanix.block.tank;
+package net.flytre.mechanix.block.xp_bank;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.gui.FluidMeterWidget;
 import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
-import net.flytre.mechanix.api.util.Formatter;
+import net.flytre.mechanix.util.FluidRegistry;
 import net.flytre.mechanix.util.Packets;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
 import static net.flytre.mechanix.api.energy.EnergyScreen.BUTTONS;
 
-public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
-
-    protected final FluidTankScreenHandler handler;
+public class XpBankScreen extends PanelledScreen<XpBankScreenHandler> {
+    protected final XpBankScreenHandler handler;
     private boolean synced;
     private final Identifier panel;
     private final Identifier background;
     private FluidMeterWidget meter;
 
 
-    public FluidTankScreen(FluidTankScreenHandler handler, PlayerInventory inventory, Text title) {
+    public XpBankScreen(XpBankScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         this.handler = handler;
         synced = false;
@@ -67,6 +65,14 @@ public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
         }
     }
 
+
+    private void requestXPTransfer(int amount) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeBlockPos(handler.getPos());
+        buf.writeInt(amount);
+        ClientPlayNetworking.send(Packets.XP_TRANSFER,buf);
+    }
+
     private void onSynced() {
 
         int baseX = x + backgroundWidth;
@@ -82,19 +88,24 @@ public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
         //behind
         this.addButton(new ToggleButton(baseX + 44, this.y + 44, 16, 16,  handler.fluidButtonState(Direction.SOUTH), BUTTONS, (buttonWidget) -> onClicked(5, (ToggleButton) buttonWidget), 'S'));
 
+        //+ buttons
+        this.addButton(new ButtonWidget(x + 8,y + 20,32,20,Text.of("§2+1"),(i) -> requestXPTransfer(1)));
+        this.addButton(new ButtonWidget(x + 8,y + 50,32,20,Text.of("§2+10"),(i) -> requestXPTransfer(10)));
+        this.addButton(new ButtonWidget(x + 40,y + 20,32,20,Text.of("§2+100"),(i) -> requestXPTransfer(100)));
+        this.addButton(new ButtonWidget(x + 40,y + 50,32,20,Text.of("§2+1000"),(i) -> requestXPTransfer(1000)));
+
+        //- buttons
+        this.addButton(new ButtonWidget(x + 105,y + 20,32,20,Text.of("§c-1"),(i) -> requestXPTransfer(-1)));
+        this.addButton(new ButtonWidget(x + 105,y + 50,32,20,Text.of("§c-10"),(i) -> requestXPTransfer(-10)));
+        this.addButton(new ButtonWidget(x + 137,y + 20,32,20,Text.of("§c-100"),(i) -> requestXPTransfer(-100)));
+        this.addButton(new ButtonWidget(x + 137,y + 50,32,20,Text.of("§c-1000"),(i) -> requestXPTransfer(-1000)));
+
+
         meter = new FluidMeterWidget(x + 73, y + 15, 0,
-                () -> Formatter.unsplit(new int[]{handler.getDelegate().get(1),handler.getDelegate().get(2)}),
-        () ->  Formatter.unsplit(new int[]{handler.getDelegate().get(3),handler.getDelegate().get(4)}),
-                this::getFluid, this::renderTooltip);
+                handler::getAmount,
+                () -> 32000,
+                (i) -> FluidRegistry.LIQUID_XP.getStill(), this::renderTooltip);
         this.addButton(meter);
-    }
-
-
-    private Fluid getFluid(int stackIndex) {
-        BlockEntity entity = MinecraftClient.getInstance().world.getBlockEntity(handler.getPos());
-        if(!(entity instanceof FluidInventory))
-            return Fluids.EMPTY;
-        return ((FluidInventory) entity).getFluidStack(stackIndex).getFluid();
     }
 
 
@@ -115,9 +126,6 @@ public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
 
         this.client.getTextureManager().bindTexture(this.panel);
         this.drawTexture(matrices, x + backgroundWidth, y, 0, 0, 65, 65);
-
-
-        //here goes nothing:
     }
 
     @Override
@@ -125,6 +133,7 @@ public class FluidTankScreen extends PanelledScreen<FluidTankScreenHandler> {
         this.renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
         this.drawMouseoverTooltip(matrices, mouseX, mouseY);
+        textRenderer.draw(matrices,new TranslatableText("gui.mechanix.xp").append(new LiteralText("" + MinecraftClient.getInstance().player.totalExperience)),x + 99,y + 5,0);
     }
 
 }

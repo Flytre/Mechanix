@@ -1,6 +1,7 @@
 package net.flytre.mechanix.util;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.flytre.mechanix.item.ServoItem;
 import net.flytre.mechanix.item.UpgradeItem;
 import net.flytre.mechanix.item.WrenchItem;
 import net.minecraft.item.Item;
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 public class ItemRegistery {
 
     public static final Supplier<Item> ITEM_MAKER = () -> new Item(new FabricItemSettings().group(MiscRegistry.TAB));
-    public static final Item SERVO = ITEM_MAKER.get();
+    public static final Item SERVO = new ServoItem(new FabricItemSettings().group(MiscRegistry.TAB));
     public static final Item WRENCH = new WrenchItem(new FabricItemSettings().group(MiscRegistry.TAB).maxCount(1));
     public static final Item COMPRESSED_DIAMOND = ITEM_MAKER.get();
     public static final Item ENDALUM_INGOT = ITEM_MAKER.get();

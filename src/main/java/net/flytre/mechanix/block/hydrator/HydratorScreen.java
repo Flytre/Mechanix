@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.flytre.mechanix.api.gui.FluidMeterWidget;
 import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
@@ -48,8 +48,7 @@ public class HydratorScreen extends PanelledScreen<HydratorScreenHandler> {
         passedData.writeBlockPos(handler.getPos());
         passedData.writeInt(side_id);
         passedData.writeInt(buttonWidget.getState());
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Packets.FLUID_IO_CHANGE, passedData);
-
+        ClientPlayNetworking.send(Packets.FLUID_IO_CHANGE, passedData);
     }
 
     @Override

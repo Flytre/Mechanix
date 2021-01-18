@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.flytre.mechanix.api.gui.EnergyMeterWidget;
 import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
@@ -65,7 +65,7 @@ public abstract class EnergyScreen<T extends EnergyScreenHandler> extends Panell
         passedData.writeInt(side_id);
         passedData.writeInt(buttonWidget.getState());
         passedData.writeInt(handler.getPanelMode());
-        ClientSidePacketRegistry.INSTANCE.sendToServer(Packets.IO_CHANGE, passedData);
+        ClientPlayNetworking.send(Packets.IO_CHANGE, passedData);
     }
 
     @Override

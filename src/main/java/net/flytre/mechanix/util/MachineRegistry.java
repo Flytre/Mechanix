@@ -67,6 +67,9 @@ import net.flytre.mechanix.block.tank.FluidTankScreenHandler;
 import net.flytre.mechanix.block.thermal_generator.ThermalGenBlock;
 import net.flytre.mechanix.block.thermal_generator.ThermalGenEntity;
 import net.flytre.mechanix.block.thermal_generator.ThermalGenScreenHandler;
+import net.flytre.mechanix.block.xp_bank.XpBankBlock;
+import net.flytre.mechanix.block.xp_bank.XpBankBlockEntity;
+import net.flytre.mechanix.block.xp_bank.XpBankScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -122,6 +125,7 @@ public class MachineRegistry {
     public static MachineType<CrafterBlock, CrafterBlockEntity, CrafterScreenHandler> CRAFTER;
     public static MachineType<HydroponatorBlock, HydroponatorEntity, HydroponatorScreenHandler> HYDROPONATOR;
     public static MachineType<QuarryBlock, QuarryEntity,QuarryScreenHandler> QUARRY;
+    public static MachineType<XpBankBlock, XpBankBlockEntity,XpBankScreenHandler> XP_BANK;
 
     public static void init() {
 
@@ -137,7 +141,7 @@ public class MachineRegistry {
 
 
         FLUID_TANKS = registerTier(
-                () -> new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f)),
+                () -> new FluidTank(FabricBlockSettings.of(Material.METAL).nonOpaque().hardness(4.5f).luminance((state) -> state.get(FluidTank.LIGHT_LEVEL))),
                 "tank",
                 (tank) -> new BlockItem(tank, new Item.Settings().group(MiscRegistry.TAB)) {
                     @Override
@@ -276,13 +280,22 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 HydroponatorEntity::new,
                 HydroponatorScreenHandler::new
-        );
+        )
+        ;
         QUARRY = new MachineType<>(
                 new QuarryBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
                 "quarry",
                 IconMaker.STANDARD,
                 QuarryEntity::new,
                 QuarryScreenHandler::new
+        );
+
+        XP_BANK = new MachineType<>(
+                new XpBankBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f).luminance((state) -> state.get(XpBankBlock.ACTIVATED) ? 12 : 0)),
+                "xp_bank",
+                IconMaker.STANDARD,
+                XpBankBlockEntity::new,
+                XpBankScreenHandler::new
         );
     }
 

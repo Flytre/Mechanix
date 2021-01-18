@@ -9,6 +9,8 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,8 +23,19 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class FluidTank extends BlockWithEntity {
+
+    public static final IntProperty LIGHT_LEVEL;
+
+    static {
+        LIGHT_LEVEL = IntProperty.of("light",0,15);
+
+    }
+
     public FluidTank(Settings settings) {
         super(settings);
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(LIGHT_LEVEL, 0)
+        );
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -88,5 +101,11 @@ public class FluidTank extends BlockWithEntity {
         }
 
     }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(LIGHT_LEVEL);
+    }
+
 
 }

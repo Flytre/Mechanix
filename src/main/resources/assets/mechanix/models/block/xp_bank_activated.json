@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/xp_bank_activated",
+    "particle": "mechanix:block/xp_bank_activated"
+  },
+  "parent" : "mechanix:block/machine"
+}

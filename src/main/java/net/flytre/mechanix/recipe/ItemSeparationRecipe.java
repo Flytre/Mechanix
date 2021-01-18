@@ -41,7 +41,7 @@ public abstract class ItemSeparationRecipe<T extends Inventory> implements Mecha
 
     @Override
     public ItemStack getOutput() {
-        return outputs[0].getStack();
+        return outputs.length == 0 ? ItemStack.EMPTY : outputs[0].getStack();
     }
 
 

@@ -25,6 +25,7 @@ public class FluidRegistry {
     public static FluidType RAW_PLATINUM;
     public static FluidType RAW_SILVER;
     public static FluidType RAW_TIN;
+    public static FluidType LIQUID_XP;
 
     public static void init() {
         PERLIUM = new FluidType("molten_perlium", () -> (new MetallicFluid.Still(() -> PERLIUM)), () -> (new MetallicFluid.Flowing(() -> PERLIUM)));
@@ -70,5 +71,7 @@ public class FluidRegistry {
         RAW_SILVER.setBlock();
         RAW_TIN = new FluidType("raw_tin", () -> (new MetallicFluid.Still(() -> RAW_TIN)), () -> (new MetallicFluid.Flowing(() -> RAW_TIN)));
         RAW_TIN.setBlock();
+        LIQUID_XP = new FluidType("liquid_xp", () -> (new MetallicFluid.Still(() -> LIQUID_XP)), () -> (new MetallicFluid.Flowing(() -> LIQUID_XP)));
+        LIQUID_XP.setBlock();
     }
 }

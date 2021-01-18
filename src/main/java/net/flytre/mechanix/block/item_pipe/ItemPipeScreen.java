@@ -2,7 +2,7 @@ package net.flytre.mechanix.block.item_pipe;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -40,7 +40,7 @@ public class ItemPipeScreen extends HandledScreen<ItemPipeScreenHandler> {
                 PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                 passedData.writeBlockPos(handler.getPos());
                 passedData.writeInt(((ToggleButton) buttonWidget).getState());
-                ClientSidePacketRegistry.INSTANCE.sendToServer(Packets.FILTER_TYPE, passedData);
+                ClientPlayNetworking.send(Packets.FILTER_TYPE,passedData);
             }
 
         } ,"");
@@ -57,7 +57,7 @@ public class ItemPipeScreen extends HandledScreen<ItemPipeScreenHandler> {
                 PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                 passedData.writeBlockPos(handler.getPos());
                 passedData.writeInt(((ToggleButton) buttonWidget).getState());
-                ClientSidePacketRegistry.INSTANCE.sendToServer(Packets.PIPE_MODE, passedData);
+                ClientPlayNetworking.send(Packets.PIPE_MODE,passedData);
             }
 
         } ,"");

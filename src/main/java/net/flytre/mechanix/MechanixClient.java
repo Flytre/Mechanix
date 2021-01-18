@@ -32,6 +32,7 @@ import net.flytre.mechanix.block.solar_panel.SolarPanelScreen;
 import net.flytre.mechanix.block.tank.FluidTankRenderer;
 import net.flytre.mechanix.block.tank.FluidTankScreen;
 import net.flytre.mechanix.block.thermal_generator.ThermalGenScreen;
+import net.flytre.mechanix.block.xp_bank.XpBankScreen;
 import net.flytre.mechanix.util.BlockRegistry;
 import net.flytre.mechanix.util.FluidRegistry;
 import net.flytre.mechanix.util.MachineRegistry;
@@ -72,6 +73,7 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.QUARRY.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.SAWMILL.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.XP_BANK.getEntityType(), MachineBlockEntityRenderer::new);
 
 
         ScreenRegistry.register(MachineRegistry.ALLOYER.getHandlerType(), AlloyerScreen::new);
@@ -93,6 +95,7 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.SAWMILL.getHandlerType(), SawmillScreen::new);
         ScreenRegistry.register(MachineRegistry.SOLAR_PANEL_HANDLER, SolarPanelScreen::new);
         ScreenRegistry.register(MachineRegistry.THERMAL_GENERATOR.getHandlerType(), ThermalGenScreen::new);
+        ScreenRegistry.register(MachineRegistry.XP_BANK.getHandlerType(), XpBankScreen::new);
 
 
 
@@ -129,6 +132,8 @@ public class MechanixClient implements ClientModInitializer {
         setupFluidRendering(FluidRegistry.RAW_PLATINUM.getStill(), FluidRegistry.RAW_PLATINUM.getFlowing(), new Identifier("mechanix", "raw_platinum"), -1);
         setupFluidRendering(FluidRegistry.RAW_SILVER.getStill(), FluidRegistry.RAW_SILVER.getFlowing(), new Identifier("mechanix", "raw_silver"), -1);
         setupFluidRendering(FluidRegistry.RAW_TIN.getStill(), FluidRegistry.RAW_TIN.getFlowing(), new Identifier("mechanix", "raw_tin"), -1);
+        setupFluidRendering(FluidRegistry.LIQUID_XP.getStill(), FluidRegistry.LIQUID_XP.getFlowing(), new Identifier("mechanix", "liquid_xp"), -1);
+
     }
 
 
