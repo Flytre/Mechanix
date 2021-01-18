@@ -6,9 +6,8 @@ import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.flytre.mechanix.api.gui.PanelledScreen;
-import net.flytre.mechanix.compat.rei.categories.*;
-import net.flytre.mechanix.compat.rei.displays.*;
-import net.flytre.mechanix.recipe.*;
+import net.flytre.mechanix.compat.rei.categories.EnchanterRecipeCategory;
+import net.flytre.mechanix.compat.rei.displays.EnchanterRecipeDisplay;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -40,9 +39,10 @@ public class MechanixPlugin implements REIPluginV0 {
         iconMap.put(RecipeRegistry.SAWMILL_RECIPE,MachineRegistry.SAWMILL.getBlock());
         iconMap.put(RecipeRegistry.CENTRIFUGE_RECIPE,MachineRegistry.CENTRIFUGE.getBlock());
         iconMap.put(RecipeRegistry.HYDROPONATOR_RECIPE,MachineRegistry.HYDROPONATOR.getBlock());
+        iconMap.put(RecipeRegistry.ENCHANTING_RECIPE,MachineRegistry.ENCHANTER.getBlock());
         types.addAll(Arrays.asList(RecipeRegistry.ALLOYING_RECIPE, RecipeRegistry.LIQUIFIER_RECIPE,RecipeRegistry.PRESSURIZER_RECIPE,
                 RecipeRegistry.CRUSHER_RECIPE, RecipeRegistry.FOUNDRY_RECIPE, RecipeRegistry.DISTILLER_RECIPE, RecipeRegistry.SAWMILL_RECIPE,
-                RecipeRegistry.CENTRIFUGE_RECIPE, RecipeRegistry.HYDROPONATOR_RECIPE));
+                RecipeRegistry.CENTRIFUGE_RECIPE, RecipeRegistry.HYDROPONATOR_RECIPE, RecipeRegistry.ENCHANTING_RECIPE));
     }
 
     @Override
@@ -82,6 +82,7 @@ public class MechanixPlugin implements REIPluginV0 {
         recipeHelper.registerCategory(new SawmillRecipeCategory(RecipeRegistry.SAWMILL_RECIPE));
         recipeHelper.registerCategory(new CentrifugeRecipeCategory(RecipeRegistry.CENTRIFUGE_RECIPE));
         recipeHelper.registerCategory(new HydroponatorRecipeCategory(RecipeRegistry.HYDROPONATOR_RECIPE));
+        recipeHelper.registerCategory(new EnchanterRecipeCategory(RecipeRegistry.ENCHANTING_RECIPE));
 
     }
 
@@ -95,6 +96,7 @@ public class MechanixPlugin implements REIPluginV0 {
         Function<SawmillRecipe, RecipeDisplay> sawmillDisplay = r -> new MultipleOutputDisplay(r) {};
         Function<CentrifugeRecipe, RecipeDisplay> centrifugeDisplay = r -> new MultipleOutputDisplay(r) {};
         Function<HydroponatorRecipe, RecipeDisplay> hydroponicsDisplay = r -> new HydroponatorRecipeDisplay(r) {};
+        Function<EnchanterRecipe, RecipeDisplay> enchantingDisplay = r -> new EnchanterRecipeDisplay(r) {};
 
 
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.ALLOYING_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.ALLOYING_RECIPE, alloyDisplay);
@@ -106,6 +108,7 @@ public class MechanixPlugin implements REIPluginV0 {
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.SAWMILL_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.SAWMILL_RECIPE, sawmillDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.CENTRIFUGE_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.CENTRIFUGE_RECIPE, centrifugeDisplay);
         recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.HYDROPONATOR_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.HYDROPONATOR_RECIPE, hydroponicsDisplay);
+        recipeHelper.registerRecipes(ReiUtils.getId(RecipeRegistry.ENCHANTING_RECIPE), (Function<Recipe, Boolean>) recipe -> recipe.getType() == RecipeRegistry.ENCHANTING_RECIPE, enchantingDisplay);
 
     }
 

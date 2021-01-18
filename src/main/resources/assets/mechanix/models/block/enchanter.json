@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/enchanter",
+    "particle": "mechanix:block/enchanter"
+  },
+  "parent" : "mechanix:block/machine"
+}

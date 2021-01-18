@@ -26,6 +26,9 @@ import net.flytre.mechanix.block.crusher.CrusherScreenHandler;
 import net.flytre.mechanix.block.distiller.DistillerBlock;
 import net.flytre.mechanix.block.distiller.DistillerEntity;
 import net.flytre.mechanix.block.distiller.DistillerScreenHandler;
+import net.flytre.mechanix.block.enchanter.EnchanterBlock;
+import net.flytre.mechanix.block.enchanter.EnchanterEntity;
+import net.flytre.mechanix.block.enchanter.EnchanterScreenHandler;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipe;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeBlockEntity;
 import net.flytre.mechanix.block.foundry.FoundryBlock;
@@ -126,6 +129,7 @@ public class MachineRegistry {
     public static MachineType<HydroponatorBlock, HydroponatorEntity, HydroponatorScreenHandler> HYDROPONATOR;
     public static MachineType<QuarryBlock, QuarryEntity,QuarryScreenHandler> QUARRY;
     public static MachineType<XpBankBlock, XpBankBlockEntity,XpBankScreenHandler> XP_BANK;
+    public static MachineType<EnchanterBlock, EnchanterEntity, EnchanterScreenHandler> ENCHANTER;
 
     public static void init() {
 
@@ -296,6 +300,14 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 XpBankBlockEntity::new,
                 XpBankScreenHandler::new
+        );
+
+        ENCHANTER = new MachineType<>(
+                new EnchanterBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f).luminance((state) -> state.get(EnchanterBlock.ACTIVATED) ? 12 : 0)),
+                "enchanter",
+                IconMaker.STANDARD,
+                EnchanterEntity::new,
+                EnchanterScreenHandler::new
         );
     }
 

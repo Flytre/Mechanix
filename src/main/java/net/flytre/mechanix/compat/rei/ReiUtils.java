@@ -26,6 +26,8 @@ public class ReiUtils {
             return new Identifier("mechanix:centrifuging");
         if(type == RecipeRegistry.HYDROPONATOR_RECIPE)
             return new Identifier("mechanix:hydroponics");
+        if(type == RecipeRegistry.ENCHANTING_RECIPE)
+            return new Identifier("mechanix:enchanting");
         throw new RuntimeException(new Exception("Unknown identifier for recipe type: " + type + ". Declare in ReiUtils.java"));
     }
 }
