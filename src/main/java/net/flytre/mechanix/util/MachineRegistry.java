@@ -23,6 +23,9 @@ import net.flytre.mechanix.block.crafter.CrafterScreenHandler;
 import net.flytre.mechanix.block.crusher.CrusherBlock;
 import net.flytre.mechanix.block.crusher.CrusherBlockEntity;
 import net.flytre.mechanix.block.crusher.CrusherScreenHandler;
+import net.flytre.mechanix.block.disenchanter.DisenchanterBlock;
+import net.flytre.mechanix.block.disenchanter.DisenchanterEntity;
+import net.flytre.mechanix.block.disenchanter.DisenchanterScreenHandler;
 import net.flytre.mechanix.block.distiller.DistillerBlock;
 import net.flytre.mechanix.block.distiller.DistillerEntity;
 import net.flytre.mechanix.block.distiller.DistillerScreenHandler;
@@ -130,6 +133,7 @@ public class MachineRegistry {
     public static MachineType<QuarryBlock, QuarryEntity,QuarryScreenHandler> QUARRY;
     public static MachineType<XpBankBlock, XpBankBlockEntity,XpBankScreenHandler> XP_BANK;
     public static MachineType<EnchanterBlock, EnchanterEntity, EnchanterScreenHandler> ENCHANTER;
+    public static MachineType<DisenchanterBlock, DisenchanterEntity, DisenchanterScreenHandler> DISENCHANTER;
 
     public static void init() {
 
@@ -308,6 +312,13 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 EnchanterEntity::new,
                 EnchanterScreenHandler::new
+        );
+        DISENCHANTER = new MachineType<>(
+                new DisenchanterBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f).luminance((state) -> state.get(DisenchanterBlock.ACTIVATED) ? 12 : 0)),
+                "disenchanter",
+                IconMaker.STANDARD,
+                DisenchanterEntity::new,
+                DisenchanterScreenHandler::new
         );
     }
 

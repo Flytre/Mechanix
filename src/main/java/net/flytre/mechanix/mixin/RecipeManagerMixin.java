@@ -2,6 +2,7 @@ package net.flytre.mechanix.mixin;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
+import net.flytre.mechanix.recipe.DisenchanterRecipe;
 import net.flytre.mechanix.recipe.EnchanterRecipe;
 import net.flytre.mechanix.util.RecipeRegistry;
 import net.minecraft.item.ItemStack;
@@ -34,18 +35,21 @@ public class RecipeManagerMixin {
     @Inject(method="apply", at = @At("RETURN"))
     public void insertEnchantingRecipes(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         List<EnchanterRecipe> recipes = EnchanterRecipe.getRecipes();
+        Map<Identifier, Recipe<?>> enchMap = new HashMap<>();
+        for (EnchanterRecipe recipe : recipes) {
+            enchMap.put(recipe.getId(), recipe);
+        }
 
-
-
-
-        Map<Identifier,Recipe<?>> enchMap = new HashMap<>();
-        for(EnchanterRecipe recipe : recipes) {
-            enchMap.put(recipe.getId(),recipe);
+        List<DisenchanterRecipe> disenchanterRecipes = DisenchanterRecipe.getRecipes();
+        Map<Identifier, Recipe<?>> disenchantMap = new HashMap<>();
+        for (DisenchanterRecipe recipe : disenchanterRecipes) {
+            disenchantMap.put(recipe.getId(), recipe);
         }
 
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> old = this.recipes;
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> copy = new HashMap<>(old);
-        copy.put(RecipeRegistry.ENCHANTING_RECIPE,enchMap); // add a new entry
+        copy.put(RecipeRegistry.ENCHANTING_RECIPE, enchMap); // add a new entry
+        copy.put(RecipeRegistry.DISENCHANTING_RECIPE, disenchantMap); // add a new entry
         this.recipes = ImmutableMap.copyOf(copy);
     }
 }

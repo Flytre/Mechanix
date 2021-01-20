@@ -1,6 +1,6 @@
 package net.flytre.mechanix.util;
 
-import net.flytre.mechanix.recipe.EnchanterRecipe;
+import net.flytre.mechanix.recipe.*;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -28,6 +28,8 @@ public class RecipeRegistry {
     public static RecipeType<HydroponatorRecipe> HYDROPONATOR_RECIPE;
     public static RecipeType<EnchanterRecipe> ENCHANTING_RECIPE;
     public static EnchanterRecipeSerializer ENCHANTING_SERIALIZER;
+    public static RecipeType<DisenchanterRecipe> DISENCHANTING_RECIPE;
+    public static DisenchanterRecipeSerializer DISENCHANTING_SERIALIZER;
 
     public static void init() {
         ALLOYING_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:alloying"), new RecipeType<AlloyingRecipe>() {
@@ -100,6 +102,14 @@ public class RecipeRegistry {
         });
 
         ENCHANTING_SERIALIZER = RecipeSerializer.register("mechanix:enchanting", new EnchanterRecipeSerializer(EnchanterRecipe::new));
+
+        DISENCHANTING_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier("mechanix:unenchanting"), new RecipeType<DisenchanterRecipe>() {
+            public String toString() {
+                return "mechanix:unenchanting";
+            }
+        });
+
+        DISENCHANTING_SERIALIZER = RecipeSerializer.register("mechanix:unenchanting", new DisenchanterRecipeSerializer(DisenchanterRecipe::new));
 
     }
 }

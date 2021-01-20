@@ -7,6 +7,8 @@
   "block.mechanix.distiller": "Distiller",
   "block.mechanix.endalum_block": "Endalum Block",
   "block.mechanix.energy_cell": "Energy Cell",
+  "block.mechanix.disenchanter": "Disenchanter",
+  "block.mechanix.enchanter": "Enchanter",
   "block.mechanix.fluid_pipe": "Fluid Pipe",
   "block.mechanix.foundry": "Foundry",
   "block.mechanix.furnace": "Powered Furnace",
@@ -60,7 +62,7 @@
   "block.mechanix.reinforced_iron_block": "Reinforced Iron Block",
   "block.mechanix.sawmill": "Sawmill",
   "block.mechanix.solar_panel": "Solar Panel",
-  "block.mechanix.xp_bank" : "Experience Bank",
+  "block.mechanix.xp_bank": "Experience Bank",
   "block.mechanix.tank": "Fluid Tank",
   "block.mechanix.thermal_generator": "Thermal Generator",
   "block.mechanix.vysterium_block": "Vysterium Block",
@@ -71,7 +73,7 @@
   "block.mechanix.vysterium_tank": "Vysterium Fluid Tank",
   "gui.mechanix.energy": "Energy: ",
   "gui.mechanix.max": "Max: ",
-  "gui.mechanix.xp" : "Your XP: ",
+  "gui.mechanix.xp": "Your XP: ",
   "gui.mechanix.world_load": "New to §eMechanix§r? Check out the guide at flytre.net/mechanix!",
   "item.mechanix.compressed_diamond": "Compressed Diamond",
   "item.mechanix.endalum_dust": "Endalum Dust",
@@ -130,5 +132,7 @@
   "recipe.mechanix.sawing": "Sawing",
   "tooltip.mechanix.energy": "Energy",
   "tooltip.mechanix.max_energy": "Max Energy",
-  "tooltip.mechanix.transfer_rate": "Transfer Rate"
+  "tooltip.mechanix.transfer_rate": "Transfer Rate",
+  "recipe.mechanix.unenchanting": "Unenchanting",
+  "recipe.mechanix.enchanting": "Enchanting"
 }

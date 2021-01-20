@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#D#",
+    "#O#",
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:book"
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "G": {
+      "item": "minecraft:grindstone"
+    }
+  },
+  "result": {
+    "item": "mechanix:disenchanter",
+    "count": 1
+  }
+}

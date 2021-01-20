@@ -18,16 +18,18 @@ public class ReiUtils {
             return new Identifier("mechanix:compressing");
         if(type == RecipeRegistry.CRUSHER_RECIPE)
             return new Identifier("mechanix:crushing");
-        if(type == RecipeRegistry.DISTILLER_RECIPE)
+        if (type == RecipeRegistry.DISTILLER_RECIPE)
             return new Identifier("mechanix:distilling");
-        if(type == RecipeRegistry.SAWMILL_RECIPE)
+        if (type == RecipeRegistry.SAWMILL_RECIPE)
             return new Identifier("mechanix:sawing");
-        if(type == RecipeRegistry.CENTRIFUGE_RECIPE)
+        if (type == RecipeRegistry.CENTRIFUGE_RECIPE)
             return new Identifier("mechanix:centrifuging");
-        if(type == RecipeRegistry.HYDROPONATOR_RECIPE)
+        if (type == RecipeRegistry.HYDROPONATOR_RECIPE)
             return new Identifier("mechanix:hydroponics");
-        if(type == RecipeRegistry.ENCHANTING_RECIPE)
+        if (type == RecipeRegistry.ENCHANTING_RECIPE)
             return new Identifier("mechanix:enchanting");
+        if (type == RecipeRegistry.DISENCHANTING_RECIPE)
+            return new Identifier("mechanix:unenchanting");
         throw new RuntimeException(new Exception("Unknown identifier for recipe type: " + type + ". Declare in ReiUtils.java"));
     }
 }

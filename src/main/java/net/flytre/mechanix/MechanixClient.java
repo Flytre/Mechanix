@@ -16,6 +16,7 @@ import net.flytre.mechanix.block.cell.EnergyCellScreen;
 import net.flytre.mechanix.block.centrifuge.CentrifugeScreen;
 import net.flytre.mechanix.block.crafter.CrafterScreen;
 import net.flytre.mechanix.block.crusher.CrusherScreen;
+import net.flytre.mechanix.block.disenchanter.DisenchanterScreen;
 import net.flytre.mechanix.block.distiller.DistillerScreen;
 import net.flytre.mechanix.block.enchanter.EnchanterScreen;
 import net.flytre.mechanix.block.fluid_pipe.FluidPipeRenderer;
@@ -76,6 +77,7 @@ public class MechanixClient implements ClientModInitializer {
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.THERMAL_GENERATOR.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.XP_BANK.getEntityType(), MachineBlockEntityRenderer::new);
         BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.ENCHANTER.getEntityType(), MachineBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.INSTANCE.register(MachineRegistry.DISENCHANTER.getEntityType(), MachineBlockEntityRenderer::new);
 
 
         ScreenRegistry.register(MachineRegistry.ALLOYER.getHandlerType(), AlloyerScreen::new);
@@ -99,6 +101,7 @@ public class MechanixClient implements ClientModInitializer {
         ScreenRegistry.register(MachineRegistry.THERMAL_GENERATOR.getHandlerType(), ThermalGenScreen::new);
         ScreenRegistry.register(MachineRegistry.XP_BANK.getHandlerType(), XpBankScreen::new);
         ScreenRegistry.register(MachineRegistry.ENCHANTER.getHandlerType(), EnchanterScreen::new);
+        ScreenRegistry.register(MachineRegistry.DISENCHANTER.getHandlerType(), DisenchanterScreen::new);
 
 
 
