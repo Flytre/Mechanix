@@ -134,5 +134,6 @@
   "tooltip.mechanix.max_energy": "Max Energy",
   "tooltip.mechanix.transfer_rate": "Transfer Rate",
   "recipe.mechanix.unenchanting": "Unenchanting",
-  "recipe.mechanix.enchanting": "Enchanting"
+  "recipe.mechanix.enchanting": "Enchanting",
+  "block.mechanix.item_collector": "Item Collector"
 }

@@ -1,9 +1,9 @@
 package net.flytre.mechanix.block.enchanter;
 
-import net.flytre.mechanix.api.energy.MachineEntity;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
+import net.flytre.mechanix.api.machine.MachineEntity;
 import net.flytre.mechanix.recipe.EnchanterRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;

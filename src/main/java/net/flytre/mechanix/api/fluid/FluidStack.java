@@ -35,8 +35,8 @@ public class FluidStack {
     /**
      * Instantiates a new Fluid stack.
      *
-     * @param fluid        the fluid
-     * @param mB the millibuckets (1000 = bucket)
+     * @param fluid the fluid
+     * @param mB    the millibuckets (1000 = bucket)
      */
     public FluidStack(@NotNull Fluid fluid, int mB) {
         this.fluid = fluid;
@@ -45,6 +45,7 @@ public class FluidStack {
 
     /**
      * Whether two fluid stacks are equal
+     *
      * @param left  the left
      * @param right the right
      * @return the boolean
@@ -67,6 +68,23 @@ public class FluidStack {
         Fluid fluid = tag.contains("id") ? Registry.FLUID.get(Identifier.tryParse(tag.getString("id"))) : Fluids.EMPTY;
         int amount = tag.getInt("amount");
         return fluid != Fluids.EMPTY ? new FluidStack(fluid, amount) : FluidStack.EMPTY;
+    }
+
+    public static FluidStack fromJson(JsonObject object) {
+        int amount = 1000;
+        if (JsonHelper.hasPrimitive(object, "amount")) {
+            amount = JsonHelper.getInt(object, "amount");
+        }
+        String attempt = JsonHelper.getString(object, "fluid");
+        Identifier fluid = new Identifier(attempt);
+        return new FluidStack(Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + attempt + " does not exist")), amount);
+    }
+
+    public static FluidStack fromPacket(PacketByteBuf buf) {
+        Identifier fluid = buf.readIdentifier();
+        Fluid f = Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + fluid + " does not exist"));
+        int amount = buf.readInt();
+        return new FluidStack(f, amount);
     }
 
     /**
@@ -197,29 +215,19 @@ public class FluidStack {
         return tag;
     }
 
-    public static FluidStack fromJson(JsonObject object) {
-        int amount = 1000;
-        if(JsonHelper.hasPrimitive(object,"amount")) {
-            amount = JsonHelper.getInt(object,"amount");
-        }
-        String attempt = JsonHelper.getString(object, "fluid");
-        Identifier fluid = new Identifier(attempt);
-        return new FluidStack(Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + attempt + " does not exist")),amount);
-    }
-
     public List<Text> toTooltip(boolean multiline) {
         ArrayList<Text> tooltip = new ArrayList<>();
         for (FluidBlock block : FluidBlocks.fluidBlocks) {
             FlowableFluid fluid = ((FluidBlockMixin) block).getFluid();
-            if(fluid == getFluid()) {
-                if(multiline) {
+            if (fluid == getFluid()) {
+                if (multiline) {
                     MutableText line = new TranslatableText(block.getTranslationKey());
                     line = line.setStyle(Style.EMPTY.withColor(Formatting.WHITE));
                     tooltip.add(line);
-                    line = new LiteralText(Formatter.formatNumber(getAmount()/1000.0, "B "));
+                    line = new LiteralText(Formatter.formatNumber(getAmount() / 1000.0, "B "));
                     line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
                     tooltip.add(line);
-                    if(MinecraftClient.getInstance().options.advancedItemTooltips) {
+                    if (MinecraftClient.getInstance().options.advancedItemTooltips) {
                         Identifier id = Registry.FLUID.getId(fluid);
                         line = new LiteralText(id.toString());
                         line = line.setStyle(Style.EMPTY.withColor(Formatting.DARK_GRAY));
@@ -227,7 +235,7 @@ public class FluidStack {
                     }
                     tooltip.add(Formatter.getModNameToolTip(Registry.FLUID.getId(getFluid()).getNamespace()));
                 } else {
-                    MutableText line = new LiteralText(Formatter.formatNumber(getAmount()/1000.0, "B ")).append(new TranslatableText(block.getTranslationKey()));
+                    MutableText line = new LiteralText(Formatter.formatNumber(getAmount() / 1000.0, "B ")).append(new TranslatableText(block.getTranslationKey()));
                     line = line.setStyle(Style.EMPTY.withColor(Formatting.GRAY));
                     tooltip.add(line);
                 }
@@ -235,13 +243,6 @@ public class FluidStack {
             }
         }
         return tooltip;
-    }
-
-    public static FluidStack fromPacket(PacketByteBuf buf) {
-        Identifier fluid = buf.readIdentifier();
-        Fluid f = Registry.FLUID.getOrEmpty(fluid).orElseThrow(() -> new IllegalStateException("Fluid: " + fluid + " does not exist"));
-        int amount = buf.readInt();
-        return new FluidStack(f,amount);
     }
 
     public void toPacket(PacketByteBuf packet) {

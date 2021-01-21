@@ -39,12 +39,12 @@ import java.util.stream.IntStream;
 public class ItemPipeBlockEntity extends BlockEntity implements Tickable, ExtendedScreenHandlerFactory, BlockEntityClientSerializable {
 
     private final Queue<PipeResult> items;
+    private final PropertyDelegate properties;
+    public HashMap<Direction, Boolean> wrenched;
     private int roundRobinIndex;
     private boolean roundRobinMode;
     private int cooldown;
     private FilterInventory filter;
-    private final PropertyDelegate properties;
-    public HashMap<Direction,Boolean> wrenched;
 
     public ItemPipeBlockEntity() {
         super(MachineRegistry.ITEM_PIPE_ENTITY);
@@ -52,29 +52,11 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
         roundRobinIndex = 0;
         roundRobinMode = false;
         properties = new ArrayPropertyDelegate(3);
-        filter = new FilterInventory(new CompoundTag(),0);
+        filter = new FilterInventory(new CompoundTag(), 0);
         wrenched = new HashMap<>();
-        for(Direction dir : Direction.values()) {
-            wrenched.put(dir,false);
+        for (Direction dir : Direction.values()) {
+            wrenched.put(dir, false);
         }
-    }
-
-
-
-    public PropertyDelegate getProperties() {
-        return properties;
-    }
-
-    public void updateDelegate() {
-        properties.set(0, 1); //when this is 1 you know its synced
-        properties.set(1, this.filter.getFilterType());
-        properties.set(2, this.isRoundRobinMode() ? 1 : 0);
-    }
-
-
-
-    public FilterInventory getFilter() {
-        return filter;
     }
 
     public static ArrayList<Direction> transferableDirections(BlockPos startingPos, World world, ItemStack stack) {
@@ -181,6 +163,20 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
         return inventory;
     }
 
+    public PropertyDelegate getProperties() {
+        return properties;
+    }
+
+    public void updateDelegate() {
+        properties.set(0, 1); //when this is 1 you know its synced
+        properties.set(1, this.filter.getFilterType());
+        properties.set(2, this.isRoundRobinMode() ? 1 : 0);
+    }
+
+    public FilterInventory getFilter() {
+        return filter;
+    }
+
     public PipeSide getSide(Direction d) {
         if (world == null)
             return null;
@@ -204,7 +200,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
             list.add(piped.toTag(new CompoundTag()));
         tag.put("queue", list);
         tag.putInt("wrenched", Formatter.hashToInt(wrenched));
-        tag.put("filter",filter.toTag());
+        tag.put("filter", filter.toTag());
 
         return super.toTag(tag);
     }
@@ -231,7 +227,7 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
         super.fromTag(state, tag);
 
         CompoundTag filter = tag.getCompound("filter");
-        this.filter = new FilterInventory(filter,0);
+        this.filter = new FilterInventory(filter, 0);
     }
 
     @Override
@@ -281,7 +277,8 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
                         if (results.size() <= roundRobinIndex) {
                             roundRobinIndex = 0;
                         }
-                        result = results.get(roundRobinIndex++);
+
+                        result = results.size() < roundRobinIndex ? results.get(roundRobinIndex++) : null;
                     } else {
                         ArrayList<PipeResult> results = findDestinations(one, this.pos.offset(d), true);
                         result = results.size() == 0 ? null : results.get(0);
@@ -405,12 +402,12 @@ public class ItemPipeBlockEntity extends BlockEntity implements Tickable, Extend
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new ItemPipeScreenHandler(syncId,inv,this,getProperties());
+        return new ItemPipeScreenHandler(syncId, inv, this, getProperties());
     }
 
     @Override
     public void fromClientTag(CompoundTag compoundTag) {
-        this.fromTag(MachineRegistry.ITEM_PIPE.getDefaultState(),compoundTag);
+        this.fromTag(MachineRegistry.ITEM_PIPE.getDefaultState(), compoundTag);
     }
 
     @Override

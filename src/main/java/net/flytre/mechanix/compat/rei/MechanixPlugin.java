@@ -5,6 +5,7 @@ import me.shedaniel.rei.api.*;
 import me.shedaniel.rei.api.plugins.REIPluginV0;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.flytre.mechanix.api.gui.FilteredScreen;
 import net.flytre.mechanix.api.gui.PanelledScreen;
 import net.flytre.mechanix.compat.rei.categories.*;
 import net.flytre.mechanix.compat.rei.displays.*;
@@ -124,12 +125,26 @@ public class MechanixPlugin implements REIPluginV0 {
         {
             Screen currentScreen = MinecraftClient.getInstance().currentScreen;
             List<Rectangle> result = new ArrayList<>();
-            if(currentScreen instanceof PanelledScreen<?>) {
+            if (currentScreen instanceof PanelledScreen<?>) {
                 PanelledScreen<?> actualScreen = (PanelledScreen<?>) currentScreen;
                 int x = actualScreen.getX();
                 int y = actualScreen.getY();
-                result.add(new Rectangle(x,y,176,170));
-                result.add(new Rectangle(x + 176,y,65,65));
+                result.add(new Rectangle(x, y, 176, 170));
+                result.add(new Rectangle(x + 176, y, 65, 65));
+            }
+            return result;
+        });
+
+        baseBoundsHandler.registerExclusionZones(FilteredScreen.class, () ->
+        {
+            Screen currentScreen = MinecraftClient.getInstance().currentScreen;
+            List<Rectangle> result = new ArrayList<>();
+            if (currentScreen instanceof FilteredScreen<?>) {
+                FilteredScreen<?> actualScreen = (FilteredScreen<?>) currentScreen;
+                int x = actualScreen.getX();
+                int y = actualScreen.getY();
+                result.add(new Rectangle(x, y, 176, 170));
+                result.add(new Rectangle(x + 176, y, 20, 50));
             }
             return result;
         });

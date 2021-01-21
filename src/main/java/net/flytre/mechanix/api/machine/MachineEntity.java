@@ -1,7 +1,7 @@
-package net.flytre.mechanix.api.energy;
+package net.flytre.mechanix.api.machine;
 
+import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
-import net.flytre.mechanix.api.machine.MachineBlock;
 import net.flytre.mechanix.recipe.MechanixRecipe;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
@@ -19,12 +19,12 @@ import java.util.function.BiFunction;
 
 public abstract class MachineEntity<T extends Inventory, R extends Recipe<T>> extends EnergyEntity implements EasyInventory {
     private final DefaultedList<ItemStack> items;
+    private final BiFunction<World, T, R> recipeSupplier;
     private int craftTime;
     private int costPerTick;
     private R recipe;
-    private final BiFunction<World,T,R> recipeSupplier;
 
-    public MachineEntity(BlockEntityType<?> type, DefaultedList<ItemStack> items, BiFunction<World,T,R> recipeSupplier, int costPerTick) {
+    public MachineEntity(BlockEntityType<?> type, DefaultedList<ItemStack> items, BiFunction<World, T, R> recipeSupplier, int costPerTick) {
         super(type);
         this.items = items;
 
@@ -86,8 +86,11 @@ public abstract class MachineEntity<T extends Inventory, R extends Recipe<T>> ex
         boolean shouldBeActivated = false;
         boolean reset = false;
         int tierTimes = getTier() + 1;
-        if (!isFull())
-            requestEnergy(Math.min(costPerTick*2 * tierTimes, getMaxEnergy() - getEnergy()));
+        if (!isFull()) {
+            if (getMaxTransferRate() < costPerTick * 2 * tierTimes)
+                setMaxTransferRate(costPerTick * 2 * tierTimes);
+            requestEnergy(Math.min(costPerTick * 2 * tierTimes, getMaxEnergy() - getEnergy()));
+        }
         recipe = recipeSupplier.apply(world, (T) this);
         if (this.hasEnergy(costPerTick * tierTimes) && canAcceptRecipeOutput(recipe)) {
             this.addEnergy(-costPerTick * tierTimes);
@@ -110,7 +113,10 @@ public abstract class MachineEntity<T extends Inventory, R extends Recipe<T>> ex
     }
 
     @Override
-    public void repeatTick() {};
+    public void repeatTick() {
+    }
+
+    ;
 
     @Override
     public void fromTag(BlockState state, CompoundTag tag) {

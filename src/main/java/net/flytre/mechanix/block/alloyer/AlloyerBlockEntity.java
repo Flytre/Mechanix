@@ -1,7 +1,7 @@
 package net.flytre.mechanix.block.alloyer;
 
-import net.flytre.mechanix.api.energy.MachineEntity;
 import net.flytre.mechanix.api.inventory.EasyInventory;
+import net.flytre.mechanix.api.machine.MachineEntity;
 import net.flytre.mechanix.recipe.AlloyingRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;

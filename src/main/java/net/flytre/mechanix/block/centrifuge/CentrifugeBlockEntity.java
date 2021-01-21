@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.centrifuge;
 
-import net.flytre.mechanix.api.energy.MachineEntity;
+import net.flytre.mechanix.api.machine.MachineEntity;
 import net.flytre.mechanix.api.recipe.RecipeUtils;
 import net.flytre.mechanix.recipe.CentrifugeRecipe;
 import net.flytre.mechanix.util.MachineRegistry;

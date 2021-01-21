@@ -49,6 +49,9 @@ import net.flytre.mechanix.block.hydrator.HydratorScreenHandler;
 import net.flytre.mechanix.block.hydroponator.HydroponatorBlock;
 import net.flytre.mechanix.block.hydroponator.HydroponatorEntity;
 import net.flytre.mechanix.block.hydroponator.HydroponatorScreenHandler;
+import net.flytre.mechanix.block.item_collector.ItemCollectorBlock;
+import net.flytre.mechanix.block.item_collector.ItemCollectorEntity;
+import net.flytre.mechanix.block.item_collector.ItemCollectorScreenHandler;
 import net.flytre.mechanix.block.item_pipe.ItemPipe;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.flytre.mechanix.block.item_pipe.ItemPipeScreenHandler;
@@ -130,10 +133,11 @@ public class MachineRegistry {
     public static MachineType<CentrifugeBlock, CentrifugeBlockEntity, CentrifugeScreenHandler> CENTRIFUGE;
     public static MachineType<CrafterBlock, CrafterBlockEntity, CrafterScreenHandler> CRAFTER;
     public static MachineType<HydroponatorBlock, HydroponatorEntity, HydroponatorScreenHandler> HYDROPONATOR;
-    public static MachineType<QuarryBlock, QuarryEntity,QuarryScreenHandler> QUARRY;
-    public static MachineType<XpBankBlock, XpBankBlockEntity,XpBankScreenHandler> XP_BANK;
+    public static MachineType<QuarryBlock, QuarryEntity, QuarryScreenHandler> QUARRY;
+    public static MachineType<XpBankBlock, XpBankBlockEntity, XpBankScreenHandler> XP_BANK;
     public static MachineType<EnchanterBlock, EnchanterEntity, EnchanterScreenHandler> ENCHANTER;
     public static MachineType<DisenchanterBlock, DisenchanterEntity, DisenchanterScreenHandler> DISENCHANTER;
+    public static MachineType<ItemCollectorBlock, ItemCollectorEntity, ItemCollectorScreenHandler> ITEM_COLLECTOR;
 
     public static void init() {
 
@@ -319,6 +323,14 @@ public class MachineRegistry {
                 IconMaker.STANDARD,
                 DisenchanterEntity::new,
                 DisenchanterScreenHandler::new
+        );
+
+        ITEM_COLLECTOR = new MachineType<>(
+                new ItemCollectorBlock(FabricBlockSettings.of(Material.METAL).hardness(4.5f)),
+                "item_collector",
+                IconMaker.STANDARD,
+                ItemCollectorEntity::new,
+                ItemCollectorScreenHandler::new
         );
     }
 

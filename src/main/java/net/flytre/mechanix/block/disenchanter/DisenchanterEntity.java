@@ -1,6 +1,6 @@
 package net.flytre.mechanix.block.disenchanter;
 
-import net.flytre.mechanix.api.energy.MachineEntity;
+import net.flytre.mechanix.api.machine.MachineEntity;
 import net.flytre.mechanix.recipe.DisenchanterRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;

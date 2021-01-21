@@ -3,9 +3,9 @@ package net.flytre.mechanix.block.item_pipe;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.flytre.mechanix.api.gui.FilteredScreen;
 import net.flytre.mechanix.api.gui.ToggleButton;
 import net.flytre.mechanix.util.Packets;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
@@ -13,7 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
-public class ItemPipeScreen extends HandledScreen<ItemPipeScreenHandler> {
+public class ItemPipeScreen extends FilteredScreen<ItemPipeScreenHandler> {
 
     protected final ItemPipeScreenHandler handler;
     private final Identifier background;

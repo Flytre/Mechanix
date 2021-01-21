@@ -5,6 +5,7 @@ import net.flytre.mechanix.api.energy.EnergyEntity;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.block.cell.EnergyCellEntity;
+import net.flytre.mechanix.block.item_collector.ItemCollectorEntity;
 import net.flytre.mechanix.block.item_pipe.FilterInventory;
 import net.flytre.mechanix.block.item_pipe.ItemPipeBlockEntity;
 import net.flytre.mechanix.block.xp_bank.XpBankBlockEntity;
@@ -107,11 +108,15 @@ public class Packets {
             World world = player.getEntityWorld();
             server.execute(() -> {
                 BlockEntity entity = world.getBlockEntity(pos);
-                if (!(entity instanceof ItemPipeBlockEntity))
-                    return;
-                ItemPipeBlockEntity ip = (ItemPipeBlockEntity) entity;
-                FilterInventory iv = ip.getFilter();
-                iv.setFilterType(newMode);
+                if (entity instanceof ItemPipeBlockEntity) {
+                    ItemPipeBlockEntity ip = (ItemPipeBlockEntity) entity;
+                    FilterInventory iv = ip.getFilter();
+                    iv.setFilterType(newMode);
+                } else if (entity instanceof ItemCollectorEntity) {
+                    ItemCollectorEntity ip = (ItemCollectorEntity) entity;
+                    FilterInventory iv = ip.getFilter();
+                    iv.setFilterType(newMode);
+                }
             });
         });
 
@@ -137,14 +142,14 @@ public class Packets {
                 BlockEntity entity = world.getBlockEntity(pos);
                 if (!(entity instanceof XpBankBlockEntity))
                     return;
-                XpBankBlockEntity bank = (XpBankBlockEntity)entity;
-                if(amount > 0) {
-                    if(bank.getAmount() >= amount * 4) {
+                XpBankBlockEntity bank = (XpBankBlockEntity) entity;
+                if (amount > 0) {
+                    if (bank.getAmount() >= amount * 4) {
                         bank.getFluidStack(0).decrement(amount * 4);
                         player.addExperience(amount);
                     }
                 } else {
-                    if(-amount <= player.totalExperience && bank.canAdd(new FluidStack(FluidRegistry.LIQUID_XP.getStill(),-amount * 4))) {
+                    if (-amount <= player.totalExperience && bank.canAdd(new FluidStack(FluidRegistry.LIQUID_XP.getStill(), -amount * 4))) {
                         bank.getFluidStack(0).increment(-amount * 4);
                         player.totalExperience += amount;
                         player.setExperiencePoints(player.totalExperience);

@@ -17,9 +17,21 @@ import java.util.stream.IntStream;
  * behavior!
  */
 public interface EasyInventory extends SidedInventory, IOMode {
+    static boolean canMergeItems(ItemStack first, ItemStack second) {
+        if (first.getItem() != second.getItem()) {
+            return false;
+        } else if (first.getDamage() != second.getDamage()) {
+            return false;
+        } else if (first.getCount() > first.getMaxCount()) {
+            return false;
+        } else {
+            return first.getCount() + second.getCount() <= first.getMaxCount() && ItemStack.areTagsEqual(first, second);
+        }
+    }
+
     DefaultedList<ItemStack> getItems();
 
-    HashMap<Direction,Boolean> getItemIO();
+    HashMap<Direction, Boolean> getItemIO();
 
     @Override
     default int size() {
@@ -75,15 +87,14 @@ public interface EasyInventory extends SidedInventory, IOMode {
         getItems().clear();
     }
 
-
     @Override
     default int[] getAvailableSlots(Direction side) {
-        return IntStream.range(0,size()).toArray();
+        return IntStream.range(0, size()).toArray();
     }
 
     @Override
     default boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir) {
-        return this.isValid(slot,stack) && !getItemIO().get(dir);
+        return this.isValid(slot, stack) && !getItemIO().get(dir);
     }
 
     @Override
@@ -113,16 +124,25 @@ public interface EasyInventory extends SidedInventory, IOMode {
         return stack;
     }
 
-    static boolean canMergeItems(ItemStack first, ItemStack second) {
-        if (first.getItem() != second.getItem()) {
-            return false;
-        } else if (first.getDamage() != second.getDamage()) {
-            return false;
-        } else if (first.getCount() > first.getMaxCount()) {
-            return false;
-        } else {
-            return first.getCount() + second.getCount() <= first.getMaxCount() && ItemStack.areTagsEqual(first, second);
+    default ItemStack addStackInternal(ItemStack stack) {
+        for (int i : IntStream.range(0, size()).toArray()) {
+            ItemStack currentStack = getStack(i);
+            if (isValid(i, stack)) {
+                if (currentStack.isEmpty()) {
+                    setStack(i, stack);
+                    markDirty();
+                    stack = ItemStack.EMPTY;
+                } else if (canMergeItems(currentStack, stack)) {
+                    if (currentStack.getCount() < currentStack.getMaxCount()) {
+                        int p = stack.getMaxCount() - currentStack.getCount();
+                        int j = Math.min(stack.getCount(), p);
+                        stack.decrement(j);
+                        currentStack.increment(j);
+                    }
+                }
+            }
         }
+        return stack;
     }
 
 }

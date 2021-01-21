@@ -342,11 +342,12 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
     }
 
 
-    private double transferEnergy(EnergyEntity neighbor, double amount) {
-        if (neighbor.getEnergy() >= amount) {
-            this.addEnergy(amount);
-            neighbor.removeEnergy(amount);
-            return 0;
+    private double transferEnergy(EnergyEntity neighbor, double amount, double maxAmount) {
+        double min = Math.min(amount, maxAmount);
+        if (neighbor.getEnergy() >= min) {
+            this.addEnergy(min);
+            neighbor.removeEnergy(min);
+            return amount - min;
         } else if (neighbor.getEnergy() > 0) {
             double energy = neighbor.getEnergy();
             this.addEnergy(energy);
@@ -386,9 +387,10 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
             BlockPos currentPos = cableResult.getPos();
             BlockEntity entity = world.getBlockEntity(currentPos);
             if (entity instanceof EnergyEntity && !(this.getPos().equals(currentPos))) {
-                amt = transferEnergy((EnergyEntity) entity, Math.min(amt, cableResult.getMax()));
+                amt = transferEnergy((EnergyEntity) entity, amt, cableResult.getMax());
                 if (amt == 0)
                     return;
+                continue;
             }
             if (!(entity instanceof EnergyEntity) && Energy.valid(entity) && !(this.getPos().equals(currentPos))) {
                 EnergyHandler handler = Energy.of(entity);
@@ -396,6 +398,7 @@ public abstract class EnergyEntity extends BlockEntity implements Tickable, Exte
                 addEnergy(Formatter.EUjoules(energy));
                 if (amt == 0)
                     return;
+                continue;
             }
 
             if (entity == null || currentPos.equals(start)) {

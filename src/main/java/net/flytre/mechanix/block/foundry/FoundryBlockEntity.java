@@ -1,10 +1,10 @@
 package net.flytre.mechanix.block.foundry;
 
-import net.flytre.mechanix.api.energy.MachineEntity;
 import net.flytre.mechanix.api.fluid.FluidInventory;
 import net.flytre.mechanix.api.fluid.FluidStack;
 import net.flytre.mechanix.api.inventory.DoubleInventory;
 import net.flytre.mechanix.api.inventory.EasyInventory;
+import net.flytre.mechanix.api.machine.MachineEntity;
 import net.flytre.mechanix.recipe.FoundryRecipe;
 import net.flytre.mechanix.util.MachineRegistry;
 import net.flytre.mechanix.util.RecipeRegistry;
