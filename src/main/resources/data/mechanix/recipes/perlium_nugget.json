@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "mechanix:perlium_ingot"
+    }
+  ],
+  "result": {
+    "item": "mechanix:perlium_nugget",
+    "count": 9
+  }
+}

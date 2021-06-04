@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sBs",
+    "cPc",
+    "sBs"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:steel_ingots"
+    },
+    "B": {
+      "item": "mechanix:bluestone_circuit"
+    },
+    "c": {
+      "tag": "c:gold_coils"
+    },
+    "P": {
+      "tag": "c:gold_plates"
+    }
+  },
+  "result": {
+    "item": "mechanix:energy_saver",
+    "count": 1
+  }
+}

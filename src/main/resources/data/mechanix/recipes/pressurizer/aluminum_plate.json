@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:aluminum_ingots"
+  },
+  "result": {
+      "tag": "c:aluminum_plates"
+    }
+
+}

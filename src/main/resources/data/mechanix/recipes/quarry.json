@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "eEe",
+    "hOh",
+    "cCc"
+  ],
+  "key": {
+    "e": {
+      "item": "mechanix:advanced_suction"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "c": {
+      "item": "minecraft:chest"
+    },
+    "E": {
+      "item": "mechanix:masterwork_circuit"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "C": {
+      "item": "minecraft:diamond_pickaxe"
+    }
+  },
+  "result": {
+    "item": "mechanix:quarry",
+    "count": 1
+  }
+}

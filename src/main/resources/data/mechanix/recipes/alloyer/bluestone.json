@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond",
+      "count": 1
+    },
+    {
+      "item": "minecraft:redstone",
+      "count": 16
+    }
+  ],
+  "result": {
+    "item": "mechanix:bluestone",
+    "count": 16
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CrC",
+    "cic",
+    "crc"
+  ],
+  "key": {
+    "c": {
+      "item": "mechanix:gilded_cable"
+    },
+    "C": {
+      "tag": "c:copper_coils"
+    },
+    "i": {
+      "item": "mechanix:circuit"
+    },
+    "r": {
+      "item": "mechanix:bluestone"
+    }
+  },
+  "result": {
+    "item": "mechanix:bluestone_circuit",
+    "count": 1
+  }
+}

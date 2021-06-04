@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:gravel"
+    },
+    {
+      "item": "minecraft:sand"
+    }
+  ],
+  "time": 200
+}

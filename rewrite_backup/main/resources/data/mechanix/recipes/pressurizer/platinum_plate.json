@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:platinum_ingots"
+  },
+  "result": {
+      "tag": "c:platinum_plates"
+    }
+
+}

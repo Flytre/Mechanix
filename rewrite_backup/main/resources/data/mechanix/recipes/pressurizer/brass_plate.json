@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:brass_ingots"
+  },
+  "result": {
+    "tag": "c:brass_plates"
+  }
+}

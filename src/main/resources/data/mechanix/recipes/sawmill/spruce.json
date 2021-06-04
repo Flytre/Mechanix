@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:sawing",
+  "ingredient": {
+    "tag": "minecraft:spruce_logs"
+  },
+  "results": [
+    {
+      "item": "minecraft:spruce_planks",
+      "count": 6
+    },
+    {
+      "item": "mechanix:sawdust",
+      "count": 1
+    }
+  ]
+}

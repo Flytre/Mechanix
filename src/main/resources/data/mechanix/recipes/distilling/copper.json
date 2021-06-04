@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:distilling",
+  "fluid_ingredient": {
+    "fluid": "mechanix:raw_copper",
+    "amount": {
+      "n": 2,
+      "d": 3
+    }
+  },
+  "fluid_result": {
+    "fluid": "mechanix:molten_copper",
+    "amount": {
+      "n": 1,
+      "d": 3
+    }
+  }
+}

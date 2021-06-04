@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "tag": "c:silver_ingots"
+    }
+  ],
+  "result" : {
+    "tag": "c:electrum_ingots",
+    "count" : 2
+  }
+}

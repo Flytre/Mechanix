@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:silver_ores"
+    },
+  "fluid_result": {
+    "fluid" : "mechanix:raw_silver",
+    "amount": {
+      "n": 2,
+      "d": 3
+    }
+  }
+}

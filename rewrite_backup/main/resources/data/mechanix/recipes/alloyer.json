@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "FOF",
+    "GFG"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:lava_bucket"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "mechanix:alloyer",
+    "count": 1
+  }
+}

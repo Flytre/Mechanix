@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "mechanix:perlium_ingot",
+  "ingredients": [
+    {
+      "item": "mechanix:perlium_block"
+    }
+  ],
+  "result": {
+    "item": "mechanix:perlium_ingot",
+    "count": 9
+  }
+}

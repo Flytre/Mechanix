@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "minecraft:blaze_rod"
+  },
+  "time": 200,
+  "result": {
+    "item": "minecraft:blaze_powder",
+    "count" : 4
+  }
+}

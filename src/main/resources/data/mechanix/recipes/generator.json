@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "cFc",
+    "#G#",
+    "BBB"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:smooth_stone"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "G": {
+      "tag": "c:iron_gears"
+    },
+    "B": {
+      "item": "minecraft:black_concrete"
+    },
+    "c": {
+      "tag": "c:copper_coils"
+    }
+  },
+  "result": {
+    "item": "mechanix:generator",
+    "count": 1
+  }
+}

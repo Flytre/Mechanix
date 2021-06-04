@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:steel_nuggets"
+    }
+  },
+  "result": {
+    "item": "mechanix:steel_ingot",
+    "count": 1
+  }
+}

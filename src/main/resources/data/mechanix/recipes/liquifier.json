@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "OIO",
+    "CLC"
+  ],
+  "key": {
+    "#": {
+      "item": "mechanix:hardened_glass"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "C": {
+      "item": "mechanix:circuit"
+    },
+    "I": {
+      "item": "mechanix:machine"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "mechanix:liquifier",
+    "count": 1
+  }
+}

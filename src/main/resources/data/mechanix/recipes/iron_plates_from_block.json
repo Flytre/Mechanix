@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "mechanix:iron_plate",
+  "ingredients": [
+    {
+      "item": "mechanix:reinforced_iron_block"
+    }
+  ],
+  "result": {
+    "item": "mechanix:iron_plate",
+    "count": 9
+  }
+}

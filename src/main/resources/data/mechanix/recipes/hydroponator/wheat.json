@@ -1,0 +1,24 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat_seeds",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "count": 3
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:wheat",
+      "count": 1
+    },
+    {
+      "item": "minecraft:wheat_seeds",
+      "count": 1,
+      "chance": 1.0
+    }
+  ]
+}

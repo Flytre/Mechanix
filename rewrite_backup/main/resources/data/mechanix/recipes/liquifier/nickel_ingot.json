@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:nickel_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_nickel",
+    "amount" : 1000
+  }
+}

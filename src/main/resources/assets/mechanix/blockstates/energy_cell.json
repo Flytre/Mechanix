@@ -1,0 +1,113 @@
+{
+    "multipart": [
+        {
+            "apply": {
+                "model": "mechanix:block/energy_cell/base"
+            }
+        },
+        {
+            "when": {
+                "north": "true"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_out"
+            }
+        },
+        {
+            "when": {
+                "east": "true"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_out",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "south": "true"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_out",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "west": "true"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_out",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "up": "true"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_vertical_out"
+            }
+        },
+        {
+            "when": {
+                "down": "true"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_vertical_out",
+                "x" : 180
+            }
+        },
+        {
+            "when": {
+                "north": "false"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_in"
+            }
+        },
+        {
+            "when": {
+                "east": "false"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_in",
+                "y" : 90
+            }
+        },
+        {
+            "when": {
+                "south": "false"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_in",
+                "y" : 180
+            }
+        },
+        {
+            "when": {
+                "west": "false"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_horizontal_in",
+                "y" : 270
+            }
+        },
+        {
+            "when": {
+                "up": "false"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_vertical_in"
+            }
+        },
+        {
+            "when": {
+                "down": "false"
+            },
+            "apply": {
+                "model": "mechanix:block/energy_cell/standard_vertical_in",
+                "x" : 180
+            }
+        }
+    ]
+}

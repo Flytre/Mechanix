@@ -1,0 +1,21 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "item": "minecraft:dirt",
+    "count" : 16
+  },
+  "results": [
+    {
+      "item": "minecraft:sand",
+      "count" : 8
+    },
+    {
+      "item": "minecraft:clay"
+    },
+    {
+      "item": "minecraft:gravel",
+      "count" : 2
+    }
+  ],
+  "time" : 1200
+}

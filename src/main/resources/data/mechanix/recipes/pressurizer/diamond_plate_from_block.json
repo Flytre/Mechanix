@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "item": "minecraft:diamond_block"
+  },
+  "result": {
+    "item": "mechanix:diamond_plate",
+    "count": 9
+  }
+}

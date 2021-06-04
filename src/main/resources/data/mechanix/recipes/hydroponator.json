@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "g#g",
+    "COC",
+    "DTS"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:water_bucket"
+    },
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "S": {
+      "item": "minecraft:sand"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "C": {
+      "item": "mechanix:bluestone_circuit"
+    },
+    "T": {
+      "item": "mechanix:tank"
+    },
+    "g": {
+      "tag": "c:copper_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:hydroponator",
+    "count": 1
+  }
+}

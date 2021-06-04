@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "item": "minecraft:iron_block"
+  },
+  "result": {
+      "tag": "c:iron_plates",
+      "count": 9
+    }
+}

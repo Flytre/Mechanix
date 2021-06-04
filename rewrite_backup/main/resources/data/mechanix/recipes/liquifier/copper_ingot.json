@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:copper_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_copper",
+    "amount" : 1000
+  }
+}

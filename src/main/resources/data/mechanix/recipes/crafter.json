@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iWi",
+    "EOE",
+    "gCg"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:steel_plates"
+    },
+    "E": {
+      "item": "mechanix:bluestone_circuit"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "W": {
+      "item": "mechanix:wrench"
+    },
+    "g": {
+      "tag": "c:steel_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:crafter",
+    "count": 1
+  }
+}

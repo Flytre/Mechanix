@@ -1,0 +1,18 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "mechanix:perlium_ingot"
+    },
+    {
+      "tag": "c:steel_ingots"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    }
+  ],
+  "result": {
+    "item": "mechanix:vysterium_ingot",
+    "count": 3
+  }
+}

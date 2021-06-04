@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "mechanix:neptunium_dust"
+  },
+  "result": "mechanix:neptunium_ingot",
+  "experience": 0.1,
+  "cookingtime": 200
+}

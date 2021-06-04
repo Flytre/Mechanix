@@ -1,0 +1,21 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:jungle_sapling",
+    "count": 4
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 32
+  },
+  "results": [
+    {
+      "item": "minecraft:jungle_log",
+      "count": 32
+    },
+    {
+      "item" : "minecraft:jungle_sapling",
+      "count" : 5
+    }
+  ]
+}

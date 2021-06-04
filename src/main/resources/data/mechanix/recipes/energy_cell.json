@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iGi",
+    "GOG",
+    "iGi"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:iron_plates"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "O": {
+      "item": "mechanix:circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:energy_cell",
+    "count": 1
+  }
+}

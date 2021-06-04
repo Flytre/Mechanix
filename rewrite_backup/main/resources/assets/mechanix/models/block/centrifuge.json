@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/centrifuge",
+    "particle": "mechanix:block/centrifuge"
+  },
+  "parent" : "mechanix:block/machine"
+}

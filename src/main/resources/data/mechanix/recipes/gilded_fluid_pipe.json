@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iHi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "H": {
+      "item": "mechanix:hardened_glass"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_fluid_pipe",
+    "count": 6
+  }
+}

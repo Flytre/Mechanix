@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "gIg",
+    "RgR"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "I": {
+      "tag": "c:diamond_plates"
+    },
+    "R": {
+      "item": "mechanix:bluestone"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_upgrade",
+    "count": 1
+  }
+}

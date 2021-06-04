@@ -1,0 +1,122 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_node"
+      }
+    },
+    {
+      "when": {
+        "pipe_north": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_connector",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "pipe_east": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_connector",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "pipe_south": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_connector",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "pipe_west": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_connector",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "pipe_up": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_connector",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "pipe_down": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_connector"
+      }
+    },
+
+    {
+      "when": {
+        "pipe_north": "servo"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_servo",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "pipe_east": "servo"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_servo",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "pipe_south": "servo"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_servo",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "pipe_west": "servo"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_servo",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "pipe_up": "servo"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_servo",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "pipe_down": "servo"
+      },
+      "apply": {
+        "model": "mechanix:block/fluid_pipe/vysterium_servo"
+      }
+    }
+  ]
+}

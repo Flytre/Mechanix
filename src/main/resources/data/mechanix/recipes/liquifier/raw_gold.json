@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "item": "minecraft:gold_ore"
+    },
+  "fluid_result": {
+    "fluid" : "mechanix:raw_gold",
+    "amount": {
+      "n": 2,
+      "d": 3
+    }
+  }
+}

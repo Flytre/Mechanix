@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "mechanix:gold_coil"
+    }
+  ],
+  "time": 200,
+  "upgrade": {
+    "item": "mechanix:coiler"
+  }
+}

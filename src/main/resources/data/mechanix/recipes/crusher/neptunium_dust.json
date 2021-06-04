@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "mechanix:neptunium_ingot"
+  },
+  "time": 200,
+  "result": {
+    "item": "mechanix:neptunium_dust"
+  }
+}

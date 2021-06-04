@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "item": "minecraft:iron_ingot"
+    },
+  "result": {
+    "fluid" : "mechanix:molten_iron",
+    "amount" : 1000
+  }
+}

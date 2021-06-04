@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:tin_blocks"
+  },
+  "result": {
+      "tag": "c:tin_plates",
+      "count": 9
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:copper_ingots"
+  },
+  "result": {
+    "item": "mechanix:copper_plate"
+  }
+}

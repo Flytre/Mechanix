@@ -1,0 +1,7 @@
+{
+	"parent" : "mechanix:block/energy_cell/standard_vertical_in",
+	"textures": {
+		"0": "mechanix:block/energy_cell/standard_out",
+		"particle": "mechanix:block/energy_cell/standard_out"
+	}
+}

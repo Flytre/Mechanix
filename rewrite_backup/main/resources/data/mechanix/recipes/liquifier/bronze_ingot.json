@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:bronze_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_bronze",
+    "amount" : 1000
+  }
+}

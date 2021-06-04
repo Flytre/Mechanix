@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:sawing",
+  "ingredient": {
+    "tag": "minecraft:birch_logs"
+  },
+  "results": [
+    {
+      "item": "minecraft:birch_planks",
+      "count": 6
+    },
+    {
+      "item": "mechanix:sawdust",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredients": [
+    {
+      "item": "minecraft:sea_pickle",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "count": 5
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:sea_pickle",
+      "count": 2
+    }
+  ]
+}

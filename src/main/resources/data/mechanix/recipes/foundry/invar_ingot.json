@@ -1,0 +1,14 @@
+{
+  "type": "mechanix:casting",
+  "fluid_ingredient" : {
+    "fluid" : "mechanix:molten_invar",
+    "amount": {
+      "n": 1,
+      "d": 9
+    }
+  },
+  "result" : {
+    "tag": "c:invar_ingots",
+    "count": 1
+  }
+}

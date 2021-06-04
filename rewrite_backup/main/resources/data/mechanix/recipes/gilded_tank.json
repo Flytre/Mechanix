@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "iGi",
+    "i i"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "G": {
+      "item": "mechanix:tank"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_tank",
+    "count": 1
+  }
+}

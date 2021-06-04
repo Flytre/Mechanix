@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "minecraft:coal"
+  },
+  "result": "mechanix:coke",
+  "experience": 0.1,
+  "cookingtime": 3000
+}

@@ -1,0 +1,18 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "mechanix:infernum_powder"
+    },
+    {
+      "item": "mechanix:endalum_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "item": "mechanix:neptunium_ingot",
+    "count": 3
+  }
+}

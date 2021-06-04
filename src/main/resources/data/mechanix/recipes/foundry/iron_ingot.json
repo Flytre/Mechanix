@@ -1,0 +1,14 @@
+{
+  "type": "mechanix:casting",
+  "fluid_ingredient" : {
+    "fluid" : "mechanix:molten_iron",
+    "amount": {
+      "n": 1,
+      "d": 9
+    }
+  },
+  "result" : {
+    "item": "minecraft:iron_ingot",
+    "count": 1
+  }
+}

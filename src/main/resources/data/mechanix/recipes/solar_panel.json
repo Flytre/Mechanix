@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "iii",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "mechanix:panel"
+    }
+  },
+  "result": {
+    "item": "mechanix:solar_panel",
+    "count": 1
+  }
+}

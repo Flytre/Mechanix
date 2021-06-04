@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "tag": "c:iron_dusts",
+      "count" : 2
+    },
+    {
+      "tag": "c:nickel_dusts"
+    }
+  ],
+  "result" : {
+    "tag": "c:invar_ingots",
+    "count" : 3
+  }
+}

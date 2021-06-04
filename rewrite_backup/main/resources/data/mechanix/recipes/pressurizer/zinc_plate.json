@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:zinc_ingots"
+  },
+  "result": {
+    "tag": "c:zinc_plates"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "tag": "c:obsidian_dusts"
+    },
+    {
+      "item": "minecraft:glass",
+      "count" : 3
+    }
+  ],
+  "result": {
+    "item": "mechanix:hardened_glass",
+    "count": 4
+  }
+}

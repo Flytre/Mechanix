@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iEi",
+    "iOi",
+    "iCi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "E": {
+      "item": "mechanix:endalum_ingot"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "C": {
+      "item": "minecraft:diamond_pickaxe"
+    }
+  },
+  "result": {
+    "item": "mechanix:quarry",
+    "count": 1
+  }
+}

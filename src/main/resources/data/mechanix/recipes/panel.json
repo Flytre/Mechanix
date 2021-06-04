@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "ECE",
+    "iii"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "i": {
+      "tag": "c:iron_plates"
+    },
+    "C": {
+      "item": "minecraft:clock"
+    },
+    "E": {
+      "item": "mechanix:circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:panel",
+    "count": 1
+  }
+}

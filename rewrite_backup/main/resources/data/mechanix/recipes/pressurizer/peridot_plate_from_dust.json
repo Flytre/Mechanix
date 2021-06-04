@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 250,
+  "ingredient": {
+    "tag": "c:peridot_dusts"
+  },
+  "result": {
+      "tag": "c:peridot_plates"
+    }
+
+}

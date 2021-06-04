@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "capacity",
+                  "target": "BlockEntityTag.capacity",
+                  "op": "replace"
+                },
+                {
+                  "source": "FluidMode",
+                  "target": "BlockEntityTag.FluidMode",
+                  "op": "replace"
+                },
+                {
+                  "source": "Fluids",
+                  "target": "BlockEntityTag.Fluids",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
+          "name": "mechanix:vysterium_tank"
+        }
+      ]
+    }
+  ]
+}

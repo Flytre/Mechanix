@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "cGc",
+    "ici"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:gold_plates"
+    },
+    "G": {
+      "item": "mechanix:energy_cell"
+    },
+    "c": {
+      "item": "mechanix:bluestone_circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_energy_cell",
+    "count": 1
+  }
+}

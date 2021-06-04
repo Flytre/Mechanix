@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "iGi",
+    "igi"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "G": {
+      "item": "mechanix:gilded_tank"
+    },
+    "g": {
+      "tag": "c:steel_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_tank",
+    "count": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "mechanix:bluestone"
+    }
+  ],
+  "time": 200
+}

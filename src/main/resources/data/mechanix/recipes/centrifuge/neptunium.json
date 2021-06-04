@@ -1,0 +1,22 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "item": "mechanix:neptunium_dust"
+  },
+  "results": [
+    {
+      "item": "mechanix:endalum_dust"
+    },
+    {
+      "item": "mechanix:diamond_dust"
+    },
+    {
+      "item": "minecraft:netherite_scrap",
+      "count": 4
+    },
+    {
+      "item": "mechanix:gold_dust",
+      "count": 4
+    }
+  ]
+}

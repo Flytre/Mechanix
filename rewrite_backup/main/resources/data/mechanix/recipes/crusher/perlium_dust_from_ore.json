@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "mechanix:perlium_ore"
+  },
+  "time": 200,
+  "result": {
+    "item": "mechanix:perlium_dust",
+    "count": 8
+  }
+}

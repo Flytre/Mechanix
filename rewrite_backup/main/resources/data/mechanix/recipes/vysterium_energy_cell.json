@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iii",
+    "iGi",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:vysterium_ingots"
+    },
+    "G": {
+      "item": "mechanix:gilded_energy_cell"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_energy_cell",
+    "count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:lead_nuggets"
+  },
+  "fluid_result": {
+    "fluid" : "mechanix:molten_lead",
+    "amount": {
+      "n": 1,
+      "d": 81
+    }
+  }
+}

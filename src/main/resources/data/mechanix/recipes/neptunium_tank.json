@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "iGi",
+    "igi"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "G": {
+      "item": "mechanix:vysterium_tank"
+    },
+    "g": {
+      "tag": "c:diamond_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_tank",
+    "count": 1
+  }
+}

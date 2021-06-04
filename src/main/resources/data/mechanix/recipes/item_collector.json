@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gHg",
+    "#O#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:ender_pearl"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "g": {
+      "tag": "c:copper_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:item_collector",
+    "count": 1
+  }
+}

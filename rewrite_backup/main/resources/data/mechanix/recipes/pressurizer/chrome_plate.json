@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:chrome_ingots"
+  },
+  "result": {
+    "tag": "c:chrome_plates"
+  }
+}

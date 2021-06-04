@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:compressing",
+  "power": 20,
+  "time": 450,
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+      "tag": "c:obsidian_plates",
+      "count": 9
+    }
+}

@@ -1,0 +1,7 @@
+{
+	"textures": {
+		"particle": "mechanix:block/fluid_pipe/standard_node",
+		"texture": "mechanix:block/fluid_pipe/standard_node"
+	},
+	"parent": "mechanix:block/item_pipe_node"
+}

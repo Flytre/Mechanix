@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "hhh",
+    "cDc",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "D": {
+      "item": "mechanix:vysterium_solar_panel"
+    },
+    "c": {
+      "item": "mechanix:masterwork_circuit"
+    },
+    "h": {
+      "tag": "c:diamond_dusts"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_solar_panel",
+    "count": 1
+  }
+}

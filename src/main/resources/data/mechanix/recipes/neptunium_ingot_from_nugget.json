@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "mechanix:neptunium_nugget"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_ingot",
+    "count": 1
+  }
+}

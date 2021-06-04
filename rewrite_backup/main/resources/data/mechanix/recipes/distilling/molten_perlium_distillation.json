@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:distilling",
+  "input": {
+    "fluid" : "mechanix:raw_perlium",
+    "amount" : 200
+  },
+  "result": {
+    "fluid" : "mechanix:molten_perlium",
+    "amount" : 1000
+  }
+}

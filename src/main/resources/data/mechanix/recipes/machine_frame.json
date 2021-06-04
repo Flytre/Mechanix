@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sis",
+    "iGi",
+    "sis"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:steel_ingots"
+    },
+    "i": {
+      "item": "minecraft:glass"
+    },
+    "G": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "mechanix:machine",
+    "count": 1
+  }
+}

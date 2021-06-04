@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "item": "minecraft:iron_ore"
+    },
+  "fluid_result": {
+    "fluid" : "mechanix:raw_iron",
+    "amount": {
+      "n": 2,
+      "d": 3
+    }
+  }
+}

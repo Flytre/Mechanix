@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:sawing",
+  "ingredient": {
+    "tag": "minecraft:dark_oak_logs"
+  },
+  "results": [
+    {
+      "item": "minecraft:dark_oak_planks",
+      "count": 6
+    },
+    {
+      "item": "mechanix:sawdust",
+      "count": 1
+    }
+  ]
+}

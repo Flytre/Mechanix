@@ -1,0 +1,65 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_node"
+      }
+    },
+    {
+      "when": {
+        "north": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_connector",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "east": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_connector",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_connector",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_connector",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_connector",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "down": "connected"
+      },
+      "apply": {
+        "model": "mechanix:block/cable/neptunium_connector"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "c:tin_ores"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:tin_dusts",
+    "count" : 2
+  }
+}

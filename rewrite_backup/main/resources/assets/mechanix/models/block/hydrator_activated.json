@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/hydrator_activated",
+    "particle": "mechanix:block/hydrator_activated"
+  },
+  "parent" : "mechanix:block/machine"
+}

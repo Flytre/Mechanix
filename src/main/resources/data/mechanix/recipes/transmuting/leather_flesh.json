@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "time": 200
+}

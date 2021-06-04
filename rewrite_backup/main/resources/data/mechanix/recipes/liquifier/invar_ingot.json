@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:invar_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_invar",
+    "amount" : 1000
+  }
+}

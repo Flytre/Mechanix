@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "c:perlium_ingots"
+  },
+  "time": 200,
+  "result": {
+    "item": "mechanix:perlium_dust",
+    "count": 4
+  }
+}

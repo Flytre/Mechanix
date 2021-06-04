@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "mechanix:endalum_ingot"
+  },
+  "time": 200,
+  "result": {
+    "item": "mechanix:endalum_dust"
+  }
+}

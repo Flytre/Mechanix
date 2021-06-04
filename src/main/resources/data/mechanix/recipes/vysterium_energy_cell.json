@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ici",
+    "cGc",
+    "ici"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "G": {
+      "item": "mechanix:gilded_energy_cell"
+    },
+    "c": {
+      "item": "mechanix:masterwork_circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_energy_cell",
+    "count": 1
+  }
+}

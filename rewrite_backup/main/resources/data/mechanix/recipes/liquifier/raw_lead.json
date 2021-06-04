@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:lead_ores"
+    },
+  "result": {
+    "fluid" : "mechanix:raw_lead",
+    "amount" : 600
+  }
+}

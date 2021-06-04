@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.flytre.mechanix.api.upgrade.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": ["ScreenHandlerAccessor", "ServerPlayerEntityMixin"],
+  "client": [
+    "HandledScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

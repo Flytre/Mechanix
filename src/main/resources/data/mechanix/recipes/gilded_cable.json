@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gcR"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "c": {
+      "tag": "c:copper_coils"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_cable",
+    "count": 4
+  }
+}

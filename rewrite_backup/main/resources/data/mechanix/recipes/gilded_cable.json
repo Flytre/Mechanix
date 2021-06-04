@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "ggg",
+    "CCC"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "mechanix:cable"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_cable",
+    "count": 6
+  }
+}

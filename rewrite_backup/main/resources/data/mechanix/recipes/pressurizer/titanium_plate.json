@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "tag": "c:titanium_ingots"
+  },
+  "result": {
+      "tag": "c:titanium_plates"
+    }
+
+}

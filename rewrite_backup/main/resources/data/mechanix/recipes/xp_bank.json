@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iEi",
+    "iOi",
+    "iCi"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:iron_plates"
+    },
+    "E": {
+      "item": "minecraft:experience_bottle"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    }
+  },
+  "result": {
+    "item": "mechanix:xp_bank",
+    "count": 1
+  }
+}

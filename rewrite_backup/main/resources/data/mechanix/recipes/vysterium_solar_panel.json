@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iDi",
+    "iii",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "tag": "c:vysterium_ingots"
+    },
+    "D": {
+      "item": "mechanix:gilded_solar_panel"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_solar_panel",
+    "count": 1
+  }
+}

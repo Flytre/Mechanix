@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:golden_apple",
+      "count": 9
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    }
+  ],
+  "time": 200
+}

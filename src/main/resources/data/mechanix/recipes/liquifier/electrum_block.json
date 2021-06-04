@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:electrum_blocks"
+  },
+  "fluid_result": {
+    "fluid" : "mechanix:molten_electrum",
+    "amount": {
+      "n": 1,
+      "d": 1
+    }
+  }
+}

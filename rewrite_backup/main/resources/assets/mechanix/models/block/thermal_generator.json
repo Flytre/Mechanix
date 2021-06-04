@@ -1,0 +1,10 @@
+{
+  "textures": {
+    "0": "mechanix:block/thermal_generator_side",
+    "1": "mechanix:block/generator_side",
+    "2" : "mechanix:block/thermal_generator_side",
+    "3": "mechanix:block/generator_side",
+    "particle": "mechanix:block/thermal_generator_side"
+  },
+  "parent" : "mechanix:block/machine"
+}

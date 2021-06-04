@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:casting",
+  "input" : {
+    "fluid" : "mechanix:molten_bronze",
+    "amount" : 1000
+  },
+  "result" : {
+    "tag": "c:bronze_ingots",
+    "count": 1
+  }
+}

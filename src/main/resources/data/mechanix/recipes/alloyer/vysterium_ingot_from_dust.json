@@ -1,0 +1,19 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "mechanix:perlium_dust",
+      "count": 4
+    },
+    {
+      "tag": "c:steel_dusts"
+    },
+    {
+      "tag": "c:gold_dusts"
+    }
+  ],
+  "result": {
+    "item": "mechanix:vysterium_ingot",
+    "count": 3
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "tag": "c:iron_plates"
+  }
+}

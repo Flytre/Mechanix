@@ -1,0 +1,7 @@
+{
+	"parent": "mechanix:block/solar_panel/standard_panel",
+	"textures": {
+		"0": "mechanix:block/solar_panel/gilded",
+		"particle": "mechanix:block/solar_panel/gilded"
+	}
+}

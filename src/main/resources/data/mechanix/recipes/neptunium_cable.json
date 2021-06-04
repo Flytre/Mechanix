@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "gcR"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:neptunium_ingot"
+    },
+    "R": {
+      "item": "mechanix:bluestone"
+    },
+    "c": {
+      "tag": "c:gold_coils"
+    }
+  },
+  "result": {
+    "item": "mechanix:neptunium_cable",
+    "count": 4
+  }
+}

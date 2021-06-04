@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "mechanix:endalum_dust"
+  },
+  "result": "mechanix:endalum_ingot",
+  "experience": 0.1,
+  "cookingtime": 200
+}

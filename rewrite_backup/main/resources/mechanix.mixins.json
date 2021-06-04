@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.flytre.mechanix.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": ["BucketItemAccessor", "FluidBlockAccessor"],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

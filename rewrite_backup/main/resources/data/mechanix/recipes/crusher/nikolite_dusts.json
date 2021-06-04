@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "c:nikolite_ores"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:nikolite_dusts",
+    "count" : 2
+
+  }
+}

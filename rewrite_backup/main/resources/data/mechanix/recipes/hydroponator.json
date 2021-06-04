@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "DOM",
+    "GSG"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:water_bucket"
+    },
+    "D": {
+      "item": "minecraft:dirt"
+    },
+    "S" : {
+      "item" : "minecraft:sand"
+    },
+    "M" : {
+      "item" : "minecraft:mycelium"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "G": {
+      "item": "mechanix:vysterium_ingot"
+    }
+  },
+  "result": {
+    "item": "mechanix:hydroponator",
+    "count": 1
+  }
+}

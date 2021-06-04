@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sEs",
+    "wPw",
+    "sEs"
+  ],
+  "key": {
+    "P": {
+      "tag": "c:diamond_plates"
+    },
+    "w": {
+      "item": "minecraft:water_bucket"
+    },
+    "E": {
+      "item": "mechanix:endalum_ingot"
+    },
+    "s": {
+      "tag": "c:steel_ingots"
+    }
+  },
+  "result": {
+    "item": "mechanix:water_fabricator",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "c:silver_ores"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:silver_dusts",
+    "count" : 2
+  }
+}

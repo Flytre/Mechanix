@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "scs",
+    "cPc",
+    "CcC"
+  ],
+  "key": {
+    "s": {
+      "tag": "c:copper_gears"
+    },
+    "C": {
+      "item": "mechanix:bluestone_circuit"
+    },
+    "c": {
+      "tag": "c:gold_coils"
+    },
+    "P": {
+      "tag": "c:steel_plates"
+    }
+  },
+  "result": {
+    "item": "mechanix:overclocker",
+    "count": 1
+  }
+}

@@ -1,0 +1,34 @@
+{
+    "variants": {
+        "facing=east,activated=false": {
+            "model": "mechanix:block/machine",
+            "y": 90
+        },
+        "facing=east,activated=true": {
+            "model": "mechanix:block/machine_activated",
+            "y": 90
+        },
+        "facing=north,activated=false": {
+            "model": "mechanix:block/machine"
+        },
+        "facing=north,activated=true": {
+            "model": "mechanix:block/machine_activated"
+        },
+        "facing=south,activated=false": {
+            "model": "mechanix:block/machine",
+            "y": 180
+        },
+        "facing=south,activated=true": {
+            "model": "mechanix:block/machine_activated",
+            "y": 180
+        },
+        "facing=west,activated=false": {
+            "model": "mechanix:block/machine",
+            "y": 270
+        },
+        "facing=west,activated=true": {
+            "model": "mechanix:block/machine_activated",
+            "y": 270
+        }
+    }
+}

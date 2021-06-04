@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "minecraft:quartz"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:quartz_dusts"
+  }
+}

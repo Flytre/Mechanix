@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "indrev:nikolite_dust"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "indrev:nikolite_ingot",
+    "count": 1
+  }
+}

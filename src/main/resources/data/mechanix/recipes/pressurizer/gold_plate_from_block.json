@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "item": "minecraft:gold_block"
+  },
+  "result": {
+    "item": "mechanix:gold_plate",
+    "count": 9
+  }
+}

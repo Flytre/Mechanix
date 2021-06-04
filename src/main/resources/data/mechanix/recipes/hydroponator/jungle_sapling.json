@@ -1,0 +1,23 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredients": [
+    {
+      "item": "minecraft:jungle_sapling",
+      "count": 4
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "count": 32
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:jungle_log",
+      "count": 32
+    },
+    {
+      "item": "minecraft:jungle_sapling",
+      "count": 5
+    }
+  ]
+}

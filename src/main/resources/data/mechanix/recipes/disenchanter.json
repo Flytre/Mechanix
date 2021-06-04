@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "dOh",
+    "obo"
+  ],
+  "key": {
+    "h": {
+      "tag": "c:steel_gears"
+    },
+    "d": {
+      "tag": "c:diamond_gears"
+    },
+    "o": {
+      "item": "minecraft:obsidian"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "G": {
+      "item": "minecraft:grindstone"
+    },
+    "b": {
+      "item": "mechanix:bluestone_circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:disenchanter",
+    "count": 1
+  }
+}

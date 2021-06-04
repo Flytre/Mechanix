@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "GOG",
+    "SPS"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "P": {
+      "item": "minecraft:packed_ice"
+    }
+  },
+  "result": {
+    "item": "mechanix:foundry",
+    "count": 1
+  }
+}

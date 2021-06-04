@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "minecraft:coal"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:coal_dusts"
+  }
+}

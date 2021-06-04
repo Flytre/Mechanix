@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "i i",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "tag": "c:copper_ingots"
+    }
+  },
+  "result": {
+    "item": "mechanix:copper_gear",
+    "count": 1
+  }
+}

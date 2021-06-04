@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "item": "minecraft:netherite_ingot",
+    "count" : 1
+  },
+  "results": [
+    {
+      "item": "minecraft:netherite_scrap",
+      "count": 4
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "count": 4
+    }
+  ]
+}

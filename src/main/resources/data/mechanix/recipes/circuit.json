@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CrC",
+    "cic",
+    "crc"
+  ],
+  "key": {
+    "c": {
+      "item": "mechanix:cable"
+    },
+    "C": {
+      "tag": "c:copper_coils"
+    },
+    "i": {
+      "tag": "c:iron_plates"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "mechanix:circuit",
+    "count": 1
+  }
+}

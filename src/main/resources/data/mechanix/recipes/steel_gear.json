@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "i i",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "tag": "c:steel_ingots"
+    }
+  },
+  "result": {
+    "item": "mechanix:steel_gear",
+    "count": 1
+  }
+}

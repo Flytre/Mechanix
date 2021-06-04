@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:perlium_dusts"
+    },
+  "result": {
+    "fluid" : "mechanix:molten_perlium",
+    "amount" : 250
+  }
+}

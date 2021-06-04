@@ -1,0 +1,14 @@
+{
+  "type": "mechanix:casting",
+  "fluid_ingredient" : {
+    "fluid" : "mechanix:molten_silver",
+    "amount": {
+      "n": 1,
+      "d": 9
+    }
+  },
+  "result" : {
+    "tag": "c:silver_ingots",
+    "count": 1
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/crusher_activated",
+    "particle": "mechanix:block/crusher_activated"
+  },
+  "parent" : "mechanix:block/machine"
+}

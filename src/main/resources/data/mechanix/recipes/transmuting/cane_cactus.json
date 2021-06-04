@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:sugar_cane"
+    },
+    {
+      "item": "minecraft:cactus"
+    }
+  ],
+  "time": 200
+}

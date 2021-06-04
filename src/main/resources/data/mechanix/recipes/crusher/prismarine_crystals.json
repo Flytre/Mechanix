@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "minecraft:prismarine_shard"
+  },
+  "time": 200,
+  "result": {
+    "item": "minecraft:prismarine_crystals"
+  }
+}

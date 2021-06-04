@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "mechanix:wither_bone"
+    }
+  ],
+  "result": {
+    "item": "mechanix:wither_ash",
+    "count": 2
+  }
+}

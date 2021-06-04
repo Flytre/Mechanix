@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "iGi",
+    "igi"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:gold_plates"
+    },
+    "G": {
+      "item": "mechanix:tank"
+    },
+    "g": {
+      "tag": "c:iron_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_tank",
+    "count": 1
+  }
+}

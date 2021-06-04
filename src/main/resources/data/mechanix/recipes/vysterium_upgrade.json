@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " g ",
+    "gIg",
+    "RgR"
+  ],
+  "key": {
+    "g": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "I": {
+      "tag": "c:gold_plates"
+    },
+    "R": {
+      "item": "mechanix:bluestone"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_upgrade",
+    "count": 1
+  }
+}

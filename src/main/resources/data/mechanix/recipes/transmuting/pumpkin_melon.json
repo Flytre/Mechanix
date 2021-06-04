@@ -1,0 +1,12 @@
+{
+  "type": "mechanix:transmuting",
+  "items": [
+    {
+      "item": "minecraft:pumpkin"
+    },
+    {
+      "item": "minecraft:melon"
+    }
+  ],
+  "time": 200
+}

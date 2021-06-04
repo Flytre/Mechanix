@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "mechanix:vysterium_ingot"
+  },
+  "time": 200,
+  "result": {
+    "item": "mechanix:vysterium_dust"
+  }
+}

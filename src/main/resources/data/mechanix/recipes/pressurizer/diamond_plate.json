@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 250,
+  "ingredient": {
+    "tag": "c:diamond_dusts"
+  },
+  "result": {
+      "item": "mechanix:diamond_plate"
+    }
+
+}

@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+    "tag": "c:electrum_ingots"
+  },
+  "result": {
+    "fluid" : "mechanix:molten_electrum",
+    "amount" : 1000
+  }
+}

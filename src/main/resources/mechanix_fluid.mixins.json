@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.flytre.mechanix.api.fluid.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": ["ScreenHandlerAccessor", "ServerPlayerEntityMixin", "BucketItemAccessor", "FluidBlockAccessor"],
+  "client": [
+    "HandledScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

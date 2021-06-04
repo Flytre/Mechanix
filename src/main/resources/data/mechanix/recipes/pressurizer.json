@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BOB",
+    "#W#",
+    "DPD"
+  ],
+  "key": {
+    "#": {
+      "item": "mechanix:hardened_glass"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "B": {
+      "tag": "c:copper_gears"
+    },
+    "W": {
+      "item": "mechanix:machine"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "result": {
+    "item": "mechanix:pressurizer",
+    "count": 1
+  }
+}

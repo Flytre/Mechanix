@@ -1,0 +1,50 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "ItemMode",
+                  "target": "BlockEntityTag.ItemMode",
+                  "op": "replace"
+                },
+                {
+                  "source": "transferRate",
+                  "target": "BlockEntityTag.transferRate",
+                  "op": "replace"
+                },
+                {
+                  "source": "init",
+                  "target": "BlockEntityTag.init",
+                  "op": "replace"
+                },
+                {
+                  "source": "maxEnergy",
+                  "target": "BlockEntityTag.maxEnergy",
+                  "op": "replace"
+                },                {
+                  "source": "energy",
+                  "target": "BlockEntityTag.energy",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
+          "name": "mechanix:vysterium_energy_cell"
+        }
+      ]
+    }
+  ]
+}

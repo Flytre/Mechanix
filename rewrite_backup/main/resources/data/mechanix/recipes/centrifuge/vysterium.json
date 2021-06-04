@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "tag": "c:vysterium_dusts"
+  },
+  "results": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "mechanix:perlium_dust"
+    },
+    {
+      "item": "mechanix:iron_dust"
+    }
+  ]
+}

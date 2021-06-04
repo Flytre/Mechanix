@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "mechanix:vysterium_nugget"
+    }
+  },
+  "result": {
+    "item": "mechanix:vysterium_ingot",
+    "count": 1
+  }
+}

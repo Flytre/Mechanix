@@ -1,0 +1,18 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "item": "mechanix:infernum_powder",
+    "count": 1
+  },
+  "results": [
+    {
+      "item": "mechanix:wither_ash"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    }
+  ]
+}

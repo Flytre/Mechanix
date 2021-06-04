@@ -1,0 +1,15 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "item": "mechanix:coke"
+    },
+    {
+      "tag": "c:iron_dusts"
+    }
+  ],
+  "result": {
+    "item": "mechanix:steel_ingot",
+    "count": 1
+  }
+}

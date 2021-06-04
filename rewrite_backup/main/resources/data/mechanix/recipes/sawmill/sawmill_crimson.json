@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:sawing",
+  "ingredient": {
+    "tag": "minecraft:crimson_stems"
+  },
+  "results": [
+    {
+      "item": "minecraft:crimson_planks",
+      "count": 6
+    },
+    {
+      "item": "mechanix:sawdust",
+      "count": 1
+    }
+  ]
+}

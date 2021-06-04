@@ -1,0 +1,14 @@
+{
+  "type": "mechanix:casting",
+  "fluid_ingredient" : {
+    "fluid" : "mechanix:molten_gold",
+    "amount": {
+      "n": 1,
+      "d": 9
+    }
+  },
+  "result" : {
+    "item": "minecraft:gold_ingot",
+    "count": 1
+  }
+}

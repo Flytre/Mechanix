@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CvC",
+    "gBg",
+    "gvg"
+  ],
+  "key": {
+    "g": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "C": {
+      "tag": "c:gold_coils"
+    },
+    "v": {
+      "item": "mechanix:vysterium_ingot"
+    },
+    "B": {
+      "item": "mechanix:bluestone_circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:masterwork_circuit",
+    "count": 1
+  }
+}

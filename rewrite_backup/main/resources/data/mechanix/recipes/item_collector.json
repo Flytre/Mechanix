@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#H#",
+    "#O#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:ender_pearl"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    }
+  },
+  "result": {
+    "item": "mechanix:item_collector",
+    "count": 1
+  }
+}

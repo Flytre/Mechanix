@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "iBi",
+    "#O#",
+    "IRI"
+  ],
+  "key": {
+    "#": {
+      "item": "mechanix:hardened_glass"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "i": {
+      "tag": "c:iron_plates"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "I": {
+      "item": "mechanix:tank"
+    },
+    "R": {
+      "item": "mechanix:masterwork_circuit"
+    }
+  },
+  "result": {
+    "item": "mechanix:distiller",
+    "count": 1
+  }
+}

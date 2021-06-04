@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ggg",
+    "cDc",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "tag": "c:gold_plates"
+    },
+    "D": {
+      "item": "mechanix:solar_panel"
+    },
+    "c": {
+      "item": "mechanix:bluestone_circuit"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "mechanix:gilded_solar_panel",
+    "count": 1
+  }
+}

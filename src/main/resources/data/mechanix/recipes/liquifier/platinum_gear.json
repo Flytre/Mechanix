@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:platinum_gears"
+    },
+  "fluid_result": {
+    "fluid" : "mechanix:molten_platinum",
+    "amount": {
+      "n": 4,
+      "d": 9
+    }
+  }
+}

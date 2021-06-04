@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "mechanix",
+  "version": "${version}",
+  "name": "Mechanix",
+  "description": "Adding machinery to Minecraft!",
+  "authors": [
+    "Flytre"
+  ],
+  "contact": {
+    "homepage": "https://www.flytre.net/",
+    "sources": "https://github.com/Flytre/Mechanix"
+  },
+  "license": "https://github.com/Flytre/Mechanix/blob/master/LICENSE.",
+  "icon": "assets/mechanix/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.flytre.mechanix.Mechanix"
+    ],
+    "client": [
+      "net.flytre.mechanix.client.MechanixClient"
+    ],
+    "rei_plugins": [
+      "net.flytre.mechanix.compat.rei.MechanixPlugin"
+    ]
+  },
+  "mixins": [
+    "mechanix.mixins.json",
+    "mechanix_fluid.mixins.json",
+    "mechanix_machine.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x",
+    "flytre_lib": ">=0.2.11"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+  "custom": {
+    "waila:plugins": {
+      "id": "mechanix:plugin",
+      "initializer": "net.flytre.mechanix.compat.waila.MechanixPlugin"
+    }
+  }
+}

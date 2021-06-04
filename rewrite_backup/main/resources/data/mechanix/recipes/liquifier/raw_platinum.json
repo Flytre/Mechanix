@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:platinum_ores"
+    },
+  "result": {
+    "fluid" : "mechanix:raw_platinum",
+    "amount" : 600
+  }
+}

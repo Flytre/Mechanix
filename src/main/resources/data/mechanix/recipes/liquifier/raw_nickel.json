@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:nickel_ores"
+    },
+  "fluid_result": {
+    "fluid" : "mechanix:raw_nickel",
+    "amount": {
+      "n": 2,
+      "d": 3
+    }
+  }
+}

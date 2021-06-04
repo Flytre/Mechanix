@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:compressing",
+  "time": 300,
+  "ingredient": {
+    "item": "minecraft:emerald_block"
+  },
+  "result": {
+      "tag": "c:emerald_plates",
+      "count": 9
+    }
+}

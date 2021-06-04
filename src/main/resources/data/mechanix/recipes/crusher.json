@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    "fOf",
+    "cPc"
+  ],
+  "key": {
+    "i": {
+      "item": "mechanix:circuit"
+    },
+    "f": {
+      "item": "minecraft:flint"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "c": {
+      "tag": "c:copper_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:crusher",
+    "count": 1
+  }
+}

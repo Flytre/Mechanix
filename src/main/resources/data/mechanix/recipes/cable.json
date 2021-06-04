@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "icR"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "c": {
+      "tag": "c:copper_coils"
+    }
+  },
+  "result": {
+    "item": "mechanix:cable",
+    "count": 4
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "tag": "c:iron_gears"
+    },
+  "fluid_result": {
+    "fluid" : "mechanix:molten_iron",
+    "amount": {
+      "n": 4,
+      "d": 9
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:dark_oak_sapling",
+    "count": 4
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 32
+  },
+  "results": [
+    {
+      "item": "minecraft:dark_oak_log",
+      "count": 24
+    },
+    {
+      "item" : "minecraft:dark_oak_sapling",
+      "count" : 5
+    }
+  ]
+}

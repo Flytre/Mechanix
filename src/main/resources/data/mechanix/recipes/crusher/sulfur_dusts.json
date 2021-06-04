@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "c:sulfurs"
+  },
+  "time": 200,
+  "result": {
+    "tag": "c:sulfur_dusts"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " h ",
+    "sPs",
+    "cGc"
+  ],
+  "key": {
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    },
+    "P": {
+      "tag": "c:steel_plates"
+    },
+    "G": {
+      "tag": "c:steel_gears"
+    },
+    "c": {
+      "tag": "c:iron_gears"
+    }
+  },
+  "result": {
+    "item": "mechanix:advanced_suction",
+    "count": 1
+  }
+}

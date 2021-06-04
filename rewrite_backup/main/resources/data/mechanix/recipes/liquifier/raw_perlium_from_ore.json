@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:liquifying",
+  "ingredient": {
+      "item": "mechanix:perlium_ore"
+    },
+  "result": {
+    "fluid" : "mechanix:raw_perlium",
+    "amount" : 600
+  }
+}

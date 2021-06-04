@@ -1,0 +1,25 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "item": "minecraft:grass_block",
+    "count" : 16
+  },
+  "results": [
+    {
+      "item": "minecraft:sand",
+      "count" : 8
+    },
+    {
+      "item": "minecraft:clay"
+    },
+    {
+      "item": "minecraft:gravel",
+      "count" : 2
+    },
+    {
+      "item" : "minecraft:wheat_seeds",
+      "count" : 4
+    }
+  ],
+  "time" : 1200
+}

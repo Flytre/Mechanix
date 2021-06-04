@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "mechanix:vysterium_ingot"
+    }
+  ],
+  "result": {
+    "item": "mechanix:vysterium_nugget",
+    "count": 9
+  }
+}

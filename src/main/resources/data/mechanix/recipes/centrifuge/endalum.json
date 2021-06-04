@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "item": "mechanix:endalum_dust"
+  },
+  "results": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "mechanix:vysterium_dust"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    }
+  ]
+}

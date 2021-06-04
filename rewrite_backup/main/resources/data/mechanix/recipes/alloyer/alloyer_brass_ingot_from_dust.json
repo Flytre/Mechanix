@@ -1,0 +1,16 @@
+{
+  "type": "mechanix:alloying",
+  "ingredients": [
+    {
+      "tag": "c:copper_dusts",
+      "count": 3
+    },
+    {
+      "tag": "c:zinc_dusts"
+    }
+  ],
+  "result": {
+    "tag": "c:brass_ingots",
+    "count": 4
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "textures": {
+    "0": "mechanix:block/distiller",
+    "particle": "mechanix:block/distiller"
+  },
+  "parent" : "mechanix:block/machine"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredients": [
+    {
+      "item": "minecraft:carrot",
+      "count": 1
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "count": 3
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:carrot",
+      "count": 2
+    }
+  ]
+}

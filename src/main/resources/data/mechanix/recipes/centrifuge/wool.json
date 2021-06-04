@@ -1,0 +1,13 @@
+{
+  "type": "mechanix:centrifuging",
+  "ingredient": {
+    "tag": "minecraft:wool",
+    "count" : 1
+  },
+  "results": [
+    {
+      "item": "minecraft:string",
+      "count": 4
+    }
+  ]
+}

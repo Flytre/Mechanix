@@ -1,0 +1,14 @@
+-Mechanix style recipe rendering in REI
+-LIQUIFIER ENERGY/FLUID Tooltip
+-Fluid Trash can button to dump fluids
+
+
+TODO:
+
+-TRANSMUTER
+-MORE UPGRADES
+
+
+PREDICATES
+--> upgrade-predicate
+--> rei predicate support

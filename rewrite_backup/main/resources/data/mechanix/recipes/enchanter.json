@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#D#",
+    "#O#",
+    "#E#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:bookshelf"
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "O": {
+      "item": "mechanix:machine"
+    },
+    "E": {
+      "item": "minecraft:enchanting_table"
+    }
+  },
+  "result": {
+    "item": "mechanix:enchanter",
+    "count": 1
+  }
+}

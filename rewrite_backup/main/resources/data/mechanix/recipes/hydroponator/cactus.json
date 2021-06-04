@@ -1,0 +1,17 @@
+{
+  "type": "mechanix:hydroponics",
+  "ingredient": {
+    "item": "minecraft:cactus",
+    "count": 1
+  },
+  "fertilizer": {
+    "item": "minecraft:bone_meal",
+    "count": 4
+  },
+  "results": [
+    {
+      "item": "minecraft:cactus",
+      "count": 2
+    }
+  ]
+}

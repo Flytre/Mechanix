@@ -1,0 +1,10 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "time": 800,
+  "result": {
+    "item": "mechanix:obsidian_dust"
+  }
+}

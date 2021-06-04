@@ -1,0 +1,11 @@
+{
+  "type": "mechanix:crushing",
+  "ingredient": {
+    "tag": "minecraft:wool"
+  },
+  "time": 200,
+  "result": {
+    "item": "minecraft:string",
+    "count" : 4
+  }
+}

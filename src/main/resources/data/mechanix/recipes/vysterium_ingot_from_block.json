@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "mechanix:vysterium_ingot",
+  "ingredients": [
+    {
+      "item": "mechanix:vysterium_block"
+    }
+  ],
+  "result": {
+    "item": "mechanix:vysterium_ingot",
+    "count": 9
+  }
+}
